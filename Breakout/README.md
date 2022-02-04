@@ -13,12 +13,12 @@ recruiters at Gamepires Ltd, Zagreb.
 * Reading level data from XML files
 * Completely rendered graphics using textures for the paddle, bricks and the ball
 * Game logic such as:
-	** Collision detection
-	** Tracking score and lives
-	** Multi-HP bricks
-	** The ball needs to increase in speed progressively 
-	** There needs to be a possibility to load more levels
-	** The paddle must be controlled by the mouse because of variable speed
+	* Collision detection
+	* Tracking score and lives
+	* Multi-HP bricks
+	* The ball needs to increase in speed progressively 
+	* There needs to be a possibility to load more levels
+	* The paddle must be controlled by the mouse because of variable speed
 * Sounds
 * A tiny bit of game level design
 

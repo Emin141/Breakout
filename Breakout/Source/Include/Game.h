@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Window.h"
+
 class Game {
 public:
 	Game(void);
@@ -7,5 +9,8 @@ public:
 	void Run(void);
 	void Quit(void);
 private:
-	// We'll see
+	void Update(); // All logic is updated in the Game class
+private:
+	Window mWindow;
+
 };
