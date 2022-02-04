@@ -27,6 +27,10 @@ Window::Window() {
 		mHeight,
 		SDL_WINDOW_RESIZABLE
 	);
+	if (mWindowPtr == nullptr) {
+		std::cout << "SDL2 window failed to initialize with"
+			" Error: " << SDL_GetError();
+	}
 
 	openStatus = true;
 }
@@ -36,8 +40,9 @@ void Window::Draw() {
 }
 
 void Window::Poll() {
-	while (SDL_PollEvent(&mEvent) != 0) {
-		switch (mEvent.window.event)
+	SDL_Event Event;
+	while (SDL_PollEvent(&Event) != 0) {
+		switch (Event.type)
 		{
 		case SDL_QUIT:
 			openStatus = false;

@@ -10,7 +10,7 @@ public:
 	inline bool isOpen() const { return openStatus; }
 private:
 	SDL_Window* mWindowPtr;
-	SDL_Event mEvent;
+	//SDL_Event mEvent;
 	uint16_t mWidth;
 	uint16_t mHeight;
 	bool openStatus;
