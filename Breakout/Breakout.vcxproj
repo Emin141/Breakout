@@ -263,6 +263,9 @@
     <Library Include="Dep\SDL2\lib\SDL2main.lib" />
     <Library Include="Dep\SDL2\lib\SDL2test.lib" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
