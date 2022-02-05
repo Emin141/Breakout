@@ -3,8 +3,7 @@
 #include "GameState.h"
 #include <SDL.h>
 
-// temporary testing
-#include "Actor.h"
+#include "Scene.h"
 
 class Game {
 public:
@@ -22,5 +21,7 @@ private:
 	uint16_t mWindowWidth;
 	uint16_t mWindowHeight;
 
-	Actor mLoadingScreen;
+	// if the game had more scenes, I would make a map or something
+	// however, it really only needs one level scene, and 3 others
+	Scene mLoadingScreen, mMenu, mLevel, mGameOver;
 };

@@ -1,5 +1,12 @@
 #include "Actor.h"
 
+Actor::Actor() {
+	mImageSurface = nullptr;
+	mXPos = 0; mYPos = 0;
+	mWidth = 0; mHeight = 0;
+	mID = 0; // Invalid ID
+}
+
 Actor::~Actor() {
 	SDL_FreeSurface(mImageSurface);
 }

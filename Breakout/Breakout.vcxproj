@@ -94,7 +94,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Dep\SDL2\include;$(ProjectDir)Source\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -128,7 +128,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Dep\SDL2\include;$(ProjectDir)Source\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -162,6 +162,7 @@
     <ClCompile Include="Source\Actor.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\tinystr.cpp" />
     <ClCompile Include="Source\tinyxml.cpp" />
     <ClCompile Include="Source\tinyxmlerror.cpp" />
@@ -258,6 +259,7 @@
     <ClInclude Include="Source\Include\Actor.h" />
     <ClInclude Include="Source\Include\Game.h" />
     <ClInclude Include="Source\Include\GameState.h" />
+    <ClInclude Include="Source\Include\Scene.h" />
     <ClInclude Include="Source\Include\tinystr.h" />
     <ClInclude Include="Source\Include\tinyxml.h" />
   </ItemGroup>
@@ -271,7 +273,7 @@
     <None Include="Zadatak - Breakout.pdf" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\Textures\TestLoadingScreen.bmp" />
+    <Image Include="Resource\Textures\LoadingScreen.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -36,6 +36,9 @@
     <ClCompile Include="Source\Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dep\SDL2\include\begin_code.h">
@@ -314,6 +317,9 @@
     <ClInclude Include="Source\Include\Actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Include\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dep\SDL2\lib\SDL2.lib" />
@@ -325,7 +331,7 @@
     <None Include="Zadatak - Breakout.pdf" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\Textures\TestLoadingScreen.bmp">
+    <Image Include="Resource\Textures\LoadingScreen.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

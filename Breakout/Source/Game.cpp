@@ -7,8 +7,10 @@ Game::Game() {
 	mGameState = GameState::LOADING;
 	mWindowPtr = nullptr;
 	mWindowSurface = nullptr;
-	mWindowWidth = 800;
-	mWindowHeight = 600;
+	mWindowWidth = 1600;
+	mWindowHeight = 1200;
+
+	// Scenes are implicitly initialized
 }
 
 void Game::Initialize() {
@@ -36,9 +38,24 @@ void Game::Initialize() {
 	}
 
 	mWindowSurface = SDL_GetWindowSurface(mWindowPtr);
-	// XML parsing
+	
+	// Loading screen until the game is loaded
+	std::list<std::string> LoadingScreenResources = {
+		"Resource/Textures/LoadingScreen.bmp"
+	};
+	mLoadingScreen.Load(LoadingScreenResources);
+	mLoadingScreen.Draw(mWindowSurface);
+
+
+
 	// Load assets
-	mLoadingScreen.Load("Resource/Textures/TestLoadingScreen.bmp");
+	std::list<std::string> MenuResources = {};
+	std::list<std::string> LevelResources = {};
+	std::list<std::string> GameOverResources = {};
+
+	// XML parsing
+
+	
 	// Setup scenes and actors
 }
 
@@ -53,14 +70,27 @@ void Game::Run() {
 		Draw();
 
 		// Poll events
+		// Better to be done inside this function instead of doing it like
+		// Poll(). If done as Poll(), there needs to be another layer of 
+		// unneccessary abstraction on the event type.
 		while (SDL_PollEvent(&event) != 0) {
 			switch (event.type) {
 			case SDL_QUIT:
 				mGameState = GameState::QUIT;
 				break;
+			case SDL_KEYDOWN:
+				switch (event.key.keysym.sym) {
+				case SDLK_ESCAPE:
+				case SDLK_q:
+					mGameState = GameState::QUIT;
+					break;
+				}
+				break;
 			case SDL_MOUSEMOTION:
+#ifdef DEBUG
 				std::cout << "x position of cursor: " <<
 					event.button.x << "\n";
+#endif
 				break;
 			default:
 				break;
@@ -91,7 +121,21 @@ void Game::Update() {
 
 void Game::Draw() {
 	// Draw the passed scene
-	mLoadingScreen.Draw(mWindowSurface);
-
+	switch (mGameState) {
+	case GameState::LOADING:
+		mLoadingScreen.Draw(mWindowSurface);
+		break;
+	case GameState::MENU:
+		mMenu.Draw(mWindowSurface);
+		break;
+	case GameState::LEVEL:
+		mLevel.Draw(mWindowSurface);
+		break;
+	case GameState::GAMEOVER:
+		mGameOver.Draw(mWindowSurface);
+		break;
+	default:
+		break;
+	}
 	SDL_UpdateWindowSurface(mWindowPtr);
 }
