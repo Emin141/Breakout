@@ -7,6 +7,7 @@ int main(int argc, char** argv) {
 	game.Run();
 	game.Quit();
 #ifdef DEBUG
+	game.~Game();
 	std::cin.get();
 #endif
 	return 0;

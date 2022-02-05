@@ -23,7 +23,7 @@ void Scene::AddActor(Actor& actor) {
 }
 
 void Scene::RemoveActor(Actor& actor) {
-	for (auto a : mActorList) {
+	for (auto& a : mActorList) {
 		if (a->GetID() == actor.GetID()) {
 			mActorList.remove(a);
 			delete a;
