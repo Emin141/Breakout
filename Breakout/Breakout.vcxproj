@@ -259,6 +259,7 @@
     <ClInclude Include="Dep\SDL2\include\SDL_video.h" />
     <ClInclude Include="Dep\SDL2\include\SDL_vulkan.h" />
     <ClInclude Include="Source\Include\Actor.h" />
+    <ClInclude Include="Source\Include\Brick.h" />
     <ClInclude Include="Source\Include\CollisionBox.h" />
     <ClInclude Include="Source\Include\Entity.h" />
     <ClInclude Include="Source\Include\Game.h" />

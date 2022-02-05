@@ -335,6 +335,9 @@
     <ClInclude Include="Source\Include\Point.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Include\Brick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dep\SDL2\lib\SDL2.lib" />

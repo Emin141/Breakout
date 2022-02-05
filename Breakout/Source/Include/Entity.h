@@ -15,6 +15,6 @@ class Entity : Actor {
 public:
 	// Okay to have CollisionBox public because all of it's members are private
 	CollisionBox mCollisionBox;
-
+	bool mToBeRemoved;
 private:
 };
