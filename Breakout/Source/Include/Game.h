@@ -4,13 +4,13 @@
 
 class Game {
 public:
-	Game(void);
-	void Initialize(void);
-	void Run(void);
-	void Quit(void);
+	Game();
+	void Initialize();
+	void Run();
+	void Quit();
 private:
 	void Update(); // All logic is updated in the Game class
 private:
 	Window mWindow;
-
+	GameState mGameState;
 };

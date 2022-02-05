@@ -32,11 +32,17 @@ Window::Window() {
 			" Error: " << SDL_GetError();
 	}
 
-	openStatus = true;
+	mWindowState = GameState::LOADING;
+}
+
+Window::~Window() {
+	SDL_DestroyWindow(mWindowPtr);
+	SDL_Quit();
 }
 
 void Window::Draw() {
-
+	SDL_UpdateWindowSurface(mWindowPtr);
+	// Draw scene
 }
 
 void Window::Poll() {
@@ -45,7 +51,17 @@ void Window::Poll() {
 		switch (Event.type)
 		{
 		case SDL_QUIT:
-			openStatus = false;
+			
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			if (Event.button.button == SDL_BUTTON_LEFT)
+				std::cout << "Left button pressed\n";
+			if (Event.button.button == SDL_BUTTON_RIGHT)
+				std::cout << "Right button pressed\n";
+			break;
+		case SDL_MOUSEMOTION:
+			// Will be passed to the location of the paddle
+			std::cout << "x position: " << Event.button.x << "\n";
 			break;
 		default:
 			break;
