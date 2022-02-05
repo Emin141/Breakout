@@ -349,5 +349,17 @@
     <Image Include="Resource\Textures\Boards\Board_01.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\Textures\Bricks\Hard.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Bricks\Impenetrable.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Bricks\Medium.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Bricks\Soft.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

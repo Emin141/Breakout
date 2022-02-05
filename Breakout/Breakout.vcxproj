@@ -277,6 +277,10 @@
     <Image Include="Resource\Textures\Backgrounds\LoadingScreen.bmp" />
     <Image Include="Resource\Textures\Backgrounds\Menu.bmp" />
     <Image Include="Resource\Textures\Boards\Board_01.bmp" />
+    <Image Include="Resource\Textures\Bricks\Hard.bmp" />
+    <Image Include="Resource\Textures\Bricks\Impenetrable.bmp" />
+    <Image Include="Resource\Textures\Bricks\Medium.bmp" />
+    <Image Include="Resource\Textures\Bricks\Soft.bmp" />
     <Image Include="Resource\Textures\LoadingScreen.bmp" />
     <Image Include="Resource\Textures\Menu.bmp" />
   </ItemGroup>
