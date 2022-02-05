@@ -289,6 +289,9 @@
     <Image Include="Resource\Textures\LoadingScreen.bmp" />
     <Image Include="Resource\Textures\Menu.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resource\Levels\Level1.xml" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

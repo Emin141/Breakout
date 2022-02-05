@@ -377,4 +377,7 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resource\Levels\Level1.xml" />
+  </ItemGroup>
 </Project>
