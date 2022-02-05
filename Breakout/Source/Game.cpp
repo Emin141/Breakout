@@ -41,22 +41,37 @@ void Game::Initialize() {
 	
 	// Loading screen until the game is loaded
 	std::list<std::string> LoadingScreenResources = {
-		"Resource/Textures/LoadingScreen.bmp"
+		"Resource/Textures/Backgrounds/LoadingScreen.bmp"
 	};
 	mLoadingScreen.Load(LoadingScreenResources);
 	mLoadingScreen.Draw(mWindowSurface);
-
+	SDL_UpdateWindowSurface(mWindowPtr);
 
 
 	// Load assets
-	std::list<std::string> MenuResources = {};
+	std::list<std::string> MenuResources = {
+		"Resource/Textures/Backgrounds/Menu.bmp"
+	};
+	mMenu.Load(MenuResources);
+
+	std::list<std::string> GameOverResources = {
+		"Resource/Textures/Backgrounds/GameOver.bmp"
+	};
+	mGameOver.Load(GameOverResources);
+
+
 	std::list<std::string> LevelResources = {};
-	std::list<std::string> GameOverResources = {};
 
 	// XML parsing
 
 	
 	// Setup scenes and actors
+
+#ifdef DEBUG
+	SDL_Delay(2000);
+#endif
+
+	mGameState = GameState::MENU;
 }
 
 void Game::Run() {
@@ -76,8 +91,6 @@ void Game::Run() {
 		while (SDL_PollEvent(&event) != 0) {
 			switch (event.type) {
 			case SDL_QUIT:
-				mGameState = GameState::QUIT;
-				break;
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym) {
 				case SDLK_ESCAPE:
@@ -87,10 +100,6 @@ void Game::Run() {
 				}
 				break;
 			case SDL_MOUSEMOTION:
-#ifdef DEBUG
-				std::cout << "x position of cursor: " <<
-					event.button.x << "\n";
-#endif
 				break;
 			default:
 				break;
@@ -114,9 +123,17 @@ void Game::Quit() {
 
 void Game::Update() {
 	// Checks collision, HP, Score, Player lives, increases ball speed
-	// This is also the function that gets the window events from the polling
-	// and also the one that will handle scene changing, removing and adding
-	// actors, and such.
+	// adding and removing of actors, menu choices etc.
+	switch (mGameState) {
+	case GameState::MENU:
+		break;
+	case GameState::LEVEL:
+		break;
+	case GameState::GAMEOVER:
+		break;
+	default:
+		break;
+	}
 }
 
 void Game::Draw() {

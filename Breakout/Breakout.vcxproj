@@ -273,7 +273,12 @@
     <None Include="Zadatak - Breakout.pdf" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resource\Textures\Backgrounds\GameOver.bmp" />
+    <Image Include="Resource\Textures\Backgrounds\LoadingScreen.bmp" />
+    <Image Include="Resource\Textures\Backgrounds\Menu.bmp" />
+    <Image Include="Resource\Textures\Boards\Board_01.bmp" />
     <Image Include="Resource\Textures\LoadingScreen.bmp" />
+    <Image Include="Resource\Textures\Menu.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

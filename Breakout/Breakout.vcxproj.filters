@@ -334,5 +334,20 @@
     <Image Include="Resource\Textures\LoadingScreen.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\Textures\Menu.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Backgrounds\GameOver.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Backgrounds\LoadingScreen.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Backgrounds\Menu.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Boards\Board_01.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
