@@ -160,7 +160,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game.cpp" />
-    <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\tinystr.cpp" />
     <ClCompile Include="Source\tinyxml.cpp" />
@@ -256,9 +255,9 @@
     <ClInclude Include="Dep\SDL2\include\SDL_video.h" />
     <ClInclude Include="Dep\SDL2\include\SDL_vulkan.h" />
     <ClInclude Include="Source\Include\Game.h" />
+    <ClInclude Include="Source\Include\GameState.h" />
     <ClInclude Include="Source\Include\tinystr.h" />
     <ClInclude Include="Source\Include\tinyxml.h" />
-    <ClInclude Include="Source\Include\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dep\SDL2\lib\SDL2.lib" />
