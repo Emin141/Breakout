@@ -25,7 +25,7 @@ Window::Window() {
 		SDL_WINDOWPOS_CENTERED,
 		mWidth,
 		mHeight,
-		SDL_WINDOW_RESIZABLE
+		SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN
 	);
 	if (mWindowPtr == nullptr) {
 		std::cout << "SDL2 window failed to initialize with"
