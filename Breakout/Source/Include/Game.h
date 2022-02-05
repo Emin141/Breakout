@@ -3,6 +3,9 @@
 #include "GameState.h"
 #include <SDL.h>
 
+// temporary testing
+#include "Actor.h"
+
 class Game {
 public:
 	Game();
@@ -15,6 +18,9 @@ private:
 private:
 	GameState mGameState;
 	SDL_Window* mWindowPtr;
+	SDL_Surface* mWindowSurface;
 	uint16_t mWindowWidth;
 	uint16_t mWindowHeight;
+
+	Actor mLoadingScreen;
 };

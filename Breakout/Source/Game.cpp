@@ -6,6 +6,7 @@ Game::Game() {
 	// Constructor call
 	mGameState = GameState::LOADING;
 	mWindowPtr = nullptr;
+	mWindowSurface = nullptr;
 	mWindowWidth = 800;
 	mWindowHeight = 600;
 }
@@ -33,8 +34,11 @@ void Game::Initialize() {
 		std::cin.get();
 		exit(-1);
 	}
+
+	mWindowSurface = SDL_GetWindowSurface(mWindowPtr);
 	// XML parsing
 	// Load assets
+	mLoadingScreen.Load("Resource/Textures/TestLoadingScreen.bmp");
 	// Setup scenes and actors
 }
 
@@ -66,14 +70,16 @@ void Game::Run() {
 }
 
 void Game::Quit() {
+	// Unload assets
+	SDL_FreeSurface(mWindowSurface);
+	mWindowSurface = nullptr;
+
+	// Deallocate all dynamic objects
+	// XML parsing
+
 	SDL_DestroyWindow(mWindowPtr);
 	mWindowPtr = nullptr;
 	SDL_Quit();
-
-	// Unload assets
-	// Deallocate all dynamic objects
-	// XML parsing
-	// Return 0;
 }
 
 void Game::Update() {
@@ -85,5 +91,7 @@ void Game::Update() {
 
 void Game::Draw() {
 	// Draw the passed scene
+	mLoadingScreen.Draw(mWindowSurface);
+
 	SDL_UpdateWindowSurface(mWindowPtr);
 }

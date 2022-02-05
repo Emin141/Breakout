@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Actor.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\tinystr.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Dep\SDL2\include\SDL_version.h" />
     <ClInclude Include="Dep\SDL2\include\SDL_video.h" />
     <ClInclude Include="Dep\SDL2\include\SDL_vulkan.h" />
+    <ClInclude Include="Source\Include\Actor.h" />
     <ClInclude Include="Source\Include\Game.h" />
     <ClInclude Include="Source\Include\GameState.h" />
     <ClInclude Include="Source\Include\tinystr.h" />
@@ -267,6 +269,9 @@
   <ItemGroup>
     <None Include="README.md" />
     <None Include="Zadatak - Breakout.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\Textures\TestLoadingScreen.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
