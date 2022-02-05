@@ -146,7 +146,7 @@ void Game::Draw() {
 		mMenu.Draw(mWindowSurface);
 		break;
 	case GameState::LEVEL:
-		mLevel.Draw(mWindowSurface);
+		//mLevel.Draw(mWindowSurface);
 		break;
 	case GameState::GAMEOVER:
 		mGameOver.Draw(mWindowSurface);

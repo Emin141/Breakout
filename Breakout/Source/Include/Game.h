@@ -23,5 +23,5 @@ private:
 
 	// if the game had more scenes, I would make a map or something
 	// however, it really only needs one level scene, and 3 others
-	Scene mLoadingScreen, mMenu, mLevel, mGameOver;
+	Scene mLoadingScreen, mMenu, mGameOver;
 };

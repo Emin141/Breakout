@@ -14,6 +14,5 @@ public:
 	void RemoveActor(Actor& actor);
 	void Draw(SDL_Surface* windowSurface);
 private:
-	
 	std::list<Actor*> mActorList;
 };
