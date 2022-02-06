@@ -280,9 +280,12 @@
     <None Include="Zadatak - Breakout.pdf" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resource\Textures\Backgrounds\Button_1.png" />
+    <Image Include="Resource\Textures\Backgrounds\Button_2.png" />
+    <Image Include="Resource\Textures\Backgrounds\Button_3.png" />
+    <Image Include="Resource\Textures\Backgrounds\Button_exit.png" />
     <Image Include="Resource\Textures\Backgrounds\GameOver.bmp" />
-    <Image Include="Resource\Textures\Backgrounds\LoadingScreen.bmp" />
-    <Image Include="Resource\Textures\Backgrounds\Menu.bmp" />
+    <Image Include="Resource\Textures\Backgrounds\Menu.png" />
     <Image Include="Resource\Textures\Boards\Board_01.bmp" />
     <Image Include="Resource\Textures\Bricks\Hard.bmp" />
     <Image Include="Resource\Textures\Bricks\Impenetrable.bmp" />
