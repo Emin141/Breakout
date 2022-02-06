@@ -18,22 +18,20 @@ void Scene::Load(const std::list<std::string>& resources) {
 	}
 }
 
-void Scene::AddActor(Actor& actor) {
-	mActorList.push_back(&actor);
-}
+//void Scene::AddActor(Actor& actor) {
+//	mActorList.push_back(&actor);
+//}
+//
+//void Scene::RemoveActor(Actor& actor) {
+//	for (auto Actor : mActorList) {
+//		mActorList.remove_if(Actor->ToBeRemoved);
+//		delete Actor;
+//	}
+//}
 
-void Scene::RemoveActor(Actor& actor) {
-	for (auto& a : mActorList) {
-		if (a->GetID() == actor.GetID()) {
-			mActorList.remove(a);
-			delete a;
-		}
-	}
-}
-
-void Scene::Draw(SDL_Surface* windowSurface) {
+void Scene::Draw(sf::RenderWindow& window) {
 	for (auto actor : mActorList) {
-		actor->Draw(windowSurface);
+		actor->Draw(window);
 	}
 }
 

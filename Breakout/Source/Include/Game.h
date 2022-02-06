@@ -1,27 +1,26 @@
 #pragma once
 
 #include "GameState.h"
-#include <SDL.h>
+#include <SFML/Graphics.hpp>
 
 #include "Scene.h"
 
 class Game {
 public:
 	Game();
-	void Initialize();
 	void Run();
 	void Quit();
 private:
 	void Update(); // All logic is updated in the Game class
 	void Draw(); // Will be modified when scenes are added
+	void Poll(); // Polls events
 private:
 	GameState mGameState;
-	SDL_Window* mWindowPtr;
-	SDL_Surface* mWindowSurface;
+	sf::RenderWindow mWindow;
 	uint16_t mWindowWidth;
 	uint16_t mWindowHeight;
 
-	// if the game had more scenes, I would make a map or something
-	// however, it really only needs one level scene, and 3 others
+	// The loading screen doesn't have to be a special class
+	// The Menu, Gameover, and Level scenes inherit from Scene
 	Scene mLoadingScreen, mMenu, mGameOver;
 };

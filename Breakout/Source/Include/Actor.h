@@ -1,20 +1,26 @@
 #pragma once
 
 #include <iostream>
-#include <SDL.h>
+#include <SFML/Graphics.hpp>
 
 class Actor {
 public:
 	Actor();
 	~Actor();
 	void Load(const std::string& assetPath);
-	void Draw(SDL_Surface* windowSurface);
+	void Draw(sf::RenderWindow& window);
 	inline uint8_t GetID() const { return mID; }
+	
 	static void IncreaseActorCount();
 	static void DecreaseActorCount();
-	static uint8_t mID;
+	
+	inline bool operator == (const Actor& s) const { return mID == s.mID; }
+	inline bool operator != (const Actor& s) const { return !operator==(s); }
 private:
-	SDL_Surface* mImageSurface;
+	static uint8_t ActorCount;
+	uint8_t mID;
+	sf::Texture mTexture;
+	sf::Sprite mSprite;
 	uint16_t mXPos, mYPos;
 	uint16_t mWidth, mHeight;
 };

@@ -1,56 +1,44 @@
 #include "Game.h"
 
 #include <iostream>
+#ifdef DEBUG
+#include <SFML/System.hpp>
+#endif
 
 Game::Game() {
 	// Constructor call
 	mGameState = GameState::LOADING;
-	mWindowPtr = nullptr;
-	mWindowSurface = nullptr;
-	mWindowWidth = 1600;
-	mWindowHeight = 1200;
 
-	// Scenes are implicitly initialized
-}
+	sf::ContextSettings ContextSettings;
+	ContextSettings.antialiasingLevel = 4;
+	ContextSettings.majorVersion = 3;
+	ContextSettings.minorVersion = 3;
 
-void Game::Initialize() {
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-		std::cout << "SDL failed to init with error: " <<
-			SDL_GetError();
-		std::cin.get();
-		exit(-1);
-	}
-	
-	mWindowPtr = SDL_CreateWindow(
+	mWindow.create(
+		sf::VideoMode(1920, 1080),
 		"Breakout",
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		mWindowWidth,
-		mWindowHeight,
-		SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+		sf::Style::Resize,
+		ContextSettings
 	);
+	mWindowWidth = mWindow.getSize().x;
+	mWindowHeight = mWindow.getSize().y;
 
-	if (mWindowPtr == nullptr) {
-		std::cout << "Failed to create window with error: " <<
-			SDL_GetError();
-		std::cin.get();
-		exit(-1);
-	}
-
-	mWindowSurface = SDL_GetWindowSurface(mWindowPtr);
-	
 	// Loading screen until the game is loaded
 	std::list<std::string> LoadingScreenResources = {
-		"Resource/Textures/Backgrounds/LoadingScreen.bmp"
+		"Resource/Textures/Backgrounds/LoadingScreen.png"
 	};
 	mLoadingScreen.Load(LoadingScreenResources);
-	mLoadingScreen.Draw(mWindowSurface);
-	SDL_UpdateWindowSurface(mWindowPtr);
-
+	mWindow.clear(sf::Color::Black);
+	mLoadingScreen.Draw(mWindow);
+	mWindow.display();
 
 	// Load assets
 	std::list<std::string> MenuResources = {
-		"Resource/Textures/Backgrounds/Menu.bmp"
+		"Resource/Textures/Backgrounds/Menu.png",
+		"Resource/Textures/Backgrounds/Button_1.png",
+		"Resource/Textures/Backgrounds/Button_2.png",
+		"Resource/Textures/Backgrounds/Button_3.png",
+		"Resource/Textures/Backgrounds/Button_exit.png"
 	};
 	mMenu.Load(MenuResources);
 
@@ -64,61 +52,23 @@ void Game::Initialize() {
 
 	// XML parsing
 
-	
-	// Setup scenes and actors
 
-#ifdef DEBUG
-	SDL_Delay(2000);
-#endif
+	// Setup scenes and actors
 
 	mGameState = GameState::MENU;
 }
 
 void Game::Run() {
-	SDL_Event event;
-
 	while (mGameState!=GameState::QUIT) {
-		// Logic
 		Update();
-
-		// Render logic
 		Draw();
-
-		// Poll events
-		// Better to be done inside this function instead of doing it like
-		// Poll(). If done as Poll(), there needs to be another layer of 
-		// unneccessary abstraction on the event type.
-		while (SDL_PollEvent(&event) != 0) {
-			switch (event.type) {
-			case SDL_QUIT:
-			case SDL_KEYDOWN:
-				switch (event.key.keysym.sym) {
-				case SDLK_ESCAPE:
-				case SDLK_q:
-					mGameState = GameState::QUIT;
-					break;
-				}
-				break;
-			case SDL_MOUSEMOTION:
-				break;
-			default:
-				break;
-			}
-		}
+		Poll();
 	}
 }
 
 void Game::Quit() {
-	// Unload assets
-	SDL_FreeSurface(mWindowSurface);
-	mWindowSurface = nullptr;
-
-	// Deallocate all dynamic objects
-	// XML parsing
-
-	SDL_DestroyWindow(mWindowPtr);
-	mWindowPtr = nullptr;
-	SDL_Quit();
+	mWindow.close();
+	// Everything else is RAII managed to deallocate
 }
 
 void Game::Update() {
@@ -137,22 +87,50 @@ void Game::Update() {
 }
 
 void Game::Draw() {
-	// Draw the passed scene
+	mWindow.clear(sf::Color::Black);
 	switch (mGameState) {
 	case GameState::LOADING:
-		mLoadingScreen.Draw(mWindowSurface);
+		mLoadingScreen.Draw(mWindow);
 		break;
 	case GameState::MENU:
-		mMenu.Draw(mWindowSurface);
+		mMenu.Draw(mWindow);
 		break;
 	case GameState::LEVEL:
 		//mLevel.Draw(mWindowSurface);
 		break;
 	case GameState::GAMEOVER:
-		mGameOver.Draw(mWindowSurface);
+		mGameOver.Draw(mWindow);
 		break;
 	default:
 		break;
 	}
-	SDL_UpdateWindowSurface(mWindowPtr);
+	mWindow.display();
+}
+
+void Game::Poll() {
+	sf::Event mEvent;
+	
+	while (mWindow.pollEvent(mEvent)) {
+		switch (mEvent.type) {
+		case sf::Event::Closed:
+			mGameState = GameState::QUIT;
+			break;
+		case sf::Event::KeyPressed:
+			switch (mEvent.key.code) {
+				using Key = sf::Keyboard;
+			case Key::Escape:
+			case Key::Q:
+				mGameState = GameState::QUIT;
+				break;
+			case Key::A:
+				mGameState = GameState::GAMEOVER;
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+	}
 }

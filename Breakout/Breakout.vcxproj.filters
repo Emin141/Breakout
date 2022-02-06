@@ -338,6 +338,9 @@
     <ClInclude Include="Source\Include\Brick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Include\Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dep\SDL2\lib\SDL2.lib" />
@@ -358,12 +361,6 @@
     <Image Include="Resource\Textures\Backgrounds\GameOver.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Resource\Textures\Backgrounds\LoadingScreen.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resource\Textures\Backgrounds\Menu.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="Resource\Textures\Boards\Board_01.bmp">
       <Filter>Resource Files</Filter>
     </Image>
@@ -377,6 +374,21 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Resource\Textures\Bricks\Soft.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Backgrounds\Button_3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Backgrounds\Button_1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Backgrounds\Button_2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Backgrounds\Button_exit.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Backgrounds\Menu.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
