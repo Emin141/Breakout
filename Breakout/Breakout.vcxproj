@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Actor.cpp" />
+    <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\CollisionBox.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Game.cpp" />
@@ -262,6 +263,7 @@
     <ClInclude Include="Dep\SDL2\include\SDL_vulkan.h" />
     <ClInclude Include="Source\Include\Actor.h" />
     <ClInclude Include="Source\Include\Brick.h" />
+    <ClInclude Include="Source\Include\Button.h" />
     <ClInclude Include="Source\Include\CollisionBox.h" />
     <ClInclude Include="Source\Include\Entity.h" />
     <ClInclude Include="Source\Include\Game.h" />

@@ -14,7 +14,7 @@ public:
 	void Quit();
 private:
 	void Update(); // All logic is updated in the Game class
-	void Draw(); // Will be modified when scenes are added
+	void Draw(); // Chooses the scene to draw and draws it
 	void Poll(); // Polls events
 private:
 	// Loading, Menu, GameOver, and Level
@@ -30,7 +30,7 @@ private:
 
 	// Mouse condition
 	sf::Vector2i mMousePosition;
-	bool cliked;
+	bool mLmbWasCliked;
 
 	// Scenes, all inherited from Scene
 	LoadingScreen mLoadingScreen;
