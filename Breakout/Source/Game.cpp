@@ -6,6 +6,8 @@
 Game::Game() {
 	// Constructor call
 	mGameState = GameState::LOADING;
+	mMousePosition = sf::Mouse::getPosition();
+	mLmbWasCliked = false;
 
 	sf::ContextSettings ContextSettings;
 	ContextSettings.antialiasingLevel = 4;
@@ -58,20 +60,56 @@ void Game::Quit() {
 void Game::Update() {
 	// Checks collision, HP, Score, Player lives, increases ball speed
 	// adding and removing of actors, menu choices etc.
+	mMousePosition = sf::Mouse::getPosition();
+
 	switch (mGameState) {
+
 	case GameState::MENU:
+		if (mLmbWasCliked) {
+			switch (mMenu.GetMenuChoice(mMousePosition)) {
+			case MenuChoice::EXIT:
+				mGameState = GameState::QUIT;
+				break;
+			case MenuChoice::LEVEL_1:
+				// Load Level 1
+				break;
+			case MenuChoice::LEVEL_2:
+				// Load Level 2
+				break;
+			case MenuChoice::LEVEL_3:
+				// Load Level 3
+				break;
+			case MenuChoice::NONE:
+			default:
+				break;
+			}
+		}
 		break;
+	
 	case GameState::LEVEL:
 		break;
+	
 	case GameState::GAMEOVER:
 		break;
+	
 	default:
 		break;
 	}
+
+
 }
 
 void Game::Draw() {
+	// Clear
 	mWindow.clear(sf::Color::Black);
+
+	// Chooses correct scene to draw
+	// If the scenes were pretty heavy, this would be a bad idea
+	// since all the assets are loaded at all times like this
+	// However, since the game is light, and the only 3 scenes other than 
+	// the chosen level are the loading screen (literally just text),
+	// a menu (barely any resources used), and a game over screen 
+	// (even less resources used), this is completely fine. 
 	switch (mGameState) {
 	case GameState::LOADING:
 		mLoadingScreen.Draw(mWindow);
@@ -88,6 +126,8 @@ void Game::Draw() {
 	default:
 		break;
 	}
+
+	// Swaps the back buffer
 	mWindow.display();
 }
 
@@ -101,16 +141,9 @@ void Game::Poll() {
 			break;
 		case sf::Event::KeyPressed:
 			switch (mEvent.key.code) {
-				using Key = sf::Keyboard;
-			case Key::Escape:
-			case Key::Q:
+			case sf::Keyboard::Escape:
+			case sf::Keyboard::Q:
 				mGameState = GameState::QUIT;
-				break;
-			case Key::A:
-				mGameState = GameState::GAMEOVER;
-				break;
-			case Key::D:
-				mGameState = GameState::LOADING;
 				break;
 			default:
 				break;
@@ -119,5 +152,12 @@ void Game::Poll() {
 		default:
 			break;
 		}
+	}
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		mLmbWasCliked = true;
+	}
+	else {
+		mLmbWasCliked = false;
 	}
 }
