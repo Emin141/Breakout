@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "LoadingScreen.h"
 #include "Menu.h"
+#include "GameOver.h"
 
 class Game {
 public:
@@ -35,5 +36,5 @@ private:
 	// Scenes, all inherited from Scene
 	LoadingScreen mLoadingScreen;
 	Menu mMenu;
-	Scene mGameOver;
+	GameOver mGameOver;
 };

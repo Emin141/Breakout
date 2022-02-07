@@ -164,6 +164,7 @@
     <ClCompile Include="Source\CollisionBox.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\GameOver.cpp" />
     <ClCompile Include="Source\LoadingScreen.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Menu.cpp" />
@@ -267,6 +268,7 @@
     <ClInclude Include="Source\Include\CollisionBox.h" />
     <ClInclude Include="Source\Include\Entity.h" />
     <ClInclude Include="Source\Include\Game.h" />
+    <ClInclude Include="Source\Include\GameOver.h" />
     <ClInclude Include="Source\Include\GameState.h" />
     <ClInclude Include="Source\Include\LoadingScreen.h" />
     <ClInclude Include="Source\Include\Menu.h" />

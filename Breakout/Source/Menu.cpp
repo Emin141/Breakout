@@ -21,25 +21,25 @@ void Menu::Load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 	mButton[0].Create(
 		font,
 		{windowDimensions.x/2.0f, 4.0f*windowDimensions.y/15.0f},
-		"Level 1"
+		"LEVEL 1"
 		);
 
 	mButton[1].Create(
 		font,
 		{ windowDimensions.x / 2.0f, 7.0f * windowDimensions.y / 15.0f },
-		"Level 2"
+		"LEVEL 2"
 	);
 
 	mButton[2].Create(
 		font,
 		{ windowDimensions.x / 2.0f, 10.0f * windowDimensions.y / 15.0f },
-		"Level 3"
+		"LEVEL 3"
 	);
 
 	mButton[3].Create(
 		font,
 		{ windowDimensions.x / 2.0f, 13.0f * windowDimensions.y / 15.0f },
-		"Exit"
+		"EXIT"
 	);
 }
 

@@ -36,7 +36,7 @@ Game::Game() {
 	mMenu.Load(mFont, sf::Vector2f(mWindowWidth, mWindowHeight));
 
 	// Game over screen
-	
+	mGameOver.Load(mFont, sf::Vector2f(mWindowWidth, mWindowHeight));
 
 
 	// Setup scenes and actors
@@ -90,6 +90,22 @@ void Game::Update() {
 		break;
 	
 	case GameState::GAMEOVER:
+		if (mLmbWasCliked) {
+			switch (mGameOver.GetMenuChoice(mMousePosition))
+			{
+			case GameOverChoice::BACK_TO_MENU:
+				mGameState = GameState::MENU;
+				break;
+			case GameOverChoice::EXIT:
+				mGameState = GameState::QUIT;
+				break;
+			default:
+				break;
+			}
+		}
+
+
+
 		break;
 	
 	default:
@@ -144,6 +160,12 @@ void Game::Poll() {
 			case sf::Keyboard::Escape:
 			case sf::Keyboard::Q:
 				mGameState = GameState::QUIT;
+				break;
+			case sf::Keyboard::D:
+				mGameState = GameState::GAMEOVER;
+				break;
+			case sf::Keyboard::A:
+				mGameState = GameState::MENU;
 				break;
 			default:
 				break;
