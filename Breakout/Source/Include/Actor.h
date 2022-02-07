@@ -5,6 +5,18 @@
 
 class Actor {
 public:
+
+
+/* UPON LOADING AN ACTOR, THE POSITION NEEDS TO BE GIVEN
+
+							O	R
+
+MAKE A METHOD THAT SETS THE POSITION
+
+THE POSITION IS A POINT, BUT FOR ALL INTENTS AND PURPOSES
+MAY BE CONSIDERED A VECTOR, BECAUSE WHAT ELSE IS A VECTOR?
+*/
+
 	Actor();
 	~Actor();
 	void Load(const std::string& assetPath, const sf::Vector2f& position);
