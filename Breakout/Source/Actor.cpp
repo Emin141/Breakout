@@ -3,8 +3,10 @@
 uint8_t Actor::ActorCount = 0;
 
 Actor::Actor() {
-	mXPos = 0; mYPos = 0;
-	mWidth = 0; mHeight = 0;
+	mPosition.x = 0.0f;
+	mPosition.y = 0.0f;
+	mScale.x = 1.0f;
+	mScale.y = 1.0f;
 	mID = 0;
 }
 
@@ -12,15 +14,20 @@ Actor::~Actor() {
 	DecreaseActorCount();
 }
 
-void Actor::Load(const std::string& assetPath) {
+void Actor::Load(const std::string& assetPath,
+	const sf::Vector2f& position) {
+	
+	mPosition = position;
 	if (!mTexture.loadFromFile(assetPath)) {
 		std::cout << "Failed to load texture at " <<
 			assetPath << "\n";
 		std::cin.get();
 		exit(-1);
 	}
-
 	mSprite.setTexture(mTexture);
+	mSprite.setPosition(mPosition);
+	mSprite.setScale(mScale);
+	
 	IncreaseActorCount();
 	mID = ActorCount;
 }

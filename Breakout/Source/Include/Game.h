@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "Scene.h"
+#include "LoadingScreen.h"
+#include "Menu.h"
 
 class Game {
 public:
@@ -17,10 +19,12 @@ private:
 private:
 	GameState mGameState;
 	sf::RenderWindow mWindow;
-	uint16_t mWindowWidth;
-	uint16_t mWindowHeight;
+	unsigned int mWindowWidth;
+	unsigned int mWindowHeight;
 
-	// The loading screen doesn't have to be a special class
-	// The Menu, Gameover, and Level scenes inherit from Scene
-	Scene mLoadingScreen, mMenu, mGameOver;
+	sf::Font mFont;
+
+	LoadingScreen mLoadingScreen;
+	Menu mMenu;
+	Scene mGameOver;
 };

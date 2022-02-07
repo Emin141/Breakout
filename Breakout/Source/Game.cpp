@@ -1,9 +1,7 @@
 #include "Game.h"
 
 #include <iostream>
-#ifdef DEBUG
-#include <SFML/System.hpp>
-#endif
+#include "LoadingScreen.h"
 
 Game::Game() {
 	// Constructor call
@@ -17,40 +15,26 @@ Game::Game() {
 	mWindow.create(
 		sf::VideoMode(1920, 1080),
 		"Breakout",
-		sf::Style::Resize,
+		sf::Style::Fullscreen,
 		ContextSettings
 	);
 	mWindowWidth = mWindow.getSize().x;
 	mWindowHeight = mWindow.getSize().y;
 
+	mFont.loadFromFile("Resource/Fonts/Biolinum.ttf");
+
 	// Loading screen until the game is loaded
-	std::list<std::string> LoadingScreenResources = {
-		"Resource/Textures/Backgrounds/LoadingScreen.png"
-	};
-	mLoadingScreen.Load(LoadingScreenResources);
+	mLoadingScreen.Load(mFont, 
+		{ mWindowWidth / 2.0f, mWindowHeight / 2.0f });
 	mWindow.clear(sf::Color::Black);
 	mLoadingScreen.Draw(mWindow);
 	mWindow.display();
 
-	// Load assets
-	std::list<std::string> MenuResources = {
-		"Resource/Textures/Backgrounds/Menu.png",
-		"Resource/Textures/Backgrounds/Button_1.png",
-		"Resource/Textures/Backgrounds/Button_2.png",
-		"Resource/Textures/Backgrounds/Button_3.png",
-		"Resource/Textures/Backgrounds/Button_exit.png"
-	};
-	mMenu.Load(MenuResources);
+	// Menu screen
+	mMenu.Load(mFont, sf::Vector2f(mWindowWidth, mWindowHeight));
 
-	std::list<std::string> GameOverResources = {
-		"Resource/Textures/Backgrounds/GameOver.bmp"
-	};
-	mGameOver.Load(GameOverResources);
-
-
-	std::list<std::string> LevelResources = {};
-
-	// XML parsing
+	// Game over screen
+	
 
 
 	// Setup scenes and actors
@@ -124,6 +108,9 @@ void Game::Poll() {
 				break;
 			case Key::A:
 				mGameState = GameState::GAMEOVER;
+				break;
+			case Key::D:
+				mGameState = GameState::LOADING;
 				break;
 			default:
 				break;

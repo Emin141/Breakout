@@ -10,10 +10,11 @@ Scene::~Scene() {
 	}
 }
 
-void Scene::Load(const std::list<std::string>& resources) {
-	for (auto resource : resources) {
+void Scene::Load(const std::vector<std::string>& resources,
+	const std::vector<sf::Vector2f>& positions) {
+	for (int index = 0; index < resources.size(); index++) {
 		Actor* actorPtr = new Actor;
-		actorPtr->Load(resource);
+		actorPtr->Load(resources.at(index), positions.at(index));
 		mActorList.push_back(actorPtr);
 	}
 }

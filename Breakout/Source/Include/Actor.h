@@ -7,7 +7,7 @@ class Actor {
 public:
 	Actor();
 	~Actor();
-	void Load(const std::string& assetPath);
+	void Load(const std::string& assetPath, const sf::Vector2f& position);
 	void Draw(sf::RenderWindow& window);
 	inline uint8_t GetID() const { return mID; }
 	
@@ -21,6 +21,6 @@ private:
 	uint8_t mID;
 	sf::Texture mTexture;
 	sf::Sprite mSprite;
-	uint16_t mXPos, mYPos;
-	uint16_t mWidth, mHeight;
+	sf::Vector2f mPosition;
+	sf::Vector2f mScale;
 };

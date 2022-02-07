@@ -163,7 +163,9 @@
     <ClCompile Include="Source\CollisionBox.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\LoadingScreen.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Menu.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\tinystr.cpp" />
     <ClCompile Include="Source\tinyxml.cpp" />
@@ -264,6 +266,7 @@
     <ClInclude Include="Source\Include\Entity.h" />
     <ClInclude Include="Source\Include\Game.h" />
     <ClInclude Include="Source\Include\GameState.h" />
+    <ClInclude Include="Source\Include\LoadingScreen.h" />
     <ClInclude Include="Source\Include\Menu.h" />
     <ClInclude Include="Source\Include\Point.h" />
     <ClInclude Include="Source\Include\Scene.h" />
@@ -280,12 +283,6 @@
     <None Include="Zadatak - Breakout.pdf" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\Textures\Backgrounds\Button_1.png" />
-    <Image Include="Resource\Textures\Backgrounds\Button_2.png" />
-    <Image Include="Resource\Textures\Backgrounds\Button_3.png" />
-    <Image Include="Resource\Textures\Backgrounds\Button_exit.png" />
-    <Image Include="Resource\Textures\Backgrounds\GameOver.bmp" />
-    <Image Include="Resource\Textures\Backgrounds\Menu.png" />
     <Image Include="Resource\Textures\Boards\Board_01.bmp" />
     <Image Include="Resource\Textures\Bricks\Hard.bmp" />
     <Image Include="Resource\Textures\Bricks\Impenetrable.bmp" />
