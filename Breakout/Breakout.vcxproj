@@ -165,9 +165,11 @@
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameOver.cpp" />
+    <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\LoadingScreen.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Menu.cpp" />
+    <ClCompile Include="Source\Paddle.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\tinystr.cpp" />
     <ClCompile Include="Source\tinyxml.cpp" />
@@ -272,10 +274,11 @@
     <ClInclude Include="Source\Include\GameState.h" />
     <ClInclude Include="Source\Include\LoadingScreen.h" />
     <ClInclude Include="Source\Include\Menu.h" />
-    <ClInclude Include="Source\Include\Point.h" />
+    <ClInclude Include="Source\Include\Paddle.h" />
     <ClInclude Include="Source\Include\Scene.h" />
     <ClInclude Include="Source\Include\tinystr.h" />
     <ClInclude Include="Source\Include\tinyxml.h" />
+    <ClInclude Include="Source\Include\Level.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dep\SDL2\lib\SDL2.lib" />

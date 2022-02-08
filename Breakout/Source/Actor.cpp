@@ -1,47 +1,34 @@
 #include "Actor.h"
 
-uint8_t Actor::ActorCount = 0;
-
 Actor::Actor() {
-	mPosition.x = 0.0f;
-	mPosition.y = 0.0f;
-	mScale.x = 1.0f;
-	mScale.y = 1.0f;
-	mID = 0;
+	mPosition = { 0.0f, 0.0f };
+	mSize = { 0.0f, 0.0f };
+	mShape.setSize(mSize);
+	mShape.setPosition(mPosition);
 }
 
 Actor::~Actor() {
-	DecreaseActorCount();
 }
 
-void Actor::Load(const std::string& assetPath,
-	const sf::Vector2f& position) {
-	
+void Actor::Create(sf::Texture& texture, const sf::Vector2f& size, const sf::Vector2f& position) {
+	mSize = size;
+
+	// Have to adjust the origin for the collision box
+	mShape.setOrigin(
+		{
+			mShape.getOrigin().x + mSize.x / 2.0f,
+			mShape.getOrigin().y + mSize.y / 2.0f
+		}
+	);
+
+
 	mPosition = position;
-	if (!mTexture.loadFromFile(assetPath)) {
-		std::cout << "Failed to load texture at " <<
-			assetPath << "\n";
-		std::cin.get();
-		exit(-1);
-	}
-	mSprite.setTexture(mTexture);
-	mSprite.setPosition(mPosition);
-	mSprite.setScale(mScale);
-	
-	IncreaseActorCount();
-	mID = ActorCount;
+	mShape.setSize(mSize);
+	mShape.setPosition(mPosition);
+	mTexture = texture;
+	mShape.setTexture(&texture);
 }
 
-void Actor::Draw(sf::RenderWindow& window) {
-	window.draw(mSprite);
-}
-
-void Actor::IncreaseActorCount() {
-	std::cout << "Current actor count " 
-		<< static_cast<int>(++ActorCount) << "\n";
-}
-
-void Actor::DecreaseActorCount() {
-	std::cout << "Current actor count "
-		<< static_cast<int>(--ActorCount) << "\n";
+void Actor::Draw(sf::RenderWindow& window) const {
+	window.draw(mShape);
 }

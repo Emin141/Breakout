@@ -3,11 +3,16 @@
 #include <cmath>
 
 bool CollisionBox::CheckCollision(const CollisionBox& otherCollisionBox) const {
-	uint16_t verticalDistance = abs(mCenter.y - otherCollisionBox.GetCenter().y);
-	uint16_t horizontalDistance = abs(mCenter.x - otherCollisionBox.GetCenter().x);
+	float verticalDistance = fabs(mCenter.y - otherCollisionBox.GetCenter().y);
+	float horizontalDistance = fabs(mCenter.x - otherCollisionBox.GetCenter().x);
 
-	if (verticalDistance <= (mWidth + otherCollisionBox.GetWidth()) / 2	&&
-		horizontalDistance <= (mHeight + otherCollisionBox.GetHeight()) / 2)
+	if (verticalDistance <= (mSize.x + otherCollisionBox.GetWidth()) / 2	&&
+		horizontalDistance <= (mSize.y + otherCollisionBox.GetHeight()) / 2)
 		return true;
 	return false;
+}
+
+void CollisionBox::CreateCollisionBox(const sf::Vector2i& center, const sf::Vector2f& size) {
+	mCenter = center;
+	mSize = size;
 }

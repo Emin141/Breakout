@@ -1,18 +1,21 @@
 #pragma once
 
 #include <iostream>
-#include "Point.h"
+#include <SFML/Graphics.hpp>
 
 class CollisionBox {
 public:
-	CollisionBox(Point center, uint16_t width, uint16_t height)
-		: mCenter(center), mWidth(width), mHeight(height) {}
+	CollisionBox() : mCenter(0, 0), mSize(0, 0) {}
+	CollisionBox(const sf::Vector2i& center, const sf::Vector2f& size)
+		: mCenter(center), mSize(size) {}
 
-	inline Point GetCenter() const { return mCenter; }
-	inline uint16_t GetWidth() const { return mWidth; }
-	inline uint16_t GetHeight() const { return mHeight; }
+	void CreateCollisionBox(const sf::Vector2i& center, const sf::Vector2f& size);
+
+	inline sf::Vector2i GetCenter() const { return mCenter; }
+	inline float GetWidth() const { return mSize.x; }
+	inline float GetHeight() const { return mSize.y; }
 	bool CheckCollision(const CollisionBox& otherCollisionBox) const;
 private:
-	Point mCenter;
-	uint16_t mWidth, mHeight;
+	sf::Vector2i mCenter;
+	sf::Vector2f mSize;
 };
