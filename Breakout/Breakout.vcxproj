@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Actor.cpp" />
+    <ClCompile Include="Source\Ball.cpp" />
     <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\CollisionBox.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
@@ -265,6 +266,7 @@
     <ClInclude Include="Dep\SDL2\include\SDL_video.h" />
     <ClInclude Include="Dep\SDL2\include\SDL_vulkan.h" />
     <ClInclude Include="Source\Include\Actor.h" />
+    <ClInclude Include="Source\Include\Ball.h" />
     <ClInclude Include="Source\Include\Brick.h" />
     <ClInclude Include="Source\Include\Button.h" />
     <ClInclude Include="Source\Include\CollisionBox.h" />
@@ -290,6 +292,7 @@
     <None Include="Zadatak - Breakout.pdf" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resource\Textures\Ball.png" />
     <Image Include="Resource\Textures\Boards\Board_01.bmp" />
     <Image Include="Resource\Textures\Bricks\Hard.bmp" />
     <Image Include="Resource\Textures\Bricks\Impenetrable.bmp" />
@@ -297,9 +300,14 @@
     <Image Include="Resource\Textures\Bricks\Soft.bmp" />
     <Image Include="Resource\Textures\LoadingScreen.bmp" />
     <Image Include="Resource\Textures\Menu.bmp" />
+    <Image Include="Resource\Textures\Paddle.png" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\Levels\Level1.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resource\Fonts\Biolinum.ttf" />
+    <Font Include="Resource\Fonts\Helvetica.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
