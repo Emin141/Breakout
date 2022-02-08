@@ -8,6 +8,7 @@ Game::Game() {
 	mGameState = GameState::LOADING;
 	mMousePosition = sf::Mouse::getPosition();
 	mLmbWasCliked = false;
+	mPlayerScore = 0;
 
 	sf::ContextSettings ContextSettings;
 	ContextSettings.antialiasingLevel = 4;
@@ -23,7 +24,7 @@ Game::Game() {
 	mWindowWidth = mWindow.getSize().x;
 	mWindowHeight = mWindow.getSize().y;
 
-	mFont.loadFromFile("Resource/Fonts/Biolinum.ttf");
+	mFont.loadFromFile("Resource/Fonts/Helvetica.ttf");
 
 	// Loading screen until the game is loaded
 	mLoadingScreen.Load(mFont, 
@@ -38,7 +39,7 @@ Game::Game() {
 	// Game over screen
 	mGameOver.Load(mFont, sf::Vector2f(mWindowWidth, mWindowHeight));
 
-
+	sf::sleep(sf::seconds(1));
 	// Setup scenes and actors
 
 	mGameState = GameState::MENU;
@@ -64,6 +65,7 @@ void Game::Update() {
 
 	switch (mGameState) {
 
+	// If on menu
 	case GameState::MENU:
 		if (mLmbWasCliked) {
 			switch (mMenu.GetMenuChoice(mMousePosition)) {
@@ -86,9 +88,11 @@ void Game::Update() {
 		}
 		break;
 	
+	// If a level is loaded
 	case GameState::LEVEL:
 		break;
 	
+	// If the game over screen is displayed
 	case GameState::GAMEOVER:
 		if (mLmbWasCliked) {
 			switch (mGameOver.GetMenuChoice(mMousePosition))

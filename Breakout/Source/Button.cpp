@@ -4,7 +4,7 @@ void Button::Create(const sf::Font& font, const sf::Vector2f& position,
 	const std::string& label) {
 	mLabel.setFont(font);
 	mLabel.setString(label);
-	mLabel.setCharacterSize(120);
+	mLabel.setCharacterSize(100);
 	mLabel.setFillColor({ 140, 16, 16, 255 });
 	mLabel.setOrigin(
 		{

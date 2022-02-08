@@ -37,4 +37,7 @@ private:
 	LoadingScreen mLoadingScreen;
 	Menu mMenu;
 	GameOver mGameOver;
+
+	// Player score
+	unsigned int mPlayerScore;
 };

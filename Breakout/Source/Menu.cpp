@@ -3,7 +3,7 @@
 void Menu::Load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 	mTitle.setFont(font);
 	mTitle.setString("MAIN MENU");
-	mTitle.setCharacterSize(120);
+	mTitle.setCharacterSize(100);
 	mTitle.setFillColor(sf::Color(140, 16, 16, 255));
 	mTitle.setOrigin(
 		{
