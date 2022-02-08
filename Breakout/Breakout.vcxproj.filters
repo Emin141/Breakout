@@ -63,6 +63,9 @@
     <ClCompile Include="Source\Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dep\SDL2\include\begin_code.h">
@@ -371,6 +374,9 @@
     <ClInclude Include="Source\Include\Level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Include\Ball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dep\SDL2\lib\SDL2.lib" />
@@ -403,8 +409,18 @@
     <Image Include="Resource\Textures\Bricks\Soft.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\Textures\Ball.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Paddle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\Levels\Level1.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resource\Fonts\Biolinum.ttf" />
+    <Font Include="Resource\Fonts\Helvetica.ttf" />
   </ItemGroup>
 </Project>

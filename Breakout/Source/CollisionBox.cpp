@@ -3,8 +3,8 @@
 #include <cmath>
 
 bool CollisionBox::CheckCollision(const CollisionBox& otherCollisionBox) const {
-	float verticalDistance = fabs(mCenter.y - otherCollisionBox.GetCenter().y);
-	float horizontalDistance = fabs(mCenter.x - otherCollisionBox.GetCenter().x);
+	float verticalDistance = fabsf(mCenter.y - otherCollisionBox.GetCenter().y);
+	float horizontalDistance = fabsf(mCenter.x - otherCollisionBox.GetCenter().x);
 
 	if (verticalDistance <= (mSize.x + otherCollisionBox.GetWidth()) / 2	&&
 		horizontalDistance <= (mSize.y + otherCollisionBox.GetHeight()) / 2)

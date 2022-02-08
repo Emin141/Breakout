@@ -39,9 +39,6 @@ Game::Game() {
 	// Game over screen
 	mGameOver.Load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
 
-	// TEMPORARY
-	mPaddleTexture.loadFromFile("Resource/Levels/Paddle.png");
-
 	sf::sleep(sf::seconds(1));
 
 	mGameState = GameState::MENU;
@@ -64,6 +61,8 @@ void Game::Update() {
 	// Checks collision, HP, Score, Player lives, increases ball speed
 	// adding and removing of actors, menu choices etc.
 	mMousePosition = sf::Mouse::getPosition();
+	sf::Time deltaTime = mClock.restart();
+	float dt = deltaTime.asSeconds();
 
 	switch (mGameState) {
 
@@ -77,7 +76,7 @@ void Game::Update() {
 				break;
 			case MenuChoice::LEVEL_1:
 				mGameState = GameState::LEVEL;
-				mLevel.TempLoad(mPaddleTexture, { 500,500 });
+				mLevel.Load(sf::Vector2i(mWindowSize.x/2.0f,mWindowSize.y ));
 				// Load Level 1
 				break;
 			case MenuChoice::LEVEL_2:
@@ -96,7 +95,7 @@ void Game::Update() {
 	// If a level is loaded
 	case GameState::LEVEL:
 		mWindow.setMouseCursorVisible(false);
-		mLevel.SetPaddlePosition(mMousePosition, mWindow);
+		mLevel.Update(mMousePosition, mWindow, dt);
 		break;
 	
 	// If the game over screen is displayed

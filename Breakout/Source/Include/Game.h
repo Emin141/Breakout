@@ -39,9 +39,9 @@ private:
 	GameOver mGameOver;
 	Level mLevel;
 
-	// TEMPORARY
-	sf::Texture mPaddleTexture;
-
 	// Player score
 	unsigned int mPlayerScore;
+
+	// DeltaTime device
+	sf::Clock mClock;
 };
