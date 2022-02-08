@@ -57,6 +57,12 @@
     <ClCompile Include="Source\GameOver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Paddle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dep\SDL2\include\begin_code.h">
@@ -344,9 +350,6 @@
     <ClInclude Include="Source\Include\CollisionBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Include\Point.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Include\Brick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -360,6 +363,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Include\GameOver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Include\Paddle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Include\Level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,6 +7,7 @@
 #include "LoadingScreen.h"
 #include "Menu.h"
 #include "GameOver.h"
+#include "Level.h"
 
 class Game {
 public:
@@ -23,8 +24,7 @@ private:
 
 	// Window related stuff
 	sf::RenderWindow mWindow;
-	unsigned int mWindowWidth;
-	unsigned int mWindowHeight;
+	sf::Vector2u mWindowSize;
 
 	// Global font, used in all assets
 	sf::Font mFont;
@@ -37,6 +37,10 @@ private:
 	LoadingScreen mLoadingScreen;
 	Menu mMenu;
 	GameOver mGameOver;
+	Level mLevel;
+
+	// TEMPORARY
+	sf::Texture mPaddleTexture;
 
 	// Player score
 	unsigned int mPlayerScore;

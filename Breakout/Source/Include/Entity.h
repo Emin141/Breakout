@@ -11,8 +11,9 @@
 #include "Actor.h"
 #include "CollisionBox.h"
 
-class Entity : Actor {
+class Entity : public Actor {
 public:
+	Entity();
 	// Okay to have CollisionBox public because all of it's members are private
 	CollisionBox mCollisionBox;
 private:

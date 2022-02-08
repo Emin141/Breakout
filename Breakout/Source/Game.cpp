@@ -16,31 +16,33 @@ Game::Game() {
 	ContextSettings.minorVersion = 3;
 
 	mWindow.create(
-		sf::VideoMode(1920, 1080),
+		sf::VideoMode(1024, 720),
 		"Breakout",
 		sf::Style::Fullscreen,
 		ContextSettings
 	);
-	mWindowWidth = mWindow.getSize().x;
-	mWindowHeight = mWindow.getSize().y;
+	mWindowSize = mWindow.getSize();
+	mWindow.setFramerateLimit(60);
 
 	mFont.loadFromFile("Resource/Fonts/Helvetica.ttf");
 
 	// Loading screen until the game is loaded
 	mLoadingScreen.Load(mFont, 
-		{ mWindowWidth / 2.0f, mWindowHeight / 2.0f });
+		{ mWindowSize.x / 2.0f, mWindowSize.y / 2.0f });
 	mWindow.clear(sf::Color::Black);
 	mLoadingScreen.Draw(mWindow);
 	mWindow.display();
 
 	// Menu screen
-	mMenu.Load(mFont, sf::Vector2f(mWindowWidth, mWindowHeight));
+	mMenu.Load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
 
 	// Game over screen
-	mGameOver.Load(mFont, sf::Vector2f(mWindowWidth, mWindowHeight));
+	mGameOver.Load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
+
+	// TEMPORARY
+	mPaddleTexture.loadFromFile("Resource/Levels/Paddle.png");
 
 	sf::sleep(sf::seconds(1));
-	// Setup scenes and actors
 
 	mGameState = GameState::MENU;
 }
@@ -67,12 +69,15 @@ void Game::Update() {
 
 	// If on menu
 	case GameState::MENU:
+		mWindow.setMouseCursorVisible(true);
 		if (mLmbWasCliked) {
 			switch (mMenu.GetMenuChoice(mMousePosition)) {
 			case MenuChoice::EXIT:
 				mGameState = GameState::QUIT;
 				break;
 			case MenuChoice::LEVEL_1:
+				mGameState = GameState::LEVEL;
+				mLevel.TempLoad(mPaddleTexture, { 500,500 });
 				// Load Level 1
 				break;
 			case MenuChoice::LEVEL_2:
@@ -90,10 +95,13 @@ void Game::Update() {
 	
 	// If a level is loaded
 	case GameState::LEVEL:
+		mWindow.setMouseCursorVisible(false);
+		mLevel.SetPaddlePosition(mMousePosition, mWindow);
 		break;
 	
 	// If the game over screen is displayed
 	case GameState::GAMEOVER:
+		mWindow.setMouseCursorVisible(true);
 		if (mLmbWasCliked) {
 			switch (mGameOver.GetMenuChoice(mMousePosition))
 			{
@@ -107,9 +115,6 @@ void Game::Update() {
 				break;
 			}
 		}
-
-
-
 		break;
 	
 	default:
@@ -138,7 +143,7 @@ void Game::Draw() {
 		mMenu.Draw(mWindow);
 		break;
 	case GameState::LEVEL:
-		//mLevel.Draw(mWindowSurface);
+		mLevel.Draw(mWindow);
 		break;
 	case GameState::GAMEOVER:
 		mGameOver.Draw(mWindow);
