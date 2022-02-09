@@ -76,7 +76,7 @@ void Game::Update() {
 				break;
 			case MenuChoice::LEVEL_1:
 				mGameState = GameState::LEVEL;
-				mLevel.Load(sf::Vector2i(mWindowSize.x/2.0f,mWindowSize.y ));
+				mLevel.LoadFromXML("Resource/Levels/Level1.xml", mWindow);
 				// Load Level 1
 				break;
 			case MenuChoice::LEVEL_2:

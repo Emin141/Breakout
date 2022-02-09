@@ -1,23 +1,67 @@
 #include "Level.h"
 
 Level::Level() {
-
+    mRowCount = 0;
+    mColumnCount = 0;
+    mRowSpacing = 0;
+    mColumnSpacing = 0;
 }
 
-void Level::Load(const sf::Vector2i& position) {
+void Level::LoadFromXML(const std::string& filename, const sf::RenderWindow& window) {
+
+    // Paddle
 	mPaddleTexture.loadFromFile("Resource/Textures/Paddle.png");
 	mPaddle.Create(
 		mPaddleTexture,
-		sf::Vector2f(200, 25),
-		sf::Vector2f(position.x, position.y)
+		sf::Vector2f(200.0f, 25.0f),
+		sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y)
 	);
 
+    // Ball
 	mBallTexture.loadFromFile("Resource/Textures/Ball.png");
 	mBall.Create(
 		mBallTexture,
 		sf::Vector2f(32, 32),
-		sf::Vector2f(1000, 500)
+		sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f)
 	);
+
+    // Bricks
+    using namespace tinyxml2;
+    XMLDocument source;
+    source.LoadFile(filename.c_str());
+
+    XMLElement* pLevelElement = source.RootElement();
+    if (pLevelElement == NULL) {
+        std::cout << "Cannot read Level element at " << filename << std::endl;
+        std::cin.get();
+        exit(-1);
+    }
+
+    mRowCount = strtod(pLevelElement->Attribute("RowCount"), NULL);
+    mColumnCount = strtod(pLevelElement->Attribute("ColumnCount"), NULL);
+    mRowSpacing = strtod(pLevelElement->Attribute("RowSpacing"), NULL);
+    mColumnSpacing = strtod(pLevelElement->Attribute("ColumnSpacing"), NULL);
+
+    XMLElement* pBrickTypesElement = pLevelElement->FirstChildElement("BrickTypes");
+    if (pBrickTypesElement == NULL) {
+        std::cout << "Cannot read BrickTypes element at " << filename << std::endl;
+        std::cin.get();
+        exit(-1);
+    }
+
+    // TAKE GOOD CARE! Huge difference between "Type" and "Types"
+
+    // Brick data
+    XMLElement* pBrickTypeElement = pBrickTypesElement->FirstChildElement("BrickType");
+    unsigned int currentBrickType = 0;
+    while (currentBrickType < 4) {
+        mBrick[currentBrickType++].setAttributes(pBrickTypeElement);
+        pBrickTypeElement = pBrickTypeElement->NextSiblingElement("BrickType");
+    }
+
+    pLevelElement = pLevelElement->FirstChildElement("Bricks");
+    mBrickLayout = pLevelElement->GetText();
+    std::cout << mBrickLayout << "\n";
 }
 
 void Level::Draw(sf::RenderWindow& window) {

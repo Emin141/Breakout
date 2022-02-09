@@ -102,7 +102,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)Dep\SFML\lib\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-window.lib;sfml-audio.lib;sfml-system.lib;sfml-main.lib;sfml-graphics.lib</AdditionalDependencies>
+      <AdditionalDependencies>sfml-window.lib;sfml-audio.lib;sfml-system.lib;sfml-main.lib;sfml-graphics.lib;openal32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -121,7 +121,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)Dep\SFML\lib\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-window.lib;sfml-audio.lib;sfml-system.lib;sfml-main.lib;sfml-graphics.lib</AdditionalDependencies>
+      <AdditionalDependencies>sfml-window.lib;sfml-audio.lib;sfml-system.lib;sfml-main.lib;sfml-graphics.lib;openal32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -136,7 +136,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)Dep\SFML\lib\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-window.lib;sfml-audio.lib;sfml-system.lib;sfml-main.lib;sfml-graphics.lib</AdditionalDependencies>
+      <AdditionalDependencies>sfml-window.lib;sfml-audio.lib;sfml-system.lib;sfml-main.lib;sfml-graphics.lib;openal32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,12 +155,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)Dep\SFML\lib\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-window.lib;sfml-audio.lib;sfml-system.lib;sfml-main.lib;sfml-graphics.lib</AdditionalDependencies>
+      <AdditionalDependencies>sfml-window.lib;sfml-audio.lib;sfml-system.lib;sfml-main.lib;sfml-graphics.lib;openal32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Actor.cpp" />
     <ClCompile Include="Source\Ball.cpp" />
+    <ClCompile Include="Source\Brick.cpp" />
     <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Game.cpp" />
@@ -171,10 +172,7 @@
     <ClCompile Include="Source\Menu.cpp" />
     <ClCompile Include="Source\Paddle.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
-    <ClCompile Include="Source\tinystr.cpp" />
-    <ClCompile Include="Source\tinyxml.cpp" />
-    <ClCompile Include="Source\tinyxmlerror.cpp" />
-    <ClCompile Include="Source\tinyxmlparser.cpp" />
+    <ClCompile Include="Source\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dep\SDL2\include\begin_code.h" />
@@ -276,9 +274,8 @@
     <ClInclude Include="Source\Include\Menu.h" />
     <ClInclude Include="Source\Include\Paddle.h" />
     <ClInclude Include="Source\Include\Scene.h" />
-    <ClInclude Include="Source\Include\tinystr.h" />
-    <ClInclude Include="Source\Include\tinyxml.h" />
     <ClInclude Include="Source\Include\Level.h" />
+    <ClInclude Include="Source\Include\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dep\SDL2\lib\SDL2.lib" />
@@ -306,6 +303,15 @@
   <ItemGroup>
     <Font Include="Resource\Fonts\Biolinum.ttf" />
     <Font Include="Resource\Fonts\Helvetica.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\Sounds\Break_01.wav" />
+    <Media Include="Resource\Sounds\Break_02.wav" />
+    <Media Include="Resource\Sounds\Break_03.wav" />
+    <Media Include="Resource\Sounds\Hit_01.wav" />
+    <Media Include="Resource\Sounds\Hit_02.wav" />
+    <Media Include="Resource\Sounds\Hit_03.wav" />
+    <Media Include="Resource\Sounds\Hit_04.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
