@@ -77,13 +77,14 @@ void Game::Update() {
 			case MenuChoice::LEVEL_1:
 				mGameState = GameState::LEVEL;
 				mLevel.LoadFromXML("Resource/Levels/Level1.xml", mWindow);
-				// Load Level 1
 				break;
 			case MenuChoice::LEVEL_2:
-				// Load Level 2
+				mGameState = GameState::LEVEL;
+				mLevel.LoadFromXML("Resource/Levels/Level2.xml", mWindow);
 				break;
 			case MenuChoice::LEVEL_3:
-				// Load Level 3
+				mGameState = GameState::LEVEL;
+				mLevel.LoadFromXML("Resource/Levels/Level3.xml", mWindow);
 				break;
 			case MenuChoice::NONE:
 			default:

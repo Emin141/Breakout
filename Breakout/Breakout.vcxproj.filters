@@ -403,6 +403,8 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\Levels\Level1.xml" />
+    <Xml Include="Resource\Levels\Level2.xml" />
+    <Xml Include="Resource\Levels\Level3.xml" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resource\Fonts\Biolinum.ttf" />

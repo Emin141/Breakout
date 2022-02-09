@@ -1,11 +1,12 @@
 #include "Brick.h"
 
-void Brick::setAttributes(const tinyxml2::XMLElement* brickTypeElement) {
-    mIdentifier = const_cast<char*>(brickTypeElement->Attribute("Id"));
+void Brick::SetAttributes(const tinyxml2::XMLElement* brickTypeElement) {
+    mIdentifier = 0[const_cast<char*>(brickTypeElement->Attribute("Id"))];
     mTexture.loadFromFile("Resource/" + std::string(brickTypeElement->Attribute("Texture")));
-    std::cout << "Resource/" + std::string(brickTypeElement->Attribute("HitSound")) << "\n";
     mHitSoundBuffer.loadFromFile("Resource/" + std::string(brickTypeElement->Attribute("HitSound")));
-    if (mIdentifier[0] == 'I') {
+    
+    // Impenetrable bricks have different attributes
+    if (mIdentifier == 'I') {
         mHitPoints = -1; // will automatically cast to a huge number
         // mBreakSound will default
         mBreakScore = 0;
@@ -18,11 +19,22 @@ void Brick::setAttributes(const tinyxml2::XMLElement* brickTypeElement) {
 
     mHitSound.setBuffer(mHitSoundBuffer);
     mBreakSound.setBuffer(mBreakSoundBuffer);
+
+    mShape.setTexture(&mTexture);
 }
 
-void Brick::playHitSound() {
-   /* sf::Sound sound;
-    sound.setBuffer(mHitSound);
-    sound.play();*/
+void Brick::PlayHitSound() {
     mHitSound.play();
+}
+
+void Brick::PlayBreakSound() {
+    mBreakSound.play();
+}
+
+bool Brick::operator==(const Brick& otherBrick) {
+    return (mPosition == otherBrick.GetPosition());
+}
+
+bool Brick::operator!=(const Brick& otherBrick) {
+    return !(*this == otherBrick);
 }
