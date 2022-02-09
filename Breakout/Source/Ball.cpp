@@ -11,13 +11,6 @@ Ball::Ball() {
 }
 
 void Ball::UpdatePosition(const sf::RenderWindow& window, const float dt) {
-	
-	// Ball Collision with borders
-	if ((mShape.getPosition().x - mShape.getOrigin().x) < 0) mVelocity.x *= -1.0f;
-	if ((mShape.getPosition().y - mShape.getOrigin().y) < 0) mVelocity.y *= -1.0f;
-	if ((mShape.getPosition().x + mShape.getOrigin().x) > window.getSize().x) mVelocity.x *= -1.0f;
-	if ((mShape.getPosition().y + mShape.getOrigin().y) > window.getSize().y) mVelocity.y *= -1.0f;
-	
 	NormalizeVelocity();
 	mPosition += mVelocity*dt;
 	mShape.setPosition(mPosition);

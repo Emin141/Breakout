@@ -162,7 +162,6 @@
     <ClCompile Include="Source\Actor.cpp" />
     <ClCompile Include="Source\Ball.cpp" />
     <ClCompile Include="Source\Button.cpp" />
-    <ClCompile Include="Source\CollisionBox.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameOver.cpp" />
@@ -269,7 +268,6 @@
     <ClInclude Include="Source\Include\Ball.h" />
     <ClInclude Include="Source\Include\Brick.h" />
     <ClInclude Include="Source\Include\Button.h" />
-    <ClInclude Include="Source\Include\CollisionBox.h" />
     <ClInclude Include="Source\Include\Entity.h" />
     <ClInclude Include="Source\Include\Game.h" />
     <ClInclude Include="Source\Include\GameOver.h" />

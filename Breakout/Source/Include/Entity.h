@@ -1,6 +1,6 @@
 #pragma once
 
-// Entities are just actors with collision boxes
+// Entities are just actors with collision checking
 // However, new classes can be inherited from the entity class
 // All three are special: 
 // 
@@ -9,12 +9,17 @@
 // The paddle moves on mouse control
 
 #include "Actor.h"
-#include "CollisionBox.h"
 
 class Entity : public Actor {
 public:
 	Entity();
-	// Okay to have CollisionBox public because all of it's members are private
-	CollisionBox mCollisionBox;
+
+	bool CollidedWith(const Entity& otherEntity) const;
+
+	inline void SetPosition(const sf::Vector2f& position) { mPosition = position; }
+	inline void SetSize(const sf::Vector2f& size) { mSize = size; }
+	inline sf::Vector2f GetPosition() const { return mPosition; }
+	inline sf::Vector2f GetSize() const { return mSize; }
 private:
 };
+

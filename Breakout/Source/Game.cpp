@@ -39,7 +39,7 @@ Game::Game() {
 	// Game over screen
 	mGameOver.Load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
 
-	sf::sleep(sf::seconds(1));
+	//sf::sleep(sf::seconds(1));
 
 	mGameState = GameState::MENU;
 }
