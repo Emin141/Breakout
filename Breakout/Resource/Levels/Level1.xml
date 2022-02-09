@@ -31,7 +31,7 @@
         BreakSound="Sounds/Break_03.wav"
         BreakScore="100" />
     <!-- Impenetrable Brick -->
-    <BrickTypes
+    <BrickType
         Id="I"
         Texture="Textures/Bricks/Impenetrable.bmp"
         HitPoints="Infinite"
