@@ -8,19 +8,11 @@
 #include "Ball.h"
 #include "Brick.h"
 
-enum class BrickType {
-	SOFT = 0,
-	MEDIUM = 1,
-	HARD = 2,
-	IMPENETRABLE = 3,
-	SIZE = 4
-};
-
 class Level : public Scene {
 public:
 	Level();
 	void LoadFromXML(const std::string&, const sf::RenderWindow&);
-	//void ArrangeBricks();
+	void ArrangeBricks(const sf::RenderWindow&);
 	void Draw(sf::RenderWindow& window);
 	void Update(const sf::Vector2i& mousePosition, const sf::RenderWindow& window, const float dt);
 

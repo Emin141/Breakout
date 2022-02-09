@@ -16,8 +16,8 @@ public:
 
 	bool CollidedWith(const Entity& otherEntity) const;
 
-	inline void SetPosition(const sf::Vector2f& position) { mPosition = position; }
-	inline void SetSize(const sf::Vector2f& size) { mSize = size; }
+	inline void SetPosition(const sf::Vector2f& position) { mPosition = position; mShape.setPosition(mPosition); }
+	inline void SetSize(const sf::Vector2f& size) { mSize = size; mShape.setSize(mSize); }
 	inline sf::Vector2f GetPosition() const { return mPosition; }
 	inline sf::Vector2f GetSize() const { return mSize; }
 private:
