@@ -31,10 +31,10 @@ void Brick::PlayBreakSound() {
     mBreakSound.play();
 }
 
-bool Brick::operator==(const Brick& otherBrick) {
-    return (mPosition == otherBrick.GetPosition());
-}
-
-bool Brick::operator!=(const Brick& otherBrick) {
-    return !(*this == otherBrick);
-}
+//bool Brick::operator==(const Brick& otherBrick) {
+//    return (mPosition == otherBrick.GetPosition());
+//}
+//
+//bool Brick::operator!=(const Brick& otherBrick) {
+//    return !(*this == otherBrick);
+//}

@@ -10,11 +10,19 @@
 
 #include "Actor.h"
 
+enum class CollisionDirection {
+	HORIZONTAL,
+	VERTICAL
+};
+
 class Entity : public Actor {
 public:
 	Entity();
 
 	bool CollidedWith(const Entity& otherEntity) const;
+
+	bool operator==(const Entity&) const;
+	bool operator!=(const Entity&) const;
 
 	inline void SetPosition(const sf::Vector2f& position) { mPosition = position; mShape.setPosition(mPosition); }
 	inline void SetSize(const sf::Vector2f& size) { mSize = size; mShape.setSize(mSize); }

@@ -96,6 +96,7 @@ void Game::Update() {
 	// If a level is loaded
 	case GameState::LEVEL:
 		mWindow.setMouseCursorVisible(false);
+		// Level update call
 		mLevel.Update(mMousePosition, mWindow, dt);
 		break;
 	

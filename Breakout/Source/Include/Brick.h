@@ -14,8 +14,8 @@ public:
     void SetAttributes(const tinyxml2::XMLElement*);
     void PlayHitSound();
     void PlayBreakSound();
-    bool operator==(const Brick&);
-    bool operator!=(const Brick&);
+    // bool operator==(const Brick&);
+    // bool operator!=(const Brick&);
     inline bool IsDead() { return mHitPoints == 0 ? true : false; }
     inline unsigned int GetBreakScore() const{ return mBreakScore; }
     inline void DecreaseHitPoints() { mHitPoints--; }

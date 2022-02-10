@@ -18,9 +18,9 @@ Level::Level() {
 void Level::ArrangeBricks(const sf::RenderWindow& window) {
 	// Defining the size of a brick
 	sf::Vector2f brickSize(
-		(window.getSize().x - (mColumnCount + 3) * mColumnSpacing) / mColumnCount,
+		(window.getSize().x - (mColumnCount + 1) * mColumnSpacing) / mColumnCount,
 		// Golden ratio of the length phi = 1.618 approx
-		((window.getSize().x - (mColumnCount + 3) * mColumnSpacing) / mColumnCount) / 1.618f
+		((window.getSize().x - (mColumnCount + 1) * mColumnSpacing) / mColumnCount) / 1.618f
 	);
 
 	// Sets all brick sizes
@@ -34,6 +34,7 @@ void Level::ArrangeBricks(const sf::RenderWindow& window) {
 		mRowSpacing
 	);
 
+	// Parsing the positions
 	unsigned int columnCounter = 1;
 	for (size_t i = 0; i < mBrickLayout.size() ; i++) {
 		switch (mBrickLayout[i]) {
@@ -187,6 +188,13 @@ void Level::Update(const sf::Vector2i& mousePosition, const sf::RenderWindow& wi
 				mPaddle.GetPosition().y - mBall.GetSize().y - 1.0f
 			}
 		);
+	}
+
+	// Brick iterator
+	for (auto itBrick = mBrickList.begin(); itBrick != mBrickList.end(); ++itBrick) {
+		if (mBall.CollidedWith(*itBrick)) {
+			mBrickList.remove(*itBrick++);
+		}
 	}
 
 	mBall.UpdatePosition(window, dt);

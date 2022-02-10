@@ -42,3 +42,11 @@ bool Entity::CollidedWith(const Entity& otherEntity) const {
 	return (xCondition && yCondition);
 #endif
 }
+
+bool Entity::operator==(const Entity& otherEntity) const {
+	return mPosition == otherEntity.GetPosition();
+}
+
+bool Entity::operator!=(const Entity& otherEntity) const {
+	return !(*this == otherEntity);
+}
