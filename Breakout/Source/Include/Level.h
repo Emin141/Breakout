@@ -14,8 +14,8 @@ public:
 	void LoadFromXML(const std::string&, const sf::RenderWindow&);
 	void ArrangeBricks(const sf::RenderWindow&);
 	void Draw(sf::RenderWindow& window);
-	void Update(const sf::Vector2i& mousePosition, const sf::RenderWindow& window, const float dt);
-
+	void Update(const sf::Vector2i&, const sf::RenderWindow&, const float, bool&);
+	inline unsigned int GetPlayerScore() const { return mPlayerScore; }
 private:
 	// Paddle info
 	sf::Texture mPaddleTexture;
@@ -35,5 +35,8 @@ private:
 	std::string mBrickLayout;
 
 	std::list<Brick> mBrickList;
+
+	// Player score tracker
+	unsigned int mPlayerScore;
 };
 

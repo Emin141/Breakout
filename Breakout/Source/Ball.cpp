@@ -4,14 +4,13 @@
 #include <cmath>
 
 Ball::Ball() {
-	srand(static_cast<unsigned int>(time(NULL)));
-	mVelocity.x = static_cast<float>((rand() % 100));
-	mVelocity.y = static_cast<float>((rand() % 100));
+	mVelocity = { 0.0f, 1000.0f };
 	NormalizeVelocity();
+	mPreviousPosition = { 0.0f, 0.0f };
 }
 
 void Ball::UpdatePosition(const sf::RenderWindow& window, const float dt) {
-	NormalizeVelocity();
+	mPreviousPosition = mPosition;
 	mPosition += mVelocity*dt;
 	mShape.setPosition(mPosition);
 }

@@ -8,7 +8,6 @@ Game::Game() {
 	mGameState = GameState::LOADING;
 	mMousePosition = sf::Mouse::getPosition();
 	mLmbWasCliked = false;
-	mPlayerScore = 0;
 
 	sf::ContextSettings ContextSettings;
 	ContextSettings.antialiasingLevel = 4;
@@ -42,6 +41,8 @@ Game::Game() {
 	//sf::sleep(sf::seconds(1));
 
 	mGameState = GameState::MENU;
+
+	mGameIsOver = false;
 }
 
 void Game::Run() {
@@ -61,8 +62,7 @@ void Game::Update() {
 	// Checks collision, HP, Score, Player lives, increases ball speed
 	// adding and removing of actors, menu choices etc.
 	mMousePosition = sf::Mouse::getPosition();
-	sf::Time deltaTime = mClock.restart();
-	float dt = deltaTime.asSeconds();
+	float deltaTime = mClock.restart().asSeconds();
 
 	switch (mGameState) {
 
@@ -90,14 +90,19 @@ void Game::Update() {
 			default:
 				break;
 			}
+			mLmbWasCliked = false;
 		}
 		break;
 	
 	// If a level is loaded
 	case GameState::LEVEL:
 		mWindow.setMouseCursorVisible(false);
-		// Level update call
-		mLevel.Update(mMousePosition, mWindow, dt);
+		mLevel.Update(mMousePosition, mWindow, deltaTime, mGameIsOver);
+		if (mGameIsOver) {
+			mGameState = GameState::GAMEOVER;
+			mGameIsOver = false;
+			
+		}
 		break;
 	
 	// If the game over screen is displayed
@@ -147,6 +152,7 @@ void Game::Draw() {
 		mLevel.Draw(mWindow);
 		break;
 	case GameState::GAMEOVER:
+		mGameOver.UpdatePlayerScore(mLevel.GetPlayerScore());
 		mGameOver.Draw(mWindow);
 		break;
 	default:
@@ -171,25 +177,16 @@ void Game::Poll() {
 			case sf::Keyboard::Q:
 				mGameState = GameState::QUIT;
 				break;
-			case sf::Keyboard::D:
-				mGameState = GameState::GAMEOVER;
-				break;
-			case sf::Keyboard::A:
-				mGameState = GameState::MENU;
-				break;
 			default:
 				break;
 			}
 			break;
+		case sf::Event::MouseButtonPressed:
+			if (mEvent.mouseButton.button == sf::Mouse::Left)
+				mLmbWasCliked = true;
+			break;
 		default:
 			break;
 		}
-	}
-
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		mLmbWasCliked = true;
-	}
-	else {
-		mLmbWasCliked = false;
 	}
 }

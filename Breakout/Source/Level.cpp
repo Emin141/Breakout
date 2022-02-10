@@ -13,6 +13,7 @@ Level::Level() {
     mColumnCount = 0;
     mRowSpacing = 0;
     mColumnSpacing = 0;
+	mPlayerScore = 0;
 }
 
 void Level::ArrangeBricks(const sf::RenderWindow& window) {
@@ -146,7 +147,6 @@ void Level::LoadFromXML(const std::string& filename, const sf::RenderWindow& win
     unsigned int currentBrickType = 0;
     while (currentBrickType < 4) {
         mBrick[currentBrickType++].SetAttributes(pBrickTypeElement);
-		// DOES THE BRICK NEED TO BE CREATED?
         pBrickTypeElement = pBrickTypeElement->NextSiblingElement("BrickType");
     }
 
@@ -165,35 +165,73 @@ void Level::Draw(sf::RenderWindow& window) {
 	}
 }
 
-void Level::Update(const sf::Vector2i& mousePosition, const sf::RenderWindow& window, const float dt) {
+void Level::Update(const sf::Vector2i& mousePosition, const sf::RenderWindow& window, const float dt, bool& gameIsOver) {
 	mPaddle.SetPosition(mousePosition, window);
 
 	// Ball Collision with borders
-	if (mBall.GetPosition().x < 0) mBall.XInvertVelocity();
-	if (mBall.GetPosition().y < 0) mBall.YInvertVelocity();
-	if ((mBall.GetPosition().x + mBall.GetSize().x) > window.getSize().x) mBall.XInvertVelocity();
-	
-	// Loss condition:
-	if ((mBall.GetPosition().y + mBall.GetSize().y) > window.getSize().y) mBall.YInvertVelocity();
-
-
-	if (mBall.CollidedWith(mPaddle)) 
+	if (mBall.GetPosition().x < 0)
+	{
+		mBall.XInvertVelocity();
+		mBall.RewindPosition();
+	}
+	if (mBall.GetPosition().y < 0)
 	{
 		mBall.YInvertVelocity();
+		mBall.RewindPosition();
+	}
+	if ((mBall.GetPosition().x + mBall.GetSize().x) > window.getSize().x)
+	{
+		mBall.XInvertVelocity();
+		mBall.RewindPosition();
+	}
+	
+	// Loss condition:
+	if ((mBall.GetPosition().y + mBall.GetSize().y) > window.getSize().y) {
+		gameIsOver = true;
+		return;
+	}
 
-		// Kicks the ball out of the collision box
-		mBall.SetPosition(
-			{
-				mBall.GetPosition().x, 
-				mPaddle.GetPosition().y - mBall.GetSize().y - 1.0f
-			}
-		);
+	CollisionSide collisionSide;
+	if (mBall.CollidedWith(mPaddle, collisionSide))
+	{
+		mBall.YInvertVelocity();
+		//mBall.Accelerate(5000, dt);
+		mBall.RewindPosition();
 	}
 
 	// Brick iterator
+	// Needs to be implemented this way instead of auto brick : mBrickList because objects need to be removed
 	for (auto itBrick = mBrickList.begin(); itBrick != mBrickList.end(); ++itBrick) {
-		if (mBall.CollidedWith(*itBrick)) {
-			mBrickList.remove(*itBrick++);
+		if (mBall.CollidedWith(*itBrick, collisionSide)) { // collisionSide is an "out" parameter
+			switch (collisionSide) {
+			case CollisionSide::LEFT:
+				mBall.XInvertVelocity();
+				mBall.RewindPosition();
+				break;
+			case CollisionSide::RIGHT:
+				mBall.XInvertVelocity();
+				mBall.RewindPosition();
+				break;
+			case CollisionSide::TOP:
+				mBall.YInvertVelocity();
+				mBall.RewindPosition();
+				break;
+			case CollisionSide::BOTTOM:
+				mBall.YInvertVelocity();
+				mBall.RewindPosition();
+				break;
+			default:
+				break;
+			}
+			itBrick->DecreaseHitPoints();
+			if (itBrick->IsDead()) {
+				itBrick->PlayBreakSound();
+				mPlayerScore += itBrick->GetBreakScore(); // Destroys it too fast
+				mBrickList.remove(*itBrick++);
+			}
+			else {
+				itBrick->PlayHitSound();
+			}
 		}
 	}
 

@@ -39,8 +39,8 @@ private:
 	GameOver mGameOver;
 	Level mLevel;
 
-	// Player score
-	unsigned int mPlayerScore;
+	// GameOver flag
+	bool mGameIsOver;
 
 	// DeltaTime device
 	sf::Clock mClock;

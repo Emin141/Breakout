@@ -1,30 +1,9 @@
 #include "Entity.h"
 
-Entity::Entity(){}
-
-bool Entity::CollidedWith(const Entity& otherEntity) const {
+bool Entity::CollidedWith(const Entity& otherEntity, CollisionSide& collisionSide) const{
 	// Axis aligned bounding boxes algorithm
 	// aka, AABB
-
-
-#define COLLISION_V 2
-#if COLLISION_V == 1
-	if (
-		// X Axis
-		(
-			mPosition.x > otherEntity.GetPosition().x &&
-			((mPosition.x + mSize.x) < (otherEntity.GetPosition().x + otherEntity.GetSize().x))
-			)
-		&&
-		// Y Axis
-		(
-			(mPosition.y + mSize.y ) > otherEntity.GetPosition().y &&
-			((mPosition.y +mSize.y ) < (otherEntity.GetPosition().y + otherEntity.GetSize().y))
-			)
-		) 
-		return true;
-#elif COLLISION_V == 2
-
+	
 	bool xCondition;
 	xCondition = (
 		!((mPosition.x + mSize.x) < otherEntity.GetPosition().x))
@@ -39,8 +18,24 @@ bool Entity::CollidedWith(const Entity& otherEntity) const {
 		!(mPosition.y > (otherEntity.GetPosition().y + otherEntity.GetSize().y)
 			);
 
-	return (xCondition && yCondition);
-#endif
+	bool collided = xCondition && yCondition;
+
+	if (collided) {
+		if (mPreviousPosition.x + mSize.x < otherEntity.GetPosition().x &&
+			mPosition.x + mSize.x >= otherEntity.GetPosition().x)
+			collisionSide = CollisionSide::LEFT;
+		if (mPreviousPosition.x >= otherEntity.GetPosition().x+otherEntity.GetSize().x &&
+			mPosition.x < otherEntity.GetPosition().x +otherEntity.GetSize().x)
+			collisionSide = CollisionSide::RIGHT;
+		if (mPreviousPosition.y + mSize.y < otherEntity.GetPosition().y &&
+			mPosition.y + mSize.y >= otherEntity.GetPosition().y)
+			collisionSide = CollisionSide::TOP;
+		if (mPreviousPosition.y >= otherEntity.GetPosition().y + otherEntity.GetSize().y &&
+			mPosition.y < otherEntity.GetPosition().y + otherEntity.GetSize().y)
+			collisionSide = CollisionSide::BOTTOM;
+	}
+
+	return collided;
 }
 
 bool Entity::operator==(const Entity& otherEntity) const {

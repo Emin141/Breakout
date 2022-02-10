@@ -21,7 +21,7 @@
         HitPoints="2"
         HitSound="Sounds/Hit_02.wav"
         BreakSound="Sounds/Break_02.wav"
-        BreakScore="150" />
+        BreakScore="100" />
     <!-- Hard Brick -->
     <BrickType
         Id="H"
@@ -29,7 +29,7 @@
         HitPoints="3"
         HitSound="Sounds/Hit_03.wav"
         BreakSound="Sounds/Break_03.wav"
-        BreakScore="100" />
+        BreakScore="150" />
     <!-- Impenetrable Brick -->
     <BrickType
         Id="I"
