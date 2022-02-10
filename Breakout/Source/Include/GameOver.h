@@ -17,12 +17,14 @@ public:
 
 	void Draw(sf::RenderWindow& window);
 
-	void UpdatePlayerScore(const unsigned int playerScore);
+	inline void UpdatePlayerScore(const unsigned int playerScore) { mPlayerScore = playerScore; }
 
 	GameOverChoice GetMenuChoice(const sf::Vector2i& mousePosition) const;
 private:
 	sf::Text mTitle;
 	sf::Text mScoreDisplay;
 	std::array<Button, 2> mButton;
+
+	unsigned int mPlayerScore;
 };
 

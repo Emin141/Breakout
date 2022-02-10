@@ -16,6 +16,8 @@ public:
 		mVelocity.x += acceleration * dt;
 		mVelocity.y += acceleration * dt;
 	}
+	inline void RewindPosition() { mPosition = mPreviousPosition; mShape.setPosition(mPosition); }
 private:
 	sf::Vector2f mVelocity;
+	
 };

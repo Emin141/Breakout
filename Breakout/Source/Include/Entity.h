@@ -10,24 +10,29 @@
 
 #include "Actor.h"
 
-enum class CollisionDirection {
-	HORIZONTAL,
-	VERTICAL
+enum class CollisionSide {
+	LEFT,
+	RIGHT,
+	TOP,
+	BOTTOM,
+	NONE
 };
 
 class Entity : public Actor {
 public:
-	Entity();
+	Entity() : mPreviousPosition({0.0f, 0.0f}) {}
 
-	bool CollidedWith(const Entity& otherEntity) const;
+	bool CollidedWith(const Entity&, CollisionSide&) const;
 
 	bool operator==(const Entity&) const;
 	bool operator!=(const Entity&) const;
 
-	inline void SetPosition(const sf::Vector2f& position) { mPosition = position; mShape.setPosition(mPosition); }
+	inline void SetPosition(const sf::Vector2f& position) { mPreviousPosition = mPosition; mPosition = position; mShape.setPosition(mPosition); }
 	inline void SetSize(const sf::Vector2f& size) { mSize = size; mShape.setSize(mSize); }
 	inline sf::Vector2f GetPosition() const { return mPosition; }
 	inline sf::Vector2f GetSize() const { return mSize; }
-private:
+	inline sf::Vector2f GetPreviousPosition() const { return mPreviousPosition; }
+protected:
+	sf::Vector2f mPreviousPosition;
 };
 

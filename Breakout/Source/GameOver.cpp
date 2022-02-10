@@ -1,4 +1,5 @@
 #include "GameOver.h"
+#include <iostream>
 
 void GameOver::Load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 	// Title options
@@ -21,7 +22,7 @@ void GameOver::Load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 
 	// Score options
 	mScoreDisplay.setFont(font);
-	mScoreDisplay.setString("SCORE: 0");
+	mScoreDisplay.setString("SCORE: " + std::to_string(mPlayerScore));
 	mScoreDisplay.setCharacterSize(100);
 	mScoreDisplay.setFillColor(sf::Color(0xFF, 0xFF, 0xFF, 0xFF));
 	mScoreDisplay.setOrigin(
@@ -53,6 +54,7 @@ void GameOver::Load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 
 void GameOver::Draw(sf::RenderWindow& window) {
 	window.draw(mTitle);
+	mScoreDisplay.setString("SCORE: " + std::to_string(mPlayerScore));
 	window.draw(mScoreDisplay);
 	for (auto& button : mButton) button.Draw(window);
 }
@@ -64,8 +66,4 @@ GameOverChoice GameOver::GetMenuChoice(const sf::Vector2i& mousePosition) const 
 	}
 	// if none pass
 	return GameOverChoice::NONE;
-}
-
-void GameOver::UpdatePlayerScore(const unsigned int playerScore) {
-	mScoreDisplay.setString("SCORE: " + playerScore); // Implicit conversion
 }
