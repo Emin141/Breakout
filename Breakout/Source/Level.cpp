@@ -20,8 +20,8 @@ void Level::ArrangeBricks(const sf::RenderWindow& window) {
 	// Defining the size of a brick
 	sf::Vector2f brickSize(
 		(window.getSize().x - (mColumnCount + 1) * mColumnSpacing) / mColumnCount,
-		// Golden ratio of the length phi = 1.618 approx
-		((window.getSize().x - (mColumnCount + 1) * mColumnSpacing) / mColumnCount) / 1.618f
+		// Same size in order to be square 
+		(window.getSize().x - (mColumnCount + 1) * mRowSpacing) / mColumnCount
 	);
 
 	// Sets all brick sizes
