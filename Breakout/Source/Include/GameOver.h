@@ -13,6 +13,8 @@ enum class GameOverChoice {
 
 class GameOver : public Scene {
 public:
+	GameOver() : mPlayerScore(0) {}
+
 	void Load(const sf::Font& font, const sf::Vector2f windowDimensions);
 
 	void Draw(sf::RenderWindow& window);

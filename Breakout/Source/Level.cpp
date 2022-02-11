@@ -115,6 +115,7 @@ void Level::LoadFromXML(const std::string& filename, const sf::RenderWindow& win
 		sf::Vector2f(32, 32),
 		sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f)
 	);
+	mBall.ResetVelocity();
 
     // Bricks
     using namespace tinyxml2;
@@ -194,8 +195,7 @@ void Level::Update(const sf::Vector2i& mousePosition, const sf::RenderWindow& wi
 	CollisionSide collisionSide;
 	if (mBall.CollidedWith(mPaddle, collisionSide))
 	{
-		mBall.YInvertVelocity();
-		//mBall.Accelerate(5000, dt);
+		mBall.Redirect(mPaddle.GetCenter().x, mPaddle.GetSize().x);
 		mBall.RewindPosition();
 	}
 

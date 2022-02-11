@@ -32,6 +32,12 @@ public:
 	inline sf::Vector2f GetPosition() const { return mPosition; }
 	inline sf::Vector2f GetSize() const { return mSize; }
 	inline sf::Vector2f GetPreviousPosition() const { return mPreviousPosition; }
+	inline sf::Vector2f GetCenter() const {
+		return sf::Vector2f(
+			(mPosition.x + mSize.x)/2.0f,
+			(mPosition.y + mSize.y)/2.0f
+		);
+	}
 protected:
 	sf::Vector2f mPreviousPosition;
 };

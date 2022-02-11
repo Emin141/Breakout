@@ -15,7 +15,7 @@ Game::Game() {
 	ContextSettings.minorVersion = 3;
 
 	mWindow.create(
-		sf::VideoMode(1024, 720),
+		sf::VideoMode(),
 		"Breakout",
 		sf::Style::Fullscreen,
 		ContextSettings
@@ -113,6 +113,7 @@ void Game::Update() {
 			{
 			case GameOverChoice::BACK_TO_MENU:
 				mGameState = GameState::MENU;
+				mLmbWasCliked = false;
 				break;
 			case GameOverChoice::EXIT:
 				mGameState = GameState::QUIT;

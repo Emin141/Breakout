@@ -371,6 +371,7 @@
   <ItemGroup>
     <None Include="README.md" />
     <None Include="Zadatak - Breakout.pdf" />
+    <None Include="TODO.md" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Textures\LoadingScreen.bmp">
