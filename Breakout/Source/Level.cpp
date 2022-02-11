@@ -1,13 +1,5 @@
 #include "Level.h"
 
-enum BrickType { // NOT a class enum
-	SOFT = 0,
-	MEDIUM = 1,
-	HARD = 2,
-	IMPENETRABLE = 3,
-	SIZE = 4
-};
-
 Level::Level() {
     mRowCount = 0;
     mColumnCount = 0;
@@ -17,6 +9,9 @@ Level::Level() {
 }
 
 void Level::ArrangeBricks(const sf::RenderWindow& window) {
+	// Clears the brick list first
+	mBrickList.clear();
+
 	// Defining the size of a brick
 	sf::Vector2f brickSize(
 		(window.getSize().x - (mColumnCount + 1) * mColumnSpacing) / mColumnCount,
@@ -147,14 +142,22 @@ void Level::LoadFromXML(const std::string& filename, const sf::RenderWindow& win
     XMLElement* pBrickTypeElement = pBrickTypesElement->FirstChildElement("BrickType");
     unsigned int currentBrickType = 0;
     while (currentBrickType < 4) {
-        mBrick[currentBrickType++].SetAttributes(pBrickTypeElement);
+        mBrick[currentBrickType].SetAttributes(pBrickTypeElement);
+		mHitSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("HitSound")));
+		mHitSound[currentBrickType].setBuffer(mHitSoundBuffer[currentBrickType]);
+		if (currentBrickType < 3) {
+			mBreakSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("BreakSound")));
+			mBreakSound[currentBrickType].setBuffer(mBreakSoundBuffer[currentBrickType]);
+		}
+		currentBrickType++;
         pBrickTypeElement = pBrickTypeElement->NextSiblingElement("BrickType");
     }
 
     pLevelElement = pLevelElement->FirstChildElement("Bricks");
     mBrickLayout = pLevelElement->GetText();
 
-	// Important call
+	mPlayerScore = 0; // Reset player score
+
 	ArrangeBricks(window);
 }
 
@@ -225,12 +228,12 @@ void Level::Update(const sf::Vector2i& mousePosition, const sf::RenderWindow& wi
 			}
 			itBrick->DecreaseHitPoints();
 			if (itBrick->IsDead()) {
-				itBrick->PlayBreakSound();
+				mBreakSound[itBrick->GetBrickType()].play();
 				mPlayerScore += itBrick->GetBreakScore(); // Destroys it too fast
 				mBrickList.remove(*itBrick++);
 			}
 			else {
-				itBrick->PlayHitSound();
+				mHitSound[itBrick->GetBrickType()].play();
 			}
 		}
 	}
