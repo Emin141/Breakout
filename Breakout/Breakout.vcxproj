@@ -287,6 +287,7 @@
     <Library Include="Dep\SDL2\lib\SDL2test.lib" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="geogebra-export.ggb" />
     <None Include="README.md" />
     <None Include="TODO.md" />
     <None Include="Zadatak - Breakout.pdf" />

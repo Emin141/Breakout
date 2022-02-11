@@ -34,10 +34,10 @@ private:
 	bool mLmbWasCliked;
 
 	// Scenes, all inherited from Scene
-	LoadingScreen mLoadingScreen;
-	Menu mMenu;
-	GameOver mGameOver;
-	Level mLevel;
+	LoadingScreen* mLoadingScreen;
+	Menu* mMenu;
+	GameOver* mGameOver;
+	Level* mLevel;
 
 	// GameOver flag
 	bool mGameIsOver;

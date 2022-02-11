@@ -3,7 +3,7 @@
 #include "Scene.h"
 #include <SFML/Graphics.hpp>
 
-class LoadingScreen : Scene {
+class LoadingScreen : public Scene {
 public:
 	LoadingScreen() 
 		: mText() {}

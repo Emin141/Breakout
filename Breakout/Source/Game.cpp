@@ -26,21 +26,24 @@ Game::Game() {
 	mFont.loadFromFile("Resource/Fonts/Helvetica.ttf");
 
 	// Loading screen until the game is loaded
-	mLoadingScreen.Load(mFont, 
+	mLoadingScreen = new LoadingScreen();
+	mLoadingScreen->Load(mFont, 
 		{ mWindowSize.x / 2.0f, mWindowSize.y / 2.0f });
 	mWindow.clear(sf::Color::Black);
-	mLoadingScreen.Draw(mWindow);
+	mLoadingScreen->Draw(mWindow);
 	mWindow.display();
 
 	// Menu screen
-	mMenu.Load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
+	mMenu = new Menu();
+	mMenu->Load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
 
 	// Game over screen
-	mGameOver.Load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
-
-	//sf::sleep(sf::seconds(1));
+	mGameOver = new GameOver();
+	mGameOver->Load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
 
 	mGameState = GameState::MENU;
+
+	mLevel = new Level();
 
 	mGameIsOver = false;
 }
@@ -55,6 +58,10 @@ void Game::Run() {
 
 void Game::Quit() {
 	mWindow.close();
+	delete mLoadingScreen;
+	delete mMenu;
+	delete mGameOver;
+	delete mLevel;
 	// Everything else is RAII managed to deallocate
 }
 
@@ -70,21 +77,21 @@ void Game::Update() {
 	case GameState::MENU:
 		mWindow.setMouseCursorVisible(true);
 		if (mLmbWasCliked) {
-			switch (mMenu.GetMenuChoice(mMousePosition)) {
+			switch (mMenu->GetMenuChoice(mMousePosition)) {
 			case MenuChoice::EXIT:
 				mGameState = GameState::QUIT;
 				break;
 			case MenuChoice::LEVEL_1:
 				mGameState = GameState::LEVEL;
-				mLevel.LoadFromXML("Resource/Levels/Level1.xml", mWindow);
+				mLevel->LoadFromXML("Resource/Levels/Level1.xml", mWindow);
 				break;
 			case MenuChoice::LEVEL_2:
 				mGameState = GameState::LEVEL;
-				mLevel.LoadFromXML("Resource/Levels/Level2.xml", mWindow);
+				mLevel->LoadFromXML("Resource/Levels/Level2.xml", mWindow);
 				break;
 			case MenuChoice::LEVEL_3:
 				mGameState = GameState::LEVEL;
-				mLevel.LoadFromXML("Resource/Levels/Level3.xml", mWindow);
+				mLevel->LoadFromXML("Resource/Levels/Level3.xml", mWindow);
 				break;
 			case MenuChoice::NONE:
 			default:
@@ -97,7 +104,7 @@ void Game::Update() {
 	// If a level is loaded
 	case GameState::LEVEL:
 		mWindow.setMouseCursorVisible(false);
-		mLevel.Update(mMousePosition, mWindow, deltaTime, mGameIsOver);
+		mLevel->Update(mMousePosition, mWindow, deltaTime, mGameIsOver);
 		if (mGameIsOver) {
 			mGameState = GameState::GAMEOVER;
 			mGameIsOver = false;
@@ -109,7 +116,7 @@ void Game::Update() {
 	case GameState::GAMEOVER:
 		mWindow.setMouseCursorVisible(true);
 		if (mLmbWasCliked) {
-			switch (mGameOver.GetMenuChoice(mMousePosition))
+			switch (mGameOver->GetMenuChoice(mMousePosition))
 			{
 			case GameOverChoice::BACK_TO_MENU:
 				mGameState = GameState::MENU;
@@ -122,6 +129,7 @@ void Game::Update() {
 				break;
 			}
 		}
+		//delete mLevel;
 		break;
 	
 	default:
@@ -144,17 +152,17 @@ void Game::Draw() {
 	// (even less resources used), this is completely fine. 
 	switch (mGameState) {
 	case GameState::LOADING:
-		mLoadingScreen.Draw(mWindow);
+		mLoadingScreen->Draw(mWindow);
 		break;
 	case GameState::MENU:
-		mMenu.Draw(mWindow);
+		mMenu->Draw(mWindow);
 		break;
 	case GameState::LEVEL:
-		mLevel.Draw(mWindow);
+		mLevel->Draw(mWindow);
 		break;
 	case GameState::GAMEOVER:
-		mGameOver.UpdatePlayerScore(mLevel.GetPlayerScore());
-		mGameOver.Draw(mWindow);
+		mGameOver->UpdatePlayerScore(mLevel->GetPlayerScore());
+		mGameOver->Draw(mWindow);
 		break;
 	default:
 		break;

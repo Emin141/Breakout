@@ -94,7 +94,7 @@ void Ball::Redirect(const float paddleCenterX, const float paddleSizeX) {
 	distance = 4 * distance / paddleSizeX + 1; 
 
 	if (magnitude < 1500.0f) {
-		magnitude *= 1.1;
+		magnitude *= 1.1f;
 	}
 
 	mVelocity.x = sin(distance * (pi / 3)) * magnitude;

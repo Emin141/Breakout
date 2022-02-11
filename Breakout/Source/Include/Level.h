@@ -30,8 +30,13 @@ private:
 	unsigned int mColumnCount;
 	unsigned int mRowSpacing;
 	unsigned int mColumnSpacing;
-	sf::Texture mBackgoundTexture;
+	sf::Texture mBackgoundTexture; // Didn't load this oops
 	std::array<Brick, 4> mBrick;
+	std::array<sf::Texture, 4> mBrickTexture;
+	std::array<sf::SoundBuffer, 4> mHitSoundBuffer;
+	std::array<sf::SoundBuffer, 3> mBreakSoundBuffer;
+	std::array<sf::Sound, 4> mHitSound;
+	std::array<sf::Sound, 3> mBreakSound;
 	std::string mBrickLayout;
 
 	std::list<Brick> mBrickList;
