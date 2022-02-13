@@ -9,6 +9,12 @@ Ball::Ball() {
 	mPreviousPosition = { 0.0f, 0.0f };
 }
 
+void Ball::SetTexture(const sf::Texture texture) {
+	// Not a reference because the texture object needs to live while the ball lives
+	mTexture = texture;
+	mShape.setTexture(&mTexture);
+}
+
 void Ball::UpdatePosition(const sf::RenderWindow& window, const float dt) {
 	mPreviousPosition = mPosition;
 	mPosition += mVelocity*dt;

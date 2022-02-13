@@ -6,6 +6,7 @@ class Ball : public Entity {
 public:
 	Ball();
 	
+	void SetTexture(const sf::Texture texture);
 	void UpdatePosition(const sf::RenderWindow& window, const float dt);
 	void NormalizeVelocity();
 	void ResetVelocity();
@@ -15,5 +16,5 @@ public:
 	inline void RewindPosition() { mPosition = mPreviousPosition; mShape.setPosition(mPosition); }
 private:
 	sf::Vector2f mVelocity;
-	
+	sf::Texture mTexture;
 };

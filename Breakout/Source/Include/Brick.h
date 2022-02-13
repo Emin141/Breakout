@@ -14,19 +14,17 @@ enum BrickType { // NOT a class enum
 
 class Brick : public Entity {
 public:
-    Brick() : mIdentifier('\0'), mHitPoints(0), mBreakScore(0) {}
+    Brick() : 
+        mIdentifier('\0'), mHitPoints(0) {}
+
     void SetAttributes(const tinyxml2::XMLElement*);
     BrickType GetBrickType() const;
+    inline void SetTexture(const sf::Texture& texturePtr) { mShape.setTexture(&texturePtr); }
     inline bool IsDead() { return mHitPoints == 0 ? true : false; }
-    inline unsigned int GetBreakScore() const{ return mBreakScore; }
     inline void DecreaseHitPoints() { mHitPoints--; }
-
-    // QUESTIONABLE CHOICE
-    inline sf::Texture GetTexture() const { return mTexture; }
 
 private:
     char mIdentifier;
     unsigned int mHitPoints;
-    unsigned int mBreakScore;
 };
 
