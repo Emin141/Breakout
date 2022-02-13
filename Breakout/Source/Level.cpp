@@ -6,6 +6,8 @@ Level::Level() {
     mRowSpacing = 0;
     mColumnSpacing = 0;
 	mPlayerScore = 0;
+
+	mBrickBreakScore.fill(0);
 }
 
 void Level::ArrangeBricks(const sf::RenderWindow& window) {
@@ -91,6 +93,24 @@ void Level::ArrangeBricks(const sf::RenderWindow& window) {
 			break;
 		}
 	}
+
+	// Setting textures
+	for (auto& brick : mBrickList) {
+		switch (brick.GetBrickType()) {
+		case SOFT:
+			brick.SetTexture(mBrickTexture[SOFT]);
+			break;
+		case MEDIUM:
+			brick.SetTexture(mBrickTexture[MEDIUM]);
+			break;
+		case HARD:
+			brick.SetTexture(mBrickTexture[HARD]);
+			break;
+		case IMPENETRABLE:
+			brick.SetTexture(mBrickTexture[IMPENETRABLE]);
+			break;
+		}
+	}
 }
 
 void Level::LoadFromXML(const std::string& filename, const sf::RenderWindow& window) {
@@ -98,18 +118,18 @@ void Level::LoadFromXML(const std::string& filename, const sf::RenderWindow& win
     // Paddle
 	mPaddleTexture.loadFromFile("Resource/Textures/Paddle.png");
 	mPaddle.Create(
-		mPaddleTexture,
 		sf::Vector2f(200.0f, 25.0f),
 		sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y)
 	);
+	mPaddle.SetTexture(mPaddleTexture);
 
     // Ball
 	mBallTexture.loadFromFile("Resource/Textures/Ball.png");
 	mBall.Create(
-		mBallTexture,
 		sf::Vector2f(32, 32),
 		sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f)
 	);
+	mBall.SetTexture(mBallTexture);
 	mBall.ResetVelocity();
 
     // Bricks
@@ -142,13 +162,23 @@ void Level::LoadFromXML(const std::string& filename, const sf::RenderWindow& win
     XMLElement* pBrickTypeElement = pBrickTypesElement->FirstChildElement("BrickType");
     unsigned int currentBrickType = 0;
     while (currentBrickType < 4) {
-        mBrick[currentBrickType].SetAttributes(pBrickTypeElement);
+        // Loading data that can be copied without much memory loss
+		mBrick[currentBrickType].SetAttributes(pBrickTypeElement);
+		
+		// Loading data that should be shared among bricks
 		mHitSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("HitSound")));
 		mHitSound[currentBrickType].setBuffer(mHitSoundBuffer[currentBrickType]);
+
 		if (currentBrickType < 3) {
 			mBreakSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("BreakSound")));
 			mBreakSound[currentBrickType].setBuffer(mBreakSoundBuffer[currentBrickType]);
+
+			mBrickBreakScore[currentBrickType] = strtod(pBrickTypeElement->Attribute("BreakScore"), NULL);
 		}
+
+		mBrickTexture[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("Texture")));
+		
+
 		currentBrickType++;
         pBrickTypeElement = pBrickTypeElement->NextSiblingElement("BrickType");
     }
@@ -229,7 +259,8 @@ void Level::Update(const sf::Vector2i& mousePosition, const sf::RenderWindow& wi
 			itBrick->DecreaseHitPoints();
 			if (itBrick->IsDead()) {
 				mBreakSound[itBrick->GetBrickType()].play();
-				mPlayerScore += itBrick->GetBreakScore(); // Destroys it too fast
+
+				mPlayerScore += mBrickBreakScore[itBrick->GetBrickType()];
 				mBrickList.remove(*itBrick++);
 			}
 			else {

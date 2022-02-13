@@ -10,13 +10,11 @@ Actor::Actor() {
 Actor::~Actor() {
 }
 
-void Actor::Create(sf::Texture& texture, const sf::Vector2f& size, const sf::Vector2f& position) {
+void Actor::Create(const sf::Vector2f& size, const sf::Vector2f& position) {
 	mSize = size;
 	mPosition = position;
 	mShape.setSize(mSize);
 	mShape.setPosition(mPosition);
-	mTexture = texture;
-	mShape.setTexture(&texture);
 }
 
 void Actor::Draw(sf::RenderWindow& window) const {

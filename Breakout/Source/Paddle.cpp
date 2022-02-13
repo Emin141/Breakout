@@ -1,5 +1,11 @@
 #include "Paddle.h"
 
+void Paddle::SetTexture(const sf::Texture texture) {
+	// Not a reference because the texture object needs to live while the ball lives
+	mTexture = texture;
+	mShape.setTexture(&mTexture);
+}
+
 void Paddle::SetPosition(const sf::Vector2i& position, const sf::RenderWindow& window) {
 
 	float xPosition = static_cast<float>(position.x);
