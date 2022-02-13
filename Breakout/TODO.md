@@ -1,7 +1,13 @@
 # TO DO
 
-* Move the texture and soundbuffer members, as well as sound classes to the level scene
-* Turn all scenes into polymorphic objects from Scene
-* Change all function naming conventions to camelCase
-* Add some logging functionality
-* Consider doing exception handling (why though?)
+* [X] Move the texture and soundbuffer members, as well as sound classes to the level scene
+* [ ] Add a game over screen if all destroyable bricks are destroyed
+* [ ] Change main menu and game over screen buttons to be relative to screen size
+* [ ] ~~Turn all scenes into polymorphic objects from Scene~~
+* [ ] Change all function naming conventions to camelCase
+* [ ] Add some logging functionality
+* [ ] Consider doing exception handling (why though?)
+
+
+
+## MAYBE
