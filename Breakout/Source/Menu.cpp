@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-void Menu::Load(const sf::Font& font, const sf::Vector2f windowDimensions) {
+void Menu::load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 	mTitle.setFont(font);
 	mTitle.setString("MAIN MENU");
 	mTitle.setCharacterSize(100);
@@ -18,39 +18,39 @@ void Menu::Load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 		}
 	);
 
-	mButton[0].Create(
+	mButton[0].create(
 		font,
 		{windowDimensions.x/2.0f, 4.0f*windowDimensions.y/15.0f},
 		"LEVEL 1"
 		);
 
-	mButton[1].Create(
+	mButton[1].create(
 		font,
 		{ windowDimensions.x / 2.0f, 7.0f * windowDimensions.y / 15.0f },
 		"LEVEL 2"
 	);
 
-	mButton[2].Create(
+	mButton[2].create(
 		font,
 		{ windowDimensions.x / 2.0f, 10.0f * windowDimensions.y / 15.0f },
 		"LEVEL 3"
 	);
 
-	mButton[3].Create(
+	mButton[3].create(
 		font,
 		{ windowDimensions.x / 2.0f, 13.0f * windowDimensions.y / 15.0f },
 		"EXIT"
 	);
 }
 
-void Menu::Draw(sf::RenderWindow& window) {
+void Menu::draw(sf::RenderWindow& window) {
 	window.draw(mTitle);
-	for (auto& button : mButton) button.Draw(window);
+	for (auto& button : mButton) button.draw(window);
 }
 
-MenuChoice Menu::GetMenuChoice(const sf::Vector2i& mousePosition) const {
+MenuChoice Menu::getMenuChoice(const sf::Vector2i& mousePosition) const {
 	for (int i = 0; i < 4; i++) {
-		if (mButton[i].HasMouseInside(mousePosition))
+		if (mButton[i].hasMouseInside(mousePosition))
 			return static_cast<MenuChoice>(i);
 	}
 	// if none pass

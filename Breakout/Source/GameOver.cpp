@@ -1,7 +1,7 @@
 #include "GameOver.h"
 #include <iostream>
 
-void GameOver::Load(const sf::Font& font, const sf::Vector2f windowDimensions) {
+void GameOver::load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 	// Title options
 	mTitle.setFont(font);
 	mTitle.setString("GAME OVER");
@@ -39,29 +39,29 @@ void GameOver::Load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 	);
 
 	// Buttons
-	mButton[0].Create(
+	mButton[0].create(
 		font,
 		{ windowDimensions.x / 2.0f, 7.0f * windowDimensions.y / 15.0f },
 		"MENU"
 	);
 
-	mButton[1].Create(
+	mButton[1].create(
 		font,
 		{ windowDimensions.x / 2.0f, 10.0f * windowDimensions.y / 15.0f },
 		"EXIT"
 	);
 }
 
-void GameOver::Draw(sf::RenderWindow& window) {
+void GameOver::draw(sf::RenderWindow& window) {
 	window.draw(mTitle);
 	mScoreDisplay.setString("SCORE: " + std::to_string(mPlayerScore));
 	window.draw(mScoreDisplay);
-	for (auto& button : mButton) button.Draw(window);
+	for (auto& button : mButton) button.draw(window);
 }
 
-GameOverChoice GameOver::GetMenuChoice(const sf::Vector2i& mousePosition) const {
+GameOverChoice GameOver::getMenuChoice(const sf::Vector2i& mousePosition) const {
 	for (int i = 0; i < 2; i++) {
-		if (mButton[i].HasMouseInside(mousePosition))
+		if (mButton[i].hasMouseInside(mousePosition))
 			return static_cast<GameOverChoice>(i);
 	}
 	// if none pass

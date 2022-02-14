@@ -1,9 +1,9 @@
 #include "Scene.h"
 
-void Scene::Load() {
+void Scene::load() {
 
 }
 
-void Scene::Draw() {
+void Scene::draw() {
 
 }

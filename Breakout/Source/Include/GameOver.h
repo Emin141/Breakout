@@ -15,13 +15,13 @@ class GameOver : public Scene {
 public:
 	GameOver() : mPlayerScore(0) {}
 
-	void Load(const sf::Font& font, const sf::Vector2f windowDimensions);
+	void load(const sf::Font& font, const sf::Vector2f windowDimensions);
 
-	void Draw(sf::RenderWindow& window);
+	void draw(sf::RenderWindow& window);
 
-	inline void UpdatePlayerScore(const unsigned int playerScore) { mPlayerScore = playerScore; }
+	inline void updatePlayerScore(const unsigned int playerScore) { mPlayerScore = playerScore; }
 
-	GameOverChoice GetMenuChoice(const sf::Vector2i& mousePosition) const;
+	GameOverChoice getMenuChoice(const sf::Vector2i& mousePosition) const;
 private:
 	sf::Text mTitle;
 	sf::Text mScoreDisplay;

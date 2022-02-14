@@ -1,6 +1,6 @@
 #include  "LoadingScreen.h"
 
-void LoadingScreen::Load(const sf::Font& font, const sf::Vector2f& position) {
+void LoadingScreen::load(const sf::Font& font, const sf::Vector2f& position) {
 	mText.setFont(font);
 	mText.setString("LOADING...");
 	mText.setCharacterSize(240);
@@ -14,6 +14,6 @@ void LoadingScreen::Load(const sf::Font& font, const sf::Vector2f& position) {
 	mText.setPosition(position);
 }
 
-void LoadingScreen::Draw(sf::RenderWindow& window) {
+void LoadingScreen::draw(sf::RenderWindow& window) {
 	window.draw(mText);
 }

@@ -27,19 +27,19 @@ Game::Game() {
 
 	// Loading screen until the game is loaded
 	mLoadingScreen = new LoadingScreen();
-	mLoadingScreen->Load(mFont, 
+	mLoadingScreen->load(mFont, 
 		{ mWindowSize.x / 2.0f, mWindowSize.y / 2.0f });
 	mWindow.clear(sf::Color::Black);
-	mLoadingScreen->Draw(mWindow);
+	mLoadingScreen->draw(mWindow);
 	mWindow.display();
 
 	// Menu screen
 	mMenu = new Menu();
-	mMenu->Load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
+	mMenu->load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
 
 	// Game over screen
 	mGameOver = new GameOver();
-	mGameOver->Load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
+	mGameOver->load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
 
 	mGameState = GameState::MENU;
 
@@ -48,15 +48,15 @@ Game::Game() {
 	mGameIsOver = false;
 }
 
-void Game::Run() {
+void Game::run() {
 	while (mGameState!=GameState::QUIT) {
-		Update();
-		Draw();
-		Poll();
+		update();
+		draw();
+		poll();
 	}
 }
 
-void Game::Quit() {
+void Game::quit() {
 	mWindow.close();
 	delete mLoadingScreen;
 	delete mMenu;
@@ -65,7 +65,7 @@ void Game::Quit() {
 	// Everything else is RAII managed to deallocate
 }
 
-void Game::Update() {
+void Game::update() {
 	// Checks collision, HP, Score, Player lives, increases ball speed
 	// adding and removing of actors, menu choices etc.
 	mMousePosition = sf::Mouse::getPosition();
@@ -77,21 +77,21 @@ void Game::Update() {
 	case GameState::MENU:
 		mWindow.setMouseCursorVisible(true);
 		if (mLmbWasCliked) {
-			switch (mMenu->GetMenuChoice(mMousePosition)) {
+			switch (mMenu->getMenuChoice(mMousePosition)) {
 			case MenuChoice::EXIT:
 				mGameState = GameState::QUIT;
 				break;
 			case MenuChoice::LEVEL_1:
 				mGameState = GameState::LEVEL;
-				mLevel->LoadFromXML("Resource/Levels/Level1.xml", mWindow);
+				mLevel->loadFromXML("Resource/Levels/Level1.xml", mWindow);
 				break;
 			case MenuChoice::LEVEL_2:
 				mGameState = GameState::LEVEL;
-				mLevel->LoadFromXML("Resource/Levels/Level2.xml", mWindow);
+				mLevel->loadFromXML("Resource/Levels/Level2.xml", mWindow);
 				break;
 			case MenuChoice::LEVEL_3:
 				mGameState = GameState::LEVEL;
-				mLevel->LoadFromXML("Resource/Levels/Level3.xml", mWindow);
+				mLevel->loadFromXML("Resource/Levels/Level3.xml", mWindow);
 				break;
 			case MenuChoice::NONE:
 			default:
@@ -104,7 +104,7 @@ void Game::Update() {
 	// If a level is loaded
 	case GameState::LEVEL:
 		mWindow.setMouseCursorVisible(false);
-		mLevel->Update(mMousePosition, mWindow, deltaTime, mGameIsOver);
+		mLevel->update(mMousePosition, mWindow, deltaTime, mGameIsOver);
 		if (mGameIsOver) {
 			mGameState = GameState::GAMEOVER;
 			mGameIsOver = false;
@@ -116,7 +116,7 @@ void Game::Update() {
 	case GameState::GAMEOVER:
 		mWindow.setMouseCursorVisible(true);
 		if (mLmbWasCliked) {
-			switch (mGameOver->GetMenuChoice(mMousePosition))
+			switch (mGameOver->getMenuChoice(mMousePosition))
 			{
 			case GameOverChoice::BACK_TO_MENU:
 				mGameState = GameState::MENU;
@@ -139,7 +139,7 @@ void Game::Update() {
 
 }
 
-void Game::Draw() {
+void Game::draw() {
 	// Clear
 	mWindow.clear(sf::Color::Black);
 
@@ -152,17 +152,17 @@ void Game::Draw() {
 	// (even less resources used), this is completely fine. 
 	switch (mGameState) {
 	case GameState::LOADING:
-		mLoadingScreen->Draw(mWindow);
+		mLoadingScreen->draw(mWindow);
 		break;
 	case GameState::MENU:
-		mMenu->Draw(mWindow);
+		mMenu->draw(mWindow);
 		break;
 	case GameState::LEVEL:
-		mLevel->Draw(mWindow);
+		mLevel->draw(mWindow);
 		break;
 	case GameState::GAMEOVER:
-		mGameOver->UpdatePlayerScore(mLevel->GetPlayerScore());
-		mGameOver->Draw(mWindow);
+		mGameOver->updatePlayerScore(mLevel->getPlayerScore());
+		mGameOver->draw(mWindow);
 		break;
 	default:
 		break;
@@ -172,7 +172,7 @@ void Game::Draw() {
 	mWindow.display();
 }
 
-void Game::Poll() {
+void Game::poll() {
 	sf::Event mEvent;
 	
 	while (mWindow.pollEvent(mEvent)) {
