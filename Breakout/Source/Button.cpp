@@ -1,10 +1,10 @@
 #include "Button.h"
 
 void Button::create(const sf::Font& font, const sf::Vector2f& position,
-	const std::string& label) {
+	const sf::Vector2f& size, const std::string& label) {
 	mLabel.setFont(font);
 	mLabel.setString(label);
-	mLabel.setCharacterSize(100);
+	mLabel.setCharacterSize(size.y/2.0f);
 	mLabel.setFillColor({ 140, 16, 16, 255 });
 	mLabel.setOrigin(
 		{
@@ -14,7 +14,7 @@ void Button::create(const sf::Font& font, const sf::Vector2f& position,
 	);
 
 	mBody.setFillColor({ 0x80, 0x80, 0x80, 255 });
-	mBody.setSize({ 420, 160 });
+	mBody.setSize(size);
 	mBody.setOrigin(
 		{
 			mBody.getLocalBounds().width / 2.0f,

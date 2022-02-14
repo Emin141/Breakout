@@ -42,12 +42,14 @@ void GameOver::load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 	mButton[0].create(
 		font,
 		{ windowDimensions.x / 2.0f, 7.0f * windowDimensions.y / 15.0f },
+		{ windowDimensions.x / 4.0f, windowDimensions.y / 6.0f },
 		"MENU"
 	);
 
 	mButton[1].create(
 		font,
 		{ windowDimensions.x / 2.0f, 10.0f * windowDimensions.y / 15.0f },
+		{ windowDimensions.x / 4.0f, windowDimensions.y / 6.0f },
 		"EXIT"
 	);
 }

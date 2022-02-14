@@ -4,7 +4,7 @@
 * [ ] Add a game over screen if all destroyable bricks are destroyed
 * [ ] Change main menu and game over screen buttons to be relative to screen size
 * [ ] ~~Turn all scenes into polymorphic objects from Scene~~
-* [ ] Change all function naming conventions to camelCase
+* [X] Change all function naming conventions to camelCase
 * [ ] Add some logging functionality
 * [ ] Consider doing exception handling (why though?)
 
