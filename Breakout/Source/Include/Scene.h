@@ -8,7 +8,7 @@
 
 class Scene {
 public:
-	void Load();
-	void Draw();
+	void load();
+	void draw();
 private:
 };

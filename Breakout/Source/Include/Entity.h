@@ -22,17 +22,17 @@ class Entity : public Actor {
 public:
 	Entity() : mPreviousPosition({0.0f, 0.0f}) {}
 
-	bool CollidedWith(const Entity&, CollisionSide&) const;
+	bool collidedWith(const Entity&, CollisionSide&) const;
 
 	bool operator==(const Entity&) const;
 	bool operator!=(const Entity&) const;
 
-	inline void SetPosition(const sf::Vector2f& position) { mPreviousPosition = mPosition; mPosition = position; mShape.setPosition(mPosition); }
-	inline void SetSize(const sf::Vector2f& size) { mSize = size; mShape.setSize(mSize); }
-	inline sf::Vector2f GetPosition() const { return mPosition; }
-	inline sf::Vector2f GetSize() const { return mSize; }
-	inline sf::Vector2f GetPreviousPosition() const { return mPreviousPosition; }
-	inline sf::Vector2f GetCenter() const {
+	inline void setPosition(const sf::Vector2f& position) { mPreviousPosition = mPosition; mPosition = position; mShape.setPosition(mPosition); }
+	inline void setSize(const sf::Vector2f& size) { mSize = size; mShape.setSize(mSize); }
+	inline sf::Vector2f getPosition() const { return mPosition; }
+	inline sf::Vector2f getSize() const { return mSize; }
+	inline sf::Vector2f getPreviousPosition() const { return mPreviousPosition; }
+	inline sf::Vector2f getCenter() const {
 		return sf::Vector2f(
 			(mPosition.x + mSize.x)/2.0f,
 			(mPosition.y + mSize.y)/2.0f

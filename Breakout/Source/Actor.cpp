@@ -10,13 +10,13 @@ Actor::Actor() {
 Actor::~Actor() {
 }
 
-void Actor::Create(const sf::Vector2f& size, const sf::Vector2f& position) {
+void Actor::create(const sf::Vector2f& size, const sf::Vector2f& position) {
 	mSize = size;
 	mPosition = position;
 	mShape.setSize(mSize);
 	mShape.setPosition(mPosition);
 }
 
-void Actor::Draw(sf::RenderWindow& window) const {
+void Actor::draw(sf::RenderWindow& window) const {
 	window.draw(mShape);
 }

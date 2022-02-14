@@ -1,9 +1,8 @@
 #include "Game.h"
-#include <iostream>
 
-int main(int argc, char** argv) {
+int main() {
 	Game game;
-	game.Run();
-	game.Quit();
+	game.run();
+	game.quit();
 	return 0;
 }

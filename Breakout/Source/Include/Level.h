@@ -11,11 +11,11 @@
 class Level : public Scene {
 public:
 	Level();
-	void LoadFromXML(const std::string&, const sf::RenderWindow&);
-	void ArrangeBricks(const sf::RenderWindow&);
-	void Draw(sf::RenderWindow& window);
-	void Update(const sf::Vector2i&, const sf::RenderWindow&, const float, bool&);
-	inline unsigned int GetPlayerScore() const { return mPlayerScore; }
+	void loadFromXML(const std::string&, const sf::RenderWindow&);
+	void arrangeBricks(const sf::RenderWindow&);
+	void draw(sf::RenderWindow& window);
+	void update(const sf::Vector2i&, const sf::RenderWindow&, const float, bool&);
+	inline unsigned int getPlayerScore() const { return mPlayerScore; }
 private:
 	// Paddle info
 	sf::Texture mPaddleTexture;

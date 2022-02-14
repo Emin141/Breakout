@@ -1,6 +1,6 @@
 #include "Button.h"
 
-void Button::Create(const sf::Font& font, const sf::Vector2f& position,
+void Button::create(const sf::Font& font, const sf::Vector2f& position,
 	const std::string& label) {
 	mLabel.setFont(font);
 	mLabel.setString(label);
@@ -25,12 +25,12 @@ void Button::Create(const sf::Font& font, const sf::Vector2f& position,
 	mLabel.setPosition(position);
 }
 
-void Button::Draw(sf::RenderWindow& window) {
+void Button::draw(sf::RenderWindow& window) {
 	window.draw(mBody);
 	window.draw(mLabel);
 }
 
-bool Button::HasMouseInside(const sf::Vector2i& point) const {
+bool Button::hasMouseInside(const sf::Vector2i& point) const {
 	// Huge condition incomming
 	if (
 		point.x < (mBody.getPosition().x + mBody.getOrigin().x) && point.x >(mBody.getPosition().x - mBody.getOrigin().x)

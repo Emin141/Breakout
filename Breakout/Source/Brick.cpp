@@ -1,6 +1,6 @@
 #include "Brick.h"
 
-void Brick::SetAttributes(const tinyxml2::XMLElement* brickTypeElement) {
+void Brick::setAttributes(const tinyxml2::XMLElement* brickTypeElement) {
     mIdentifier = 0[const_cast<char*>(brickTypeElement->Attribute("Id"))];
     
     // Impenetrable bricks have different attributes
@@ -12,7 +12,7 @@ void Brick::SetAttributes(const tinyxml2::XMLElement* brickTypeElement) {
     }
 }
 
-BrickType Brick::GetBrickType() const {
+BrickType Brick::getBrickType() const {
     switch (mIdentifier) {
     case 'S':
         return SOFT;

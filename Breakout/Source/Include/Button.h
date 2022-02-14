@@ -4,9 +4,9 @@
 
 class Button {
 public:
-	void Create(const sf::Font& font, const sf::Vector2f& position, const std::string& label);
-	void Draw(sf::RenderWindow& window);
-	bool HasMouseInside(const sf::Vector2i& point) const;
+	void create(const sf::Font& font, const sf::Vector2f& position, const std::string& label);
+	void draw(sf::RenderWindow& window);
+	bool hasMouseInside(const sf::Vector2i& point) const;
 private:
 	sf::Text mLabel;
 	sf::RectangleShape mBody;

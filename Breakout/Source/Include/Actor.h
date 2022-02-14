@@ -7,8 +7,8 @@ class Actor {
 public:
 	Actor();
 	~Actor();
-	void Create(const sf::Vector2f& size, const sf::Vector2f& position);
-	void Draw(sf::RenderWindow& window) const;
+	void create(const sf::Vector2f& size, const sf::Vector2f& position);
+	void draw(sf::RenderWindow& window) const;
 	
 protected:
 	sf::Vector2f mSize;

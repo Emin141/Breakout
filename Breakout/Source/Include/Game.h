@@ -1,8 +1,8 @@
 #pragma once
 
-#include "GameState.h"
 #include <SFML/Graphics.hpp>
 
+#include "GameState.h"
 #include "Scene.h"
 #include "LoadingScreen.h"
 #include "Menu.h"
@@ -12,12 +12,12 @@
 class Game {
 public:
 	Game();
-	void Run();
-	void Quit();
+	void run();
+	void quit();
 private:
-	void Update(); // All logic is updated in the Game class
-	void Draw(); // Chooses the scene to draw and draws it
-	void Poll(); // Polls events
+	void update();
+	void draw();
+	void poll();
 private:
 	// Loading, Menu, GameOver, and Level
 	GameState mGameState;

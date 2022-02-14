@@ -5,35 +5,35 @@
 
 Ball::Ball() {
 	mVelocity = { 0.0f, 1000.0f };
-	NormalizeVelocity();
+	normalizeVelocity();
 	mPreviousPosition = { 0.0f, 0.0f };
 }
 
-void Ball::SetTexture(const sf::Texture texture) {
+void Ball::setTexture(const sf::Texture texture) {
 	// Not a reference because the texture object needs to live while the ball lives
 	mTexture = texture;
 	mShape.setTexture(&mTexture);
 }
 
-void Ball::UpdatePosition(const sf::RenderWindow& window, const float dt) {
+void Ball::updatePosition(const sf::RenderWindow& window, const float dt) {
 	mPreviousPosition = mPosition;
 	mPosition += mVelocity*dt;
 	mShape.setPosition(mPosition);
 }
 
-void Ball::NormalizeVelocity() {
+void Ball::normalizeVelocity() {
 	float magnitude = sqrt(mVelocity.x * mVelocity.x + mVelocity.y * mVelocity.y);
 	mVelocity.x /= magnitude*0.002f;
 	mVelocity.y /= magnitude*0.002f;
 }
 
-void Ball::ResetVelocity() {
+void Ball::resetVelocity() {
 	mVelocity = { 0.0f, 1000.0f };
-	NormalizeVelocity();
+	normalizeVelocity();
 	mPreviousPosition = { 0.0f, 0.0f };
 }
 
-void Ball::Redirect(const float paddleCenterX, const float paddleSizeX) {
+void Ball::redirect(const float paddleCenterX, const float paddleSizeX) {
 	/*
 	
 	Rediredction algorithm

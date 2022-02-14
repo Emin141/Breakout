@@ -10,7 +10,7 @@ Level::Level() {
 	mBrickBreakScore.fill(0);
 }
 
-void Level::ArrangeBricks(const sf::RenderWindow& window) {
+void Level::arrangeBricks(const sf::RenderWindow& window) {
 	// Clears the brick list first
 	mBrickList.clear();
 
@@ -23,7 +23,7 @@ void Level::ArrangeBricks(const sf::RenderWindow& window) {
 
 	// Sets all brick sizes
 	for (auto& brick : mBrick) {
-		brick.SetSize(brickSize);
+		brick.setSize(brickSize);
 	}
 
 	// Defining a position which will track the brick which is currently being placed
@@ -37,7 +37,7 @@ void Level::ArrangeBricks(const sf::RenderWindow& window) {
 	for (size_t i = 0; i < mBrickLayout.size() ; i++) {
 		switch (mBrickLayout[i]) {
 		case 'S':
-			mBrick[SOFT].SetPosition(currentBrickPosition);
+			mBrick[SOFT].setPosition(currentBrickPosition);
 			mBrickList.emplace_back(mBrick[SOFT]);
 			currentBrickPosition.x += brickSize.x + mColumnSpacing;
 			if (columnCounter % mColumnCount == 0) {
@@ -48,7 +48,7 @@ void Level::ArrangeBricks(const sf::RenderWindow& window) {
 			columnCounter++;
 			break;
 		case 'M':
-			mBrick[MEDIUM].SetPosition(currentBrickPosition);
+			mBrick[MEDIUM].setPosition(currentBrickPosition);
 			mBrickList.emplace_back(mBrick[MEDIUM]);
 			currentBrickPosition.x += brickSize.x + mColumnSpacing;
 			if (columnCounter % mColumnCount == 0) {
@@ -59,7 +59,7 @@ void Level::ArrangeBricks(const sf::RenderWindow& window) {
 			columnCounter++;
 			break;
 		case 'H':
-			mBrick[HARD].SetPosition(currentBrickPosition);
+			mBrick[HARD].setPosition(currentBrickPosition);
 			mBrickList.emplace_back(mBrick[HARD]);
 			currentBrickPosition.x += brickSize.x + mColumnSpacing;
 			if (columnCounter % mColumnCount == 0) {
@@ -70,7 +70,7 @@ void Level::ArrangeBricks(const sf::RenderWindow& window) {
 			columnCounter++;
 			break;
 		case 'I':
-			mBrick[IMPENETRABLE].SetPosition(currentBrickPosition);
+			mBrick[IMPENETRABLE].setPosition(currentBrickPosition);
 			mBrickList.emplace_back(mBrick[IMPENETRABLE]);
 			currentBrickPosition.x += brickSize.x + mColumnSpacing;
 			if (columnCounter % mColumnCount == 0) {
@@ -96,41 +96,41 @@ void Level::ArrangeBricks(const sf::RenderWindow& window) {
 
 	// Setting textures
 	for (auto& brick : mBrickList) {
-		switch (brick.GetBrickType()) {
+		switch (brick.getBrickType()) {
 		case SOFT:
-			brick.SetTexture(mBrickTexture[SOFT]);
+			brick.setTexture(mBrickTexture[SOFT]);
 			break;
 		case MEDIUM:
-			brick.SetTexture(mBrickTexture[MEDIUM]);
+			brick.setTexture(mBrickTexture[MEDIUM]);
 			break;
 		case HARD:
-			brick.SetTexture(mBrickTexture[HARD]);
+			brick.setTexture(mBrickTexture[HARD]);
 			break;
 		case IMPENETRABLE:
-			brick.SetTexture(mBrickTexture[IMPENETRABLE]);
+			brick.setTexture(mBrickTexture[IMPENETRABLE]);
 			break;
 		}
 	}
 }
 
-void Level::LoadFromXML(const std::string& filename, const sf::RenderWindow& window) {
+void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& window) {
 
     // Paddle
 	mPaddleTexture.loadFromFile("Resource/Textures/Paddle.png");
-	mPaddle.Create(
+	mPaddle.create(
 		sf::Vector2f(200.0f, 25.0f),
 		sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y)
 	);
-	mPaddle.SetTexture(mPaddleTexture);
+	mPaddle.setTexture(mPaddleTexture);
 
     // Ball
 	mBallTexture.loadFromFile("Resource/Textures/Ball.png");
-	mBall.Create(
+	mBall.create(
 		sf::Vector2f(32, 32),
 		sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f)
 	);
-	mBall.SetTexture(mBallTexture);
-	mBall.ResetVelocity();
+	mBall.setTexture(mBallTexture);
+	mBall.resetVelocity();
 
     // Bricks
     using namespace tinyxml2;
@@ -163,7 +163,7 @@ void Level::LoadFromXML(const std::string& filename, const sf::RenderWindow& win
     unsigned int currentBrickType = 0;
     while (currentBrickType < 4) {
         // Loading data that can be copied without much memory loss
-		mBrick[currentBrickType].SetAttributes(pBrickTypeElement);
+		mBrick[currentBrickType].setAttributes(pBrickTypeElement);
 		
 		// Loading data that should be shared among bricks
 		mHitSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("HitSound")));
@@ -188,86 +188,86 @@ void Level::LoadFromXML(const std::string& filename, const sf::RenderWindow& win
 
 	mPlayerScore = 0; // Reset player score
 
-	ArrangeBricks(window);
+	arrangeBricks(window);
 }
 
-void Level::Draw(sf::RenderWindow& window) {
-	mPaddle.Draw(window);
-	mBall.Draw(window);
+void Level::draw(sf::RenderWindow& window) {
+	mPaddle.draw(window);
+	mBall.draw(window);
 	for (auto& brick : mBrickList) {
-		brick.Draw(window);
+		brick.draw(window);
 	}
 }
 
-void Level::Update(const sf::Vector2i& mousePosition, const sf::RenderWindow& window, const float dt, bool& gameIsOver) {
-	mPaddle.SetPosition(mousePosition, window);
+void Level::update(const sf::Vector2i& mousePosition, const sf::RenderWindow& window, const float dt, bool& gameIsOver) {
+	mPaddle.setPosition(mousePosition, window);
 
 	// Ball Collision with borders
-	if (mBall.GetPosition().x < 0)
+	if (mBall.getPosition().x < 0)
 	{
-		mBall.XInvertVelocity();
-		mBall.RewindPosition();
+		mBall.xInvertVelocity();
+		mBall.rewindPosition();
 	}
-	if (mBall.GetPosition().y < 0)
+	if (mBall.getPosition().y < 0)
 	{
-		mBall.YInvertVelocity();
-		mBall.RewindPosition();
+		mBall.yInvertVelocity();
+		mBall.rewindPosition();
 	}
-	if ((mBall.GetPosition().x + mBall.GetSize().x) > window.getSize().x)
+	if ((mBall.getPosition().x + mBall.getSize().x) > window.getSize().x)
 	{
-		mBall.XInvertVelocity();
-		mBall.RewindPosition();
+		mBall.xInvertVelocity();
+		mBall.rewindPosition();
 	}
 	
 	// Loss condition:
-	if ((mBall.GetPosition().y + mBall.GetSize().y) > window.getSize().y) {
+	if ((mBall.getPosition().y + mBall.getSize().y) > window.getSize().y) {
 		gameIsOver = true;
 		return;
 	}
 
 	CollisionSide collisionSide;
-	if (mBall.CollidedWith(mPaddle, collisionSide))
+	if (mBall.collidedWith(mPaddle, collisionSide))
 	{
-		mBall.Redirect(mPaddle.GetCenter().x, mPaddle.GetSize().x);
-		mBall.RewindPosition();
+		mBall.redirect(mPaddle.getCenter().x, mPaddle.getSize().x);
+		mBall.rewindPosition();
 	}
 
 	// Brick iterator
 	// Needs to be implemented this way instead of auto brick : mBrickList because objects need to be removed
 	for (auto itBrick = mBrickList.begin(); itBrick != mBrickList.end(); ++itBrick) {
-		if (mBall.CollidedWith(*itBrick, collisionSide)) { // collisionSide is an "out" parameter
+		if (mBall.collidedWith(*itBrick, collisionSide)) { // collisionSide is an "out" parameter
 			switch (collisionSide) {
 			case CollisionSide::LEFT:
-				mBall.XInvertVelocity();
-				mBall.RewindPosition();
+				mBall.xInvertVelocity();
+				mBall.rewindPosition();
 				break;
 			case CollisionSide::RIGHT:
-				mBall.XInvertVelocity();
-				mBall.RewindPosition();
+				mBall.xInvertVelocity();
+				mBall.rewindPosition();
 				break;
 			case CollisionSide::TOP:
-				mBall.YInvertVelocity();
-				mBall.RewindPosition();
+				mBall.yInvertVelocity();
+				mBall.rewindPosition();
 				break;
 			case CollisionSide::BOTTOM:
-				mBall.YInvertVelocity();
-				mBall.RewindPosition();
+				mBall.yInvertVelocity();
+				mBall.rewindPosition();
 				break;
 			default:
 				break;
 			}
-			itBrick->DecreaseHitPoints();
-			if (itBrick->IsDead()) {
-				mBreakSound[itBrick->GetBrickType()].play();
+			itBrick->decreaseHitPoints();
+			if (itBrick->isDead()) {
+				mBreakSound[itBrick->getBrickType()].play();
 
-				mPlayerScore += mBrickBreakScore[itBrick->GetBrickType()];
+				mPlayerScore += mBrickBreakScore[itBrick->getBrickType()];
 				mBrickList.remove(*itBrick++);
 			}
 			else {
-				mHitSound[itBrick->GetBrickType()].play();
+				mHitSound[itBrick->getBrickType()].play();
 			}
 		}
 	}
 
-	mBall.UpdatePosition(window, dt);
+	mBall.updatePosition(window, dt);
 }

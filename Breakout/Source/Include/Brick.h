@@ -17,11 +17,11 @@ public:
     Brick() : 
         mIdentifier('\0'), mHitPoints(0) {}
 
-    void SetAttributes(const tinyxml2::XMLElement*);
-    BrickType GetBrickType() const;
-    inline void SetTexture(const sf::Texture& texturePtr) { mShape.setTexture(&texturePtr); }
-    inline bool IsDead() { return mHitPoints == 0 ? true : false; }
-    inline void DecreaseHitPoints() { mHitPoints--; }
+    void setAttributes(const tinyxml2::XMLElement*);
+    BrickType getBrickType() const;
+    inline void setTexture(const sf::Texture& texturePtr) { mShape.setTexture(&texturePtr); }
+    inline bool isDead() { return mHitPoints == 0 ? true : false; }
+    inline void decreaseHitPoints() { mHitPoints--; }
 
 private:
     char mIdentifier;
