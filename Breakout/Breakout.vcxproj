@@ -175,7 +175,6 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Menu.cpp" />
     <ClCompile Include="Source\Paddle.cpp" />
-    <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +189,27 @@
     <ClInclude Include="Source\Include\LoadingScreen.h" />
     <ClInclude Include="Source\Include\Menu.h" />
     <ClInclude Include="Source\Include\Paddle.h" />
+    <ClInclude Include="Source\Include\plog\Appenders\AndroidAppender.h" />
+    <ClInclude Include="Source\Include\plog\Appenders\ColorConsoleAppender.h" />
+    <ClInclude Include="Source\Include\plog\Appenders\ConsoleAppender.h" />
+    <ClInclude Include="Source\Include\plog\Appenders\DebugOutputAppender.h" />
+    <ClInclude Include="Source\Include\plog\Appenders\EventLogAppender.h" />
+    <ClInclude Include="Source\Include\plog\Appenders\IAppender.h" />
+    <ClInclude Include="Source\Include\plog\Appenders\RollingFileAppender.h" />
+    <ClInclude Include="Source\Include\plog\Converters\NativeEOLConverter.h" />
+    <ClInclude Include="Source\Include\plog\Converters\UTF8Converter.h" />
+    <ClInclude Include="Source\Include\plog\Formatters\CsvFormatter.h" />
+    <ClInclude Include="Source\Include\plog\Formatters\FuncMessageFormatter.h" />
+    <ClInclude Include="Source\Include\plog\Formatters\MessageOnlyFormatter.h" />
+    <ClInclude Include="Source\Include\plog\Formatters\TxtFormatter.h" />
+    <ClInclude Include="Source\Include\plog\Init.h" />
+    <ClInclude Include="Source\Include\plog\Initializers\RollingFileInitializer.h" />
+    <ClInclude Include="Source\Include\plog\Log.h" />
+    <ClInclude Include="Source\Include\plog\Logger.h" />
+    <ClInclude Include="Source\Include\plog\Record.h" />
+    <ClInclude Include="Source\Include\plog\Severity.h" />
+    <ClInclude Include="Source\Include\plog\Util.h" />
+    <ClInclude Include="Source\Include\plog\WinApi.h" />
     <ClInclude Include="Source\Include\Scene.h" />
     <ClInclude Include="Source\Include\Level.h" />
     <ClInclude Include="Source\Include\tinyxml2.h" />

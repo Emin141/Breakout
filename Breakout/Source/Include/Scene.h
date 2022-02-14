@@ -8,7 +8,8 @@
 
 class Scene {
 public:
-	virtual void load();
-	virtual void draw();
+	virtual void load() {};
+	virtual void draw() {};
+
 private:
 };

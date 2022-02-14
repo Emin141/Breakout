@@ -1,4 +1,5 @@
 #include "Level.h"
+#include "plog/Log.h"
 
 Level::Level() {
 	mRowCount = 0;
@@ -125,7 +126,14 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& window) {
 
 	// Paddle
-	mPaddleTexture.loadFromFile("Resource/Textures/Paddle.png");
+	try {
+		if (!mPaddleTexture.loadFromFile("Resource/Textures/Paddle.png"))
+			throw "Cannot load resource at Resource/Textures/Paddle.png";
+	}
+	catch (std::string message) {
+		PLOGD << message;
+		exit(-1);
+	}
 	mPaddle.create(
 		sf::Vector2f(window.getSize().x / 10.0f, window.getSize().y / 40.0f),
 		sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y)
@@ -133,7 +141,14 @@ void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& win
 	mPaddle.setTexture(mPaddleTexture);
 
 	// Ball
-	mBallTexture.loadFromFile("Resource/Textures/Ball.png");
+	try {
+		if (!mBallTexture.loadFromFile("Resource/Textures/Ball.png"))
+			throw "Cannot load resource at Resource/Textures/Ball.png";
+	}
+	catch (std::string message) {
+		PLOGD << message;
+		exit(-1);
+	}
 	mBall.create(
 		sf::Vector2f(mPaddle.getSize().y, mPaddle.getSize().y), // The ball is a "square" with side length equal to the thickness of the paddle
 		sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f)
@@ -144,60 +159,67 @@ void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& win
 	// Bricks
 	using namespace tinyxml2;
 	XMLDocument source;
-	source.LoadFile(filename.c_str());
+	try {
+		source.LoadFile(filename.c_str());
 
-	XMLElement* pLevelElement = source.RootElement();
-	if (pLevelElement == NULL) {
-		std::cout << "Cannot read Level element at " << filename << std::endl;
-		std::cin.get();
-		exit(-1);
-	}
+		XMLElement* pLevelElement = source.RootElement();
 
-	mRowCount = strtod(pLevelElement->Attribute("RowCount"), NULL);
-	mColumnCount = strtod(pLevelElement->Attribute("ColumnCount"), NULL);
-	mRowSpacing = strtod(pLevelElement->Attribute("RowSpacing"), NULL);
-	mColumnSpacing = strtod(pLevelElement->Attribute("ColumnSpacing"), NULL);
+		mRowCount = strtod(pLevelElement->Attribute("RowCount"), NULL);
+		mColumnCount = strtod(pLevelElement->Attribute("ColumnCount"), NULL);
+		mRowSpacing = strtod(pLevelElement->Attribute("RowSpacing"), NULL);
+		mColumnSpacing = strtod(pLevelElement->Attribute("ColumnSpacing"), NULL);
 
-	XMLElement* pBrickTypesElement = pLevelElement->FirstChildElement("BrickTypes");
-	if (pBrickTypesElement == NULL) {
-		std::cout << "Cannot read BrickTypes element at " << filename << std::endl;
-		std::cin.get();
-		exit(-1);
-	}
+		// Brick data
+		XMLElement* pBrickTypesElement = pLevelElement->FirstChildElement("BrickTypes");
 
-	// TAKE GOOD CARE! Huge difference between "Type" and "Types"
+		// TAKE GOOD CARE! Huge difference between "Type" and "Types"
+		XMLElement* pBrickTypeElement = pBrickTypesElement->FirstChildElement("BrickType");
+		unsigned int currentBrickType = 0;
 
-	// Brick data
-	XMLElement* pBrickTypeElement = pBrickTypesElement->FirstChildElement("BrickType");
-	unsigned int currentBrickType = 0;
-	while (currentBrickType < 4) {
-		// Loading data that can be copied without much memory loss
-		mBrick[currentBrickType].setAttributes(pBrickTypeElement);
+		while (currentBrickType < 4) { // 4 is the number of possible brick types
 
-		// Loading data that should be shared among bricks
-		mHitSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("HitSound")));
-		mHitSound[currentBrickType].setBuffer(mHitSoundBuffer[currentBrickType]);
+			// Loading data that has to be copied per brick object
+			mBrick[currentBrickType].setAttributes(pBrickTypeElement);
 
-		if (currentBrickType < 3) {
-			mBreakSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("BreakSound")));
-			mBreakSound[currentBrickType].setBuffer(mBreakSoundBuffer[currentBrickType]);
+			// Loading data that should be shared among bricks
+			if (!mHitSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("HitSound"))))
+			{
+				PLOGD << "Cannot read Resource/" + std::string(pBrickTypeElement->Attribute("HitSound"));
+				exit(-1);
+			}
+			mHitSound[currentBrickType].setBuffer(mHitSoundBuffer[currentBrickType]);
 
-			mBrickBreakScore[currentBrickType] = strtod(pBrickTypeElement->Attribute("BreakScore"), NULL);
+			if (currentBrickType < 3) {
+				if (!mBreakSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("BreakSound"))))
+				{
+					PLOGD << "Cannot read Resource/" + std::string(pBrickTypeElement->Attribute("BreakSound"));
+					exit(-1);
+				}
+				mBreakSound[currentBrickType].setBuffer(mBreakSoundBuffer[currentBrickType]);
+				mBrickBreakScore[currentBrickType] = strtod(pBrickTypeElement->Attribute("BreakScore"), NULL);
+			}
+
+			if (!mBrickTexture[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("Texture"))))
+			{
+				PLOGD << "Cannot read Resource/" + std::string(pBrickTypeElement->Attribute("Texture"));
+				exit(-1);
+			}
+
+				currentBrickType++;
+			pBrickTypeElement = pBrickTypeElement->NextSiblingElement("BrickType");
 		}
 
-		mBrickTexture[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("Texture")));
+		pLevelElement = pLevelElement->FirstChildElement("Bricks");
+		mBrickLayout = pLevelElement->GetText();
 
+		mPlayerScore = 0; // Reset player score
 
-		currentBrickType++;
-		pBrickTypeElement = pBrickTypeElement->NextSiblingElement("BrickType");
+		arrangeBricks(window);
 	}
-
-	pLevelElement = pLevelElement->FirstChildElement("Bricks");
-	mBrickLayout = pLevelElement->GetText();
-
-	mPlayerScore = 0; // Reset player score
-
-	arrangeBricks(window);
+	catch (std::string message) {
+		PLOGD << message;
+		exit(-1);
+	}
 }
 
 void Level::draw(sf::RenderWindow& window) {

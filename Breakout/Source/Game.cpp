@@ -1,9 +1,15 @@
 #include "Game.h"
 
 #include <iostream>
+
 #include "LoadingScreen.h"
+#include <plog/Log.h>
+#include "plog/Initializers/RollingFileInitializer.h"
 
 Game::Game() {
+	// Logger
+	plog::init(plog::debug, "Error.log");
+
 	// Constructor call
 	mGameState = GameState::LOADING;
 	mMousePosition = sf::Mouse::getPosition();
@@ -27,7 +33,14 @@ Game::Game() {
 	mWindowSize = mWindow.getSize();
 	mWindow.setFramerateLimit(60);
 
-	mFont.loadFromFile("Resource/Fonts/Biolinum.ttf");
+	try {
+		if (!mFont.loadFromFile("Resource/Fonts/Biolinum.ttf"))
+			throw "Cannot load font at Resource/Fonts/Biolinum.tff";
+	}
+	catch (std::string message) {
+		PLOGD << message;
+		exit(1);
+	}
 
 	// Loading screen until the game is loaded
 	mLoadingScreen = new LoadingScreen();
@@ -45,9 +58,7 @@ Game::Game() {
 	mGameOver->load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
 
 	mGameState = GameState::MENU;
-
 	mLevel = new Level();
-
 	mGameIsOver = false;
 }
 
@@ -132,7 +143,6 @@ void Game::update() {
 				break;
 			}
 		}
-		//delete mLevel;
 		break;
 
 	default:
