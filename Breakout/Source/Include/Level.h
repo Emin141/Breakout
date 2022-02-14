@@ -11,11 +11,13 @@
 class Level : public Scene {
 public:
 	Level();
+
 	void loadFromXML(const std::string&, const sf::RenderWindow&);
 	void arrangeBricks(const sf::RenderWindow&);
 	void draw(sf::RenderWindow& window);
 	void update(const sf::Vector2i&, const sf::RenderWindow&, const float, bool&);
 	inline unsigned int getPlayerScore() const { return mPlayerScore; }
+
 private:
 	// Paddle info
 	sf::Texture mPaddleTexture;
@@ -34,7 +36,8 @@ private:
 	unsigned int mRowSpacing;
 	unsigned int mColumnSpacing;
 
-	sf::Texture mBackgoundTexture; // Didn't load this oops
+	// Bricks assets
+	sf::Texture mBackgoundTexture;
 	std::array<Brick, 4> mBrick;
 	std::array<sf::Texture, 4> mBrickTexture;
 	std::array<sf::SoundBuffer, 4> mHitSoundBuffer;
@@ -48,5 +51,6 @@ private:
 
 	// Player score tracker
 	unsigned int mPlayerScore;
+	unsigned int mBreakableBricksNum;
 };
 

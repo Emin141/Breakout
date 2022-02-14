@@ -1,9 +1,9 @@
 #include "Entity.h"
 
-bool Entity::collidedWith(const Entity& otherEntity, CollisionSide& collisionSide) const{
+bool Entity::collidedWith(const Entity& otherEntity, CollisionSide& collisionSide) const {
 	// Axis aligned bounding boxes algorithm
 	// aka, AABB
-	
+
 	bool xCondition;
 	xCondition = (
 		!((mPosition.x + mSize.x) < otherEntity.getPosition().x))
@@ -20,12 +20,13 @@ bool Entity::collidedWith(const Entity& otherEntity, CollisionSide& collisionSid
 
 	bool collided = xCondition && yCondition;
 
+	// If the collision happened, checks the direction of the collision
 	if (collided) {
 		if (mPreviousPosition.x + mSize.x < otherEntity.getPosition().x &&
 			mPosition.x + mSize.x >= otherEntity.getPosition().x)
 			collisionSide = CollisionSide::LEFT;
-		if (mPreviousPosition.x >= otherEntity.getPosition().x+otherEntity.getSize().x &&
-			mPosition.x < otherEntity.getPosition().x +otherEntity.getSize().x)
+		if (mPreviousPosition.x >= otherEntity.getPosition().x + otherEntity.getSize().x &&
+			mPosition.x < otherEntity.getPosition().x + otherEntity.getSize().x)
 			collisionSide = CollisionSide::RIGHT;
 		if (mPreviousPosition.y + mSize.y < otherEntity.getPosition().y &&
 			mPosition.y + mSize.y >= otherEntity.getPosition().y)

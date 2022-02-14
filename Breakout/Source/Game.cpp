@@ -9,13 +9,17 @@ Game::Game() {
 	mMousePosition = sf::Mouse::getPosition();
 	mLmbWasCliked = false;
 
+	// OpenGL context settings, for modern OpenGL at least 3.3
 	sf::ContextSettings ContextSettings;
 	ContextSettings.antialiasingLevel = 4;
 	ContextSettings.majorVersion = 3;
 	ContextSettings.minorVersion = 3;
 
+	// Gets the biggest possible video mode
+	sf::VideoMode videoMode = sf::VideoMode::getDesktopMode();
+
 	mWindow.create(
-		sf::VideoMode(),
+		videoMode,
 		"Breakout",
 		sf::Style::Fullscreen,
 		ContextSettings
@@ -23,12 +27,11 @@ Game::Game() {
 	mWindowSize = mWindow.getSize();
 	mWindow.setFramerateLimit(60);
 
-	mFont.loadFromFile("Resource/Fonts/Helvetica.ttf");
+	mFont.loadFromFile("Resource/Fonts/Biolinum.ttf");
 
 	// Loading screen until the game is loaded
 	mLoadingScreen = new LoadingScreen();
-	mLoadingScreen->load(mFont, 
-		{ mWindowSize.x / 2.0f, mWindowSize.y / 2.0f });
+	mLoadingScreen->load(mFont, { mWindowSize.x / 2.0f, mWindowSize.y / 2.0f });
 	mWindow.clear(sf::Color::Black);
 	mLoadingScreen->draw(mWindow);
 	mWindow.display();
@@ -49,7 +52,7 @@ Game::Game() {
 }
 
 void Game::run() {
-	while (mGameState!=GameState::QUIT) {
+	while (mGameState != GameState::QUIT) {
 		update();
 		draw();
 		poll();
@@ -73,7 +76,7 @@ void Game::update() {
 
 	switch (mGameState) {
 
-	// If on menu
+		// If on menu
 	case GameState::MENU:
 		mWindow.setMouseCursorVisible(true);
 		if (mLmbWasCliked) {
@@ -100,19 +103,19 @@ void Game::update() {
 			mLmbWasCliked = false;
 		}
 		break;
-	
-	// If a level is loaded
+
+		// If a level is loaded
 	case GameState::LEVEL:
 		mWindow.setMouseCursorVisible(false);
 		mLevel->update(mMousePosition, mWindow, deltaTime, mGameIsOver);
 		if (mGameIsOver) {
 			mGameState = GameState::GAMEOVER;
 			mGameIsOver = false;
-			
+
 		}
 		break;
-	
-	// If the game over screen is displayed
+
+		// If the game over screen is displayed
 	case GameState::GAMEOVER:
 		mWindow.setMouseCursorVisible(true);
 		if (mLmbWasCliked) {
@@ -131,7 +134,7 @@ void Game::update() {
 		}
 		//delete mLevel;
 		break;
-	
+
 	default:
 		break;
 	}
@@ -174,7 +177,7 @@ void Game::draw() {
 
 void Game::poll() {
 	sf::Event mEvent;
-	
+
 	while (mWindow.pollEvent(mEvent)) {
 		switch (mEvent.type) {
 		case sf::Event::Closed:

@@ -20,7 +20,7 @@ enum class CollisionSide {
 
 class Entity : public Actor {
 public:
-	Entity() : mPreviousPosition({0.0f, 0.0f}) {}
+	Entity() : mPreviousPosition({ 0.0f, 0.0f }) {}
 
 	bool collidedWith(const Entity&, CollisionSide&) const;
 
@@ -34,10 +34,11 @@ public:
 	inline sf::Vector2f getPreviousPosition() const { return mPreviousPosition; }
 	inline sf::Vector2f getCenter() const {
 		return sf::Vector2f(
-			(mPosition.x + mSize.x)/2.0f,
-			(mPosition.y + mSize.y)/2.0f
+			(mPosition.x + mSize.x) / 2.0f,
+			(mPosition.y + mSize.y) / 2.0f
 		);
 	}
+
 protected:
 	sf::Vector2f mPreviousPosition;
 };

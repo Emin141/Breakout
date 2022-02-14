@@ -3,7 +3,7 @@
 void Menu::load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 	mTitle.setFont(font);
 	mTitle.setString("MAIN MENU");
-	mTitle.setCharacterSize(windowDimensions.y/10.0f);
+	mTitle.setCharacterSize(windowDimensions.y / 10.0f);
 	mTitle.setFillColor(sf::Color(140, 16, 16, 255));
 	mTitle.setOrigin(
 		{
@@ -20,10 +20,10 @@ void Menu::load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 
 	mButton[0].create(
 		font,
-		{windowDimensions.x/2.0f, 4.0f*windowDimensions.y/15.0f},
-		{windowDimensions.x/4.0f, windowDimensions.y/6.0f},
+		{ windowDimensions.x / 2.0f, 4.0f * windowDimensions.y / 15.0f },
+		{ windowDimensions.x / 4.0f, windowDimensions.y / 6.0f },
 		"LEVEL 1"
-		);
+	);
 
 	mButton[1].create(
 		font,

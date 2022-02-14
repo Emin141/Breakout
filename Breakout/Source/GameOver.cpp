@@ -56,8 +56,23 @@ void GameOver::load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 
 void GameOver::draw(sf::RenderWindow& window) {
 	window.draw(mTitle);
+
+	// Centers the score display
 	mScoreDisplay.setString("SCORE: " + std::to_string(mPlayerScore));
+	mScoreDisplay.setOrigin(
+		{
+			mScoreDisplay.getLocalBounds().width / 2.0f,
+			mScoreDisplay.getLocalBounds().height
+		}
+	);
+	mScoreDisplay.setPosition(
+		{
+			window.getSize().x / 2.0f,
+			3.0f * window.getSize().y / 12.0f
+		}
+	);
 	window.draw(mScoreDisplay);
+
 	for (auto& button : mButton) button.draw(window);
 }
 

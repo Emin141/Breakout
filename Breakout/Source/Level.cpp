@@ -1,13 +1,14 @@
 #include "Level.h"
 
 Level::Level() {
-    mRowCount = 0;
-    mColumnCount = 0;
-    mRowSpacing = 0;
-    mColumnSpacing = 0;
+	mRowCount = 0;
+	mColumnCount = 0;
+	mRowSpacing = 0;
+	mColumnSpacing = 0;
 	mPlayerScore = 0;
 
 	mBrickBreakScore.fill(0);
+	mBreakableBricksNum = 0;
 }
 
 void Level::arrangeBricks(const sf::RenderWindow& window) {
@@ -32,10 +33,15 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 		mRowSpacing
 	);
 
-	// Parsing the positions
+	// Required to track the rows
 	unsigned int columnCounter = 1;
-	for (size_t i = 0; i < mBrickLayout.size() ; i++) {
+
+	// Parsing the positions
+	for (size_t i = 0; i < mBrickLayout.size(); i++) {
 		switch (mBrickLayout[i]) {
+			// The position needs to be pushed if the parsed layout info is valid
+			// hence, the code is quite literally "copied" in order to avoid pushing 
+			// when the parsed character is not valid
 		case 'S':
 			mBrick[SOFT].setPosition(currentBrickPosition);
 			mBrickList.emplace_back(mBrick[SOFT]);
@@ -46,6 +52,7 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 				currentBrickPosition.x = mColumnSpacing;
 			}
 			columnCounter++;
+			mBreakableBricksNum++;
 			break;
 		case 'M':
 			mBrick[MEDIUM].setPosition(currentBrickPosition);
@@ -57,6 +64,7 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 				currentBrickPosition.x = mColumnSpacing;
 			}
 			columnCounter++;
+			mBreakableBricksNum++;
 			break;
 		case 'H':
 			mBrick[HARD].setPosition(currentBrickPosition);
@@ -68,6 +76,7 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 				currentBrickPosition.x = mColumnSpacing;
 			}
 			columnCounter++;
+			mBreakableBricksNum++;
 			break;
 		case 'I':
 			mBrick[IMPENETRABLE].setPosition(currentBrickPosition);
@@ -115,56 +124,56 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 
 void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& window) {
 
-    // Paddle
+	// Paddle
 	mPaddleTexture.loadFromFile("Resource/Textures/Paddle.png");
 	mPaddle.create(
-		sf::Vector2f(200.0f, 25.0f),
+		sf::Vector2f(window.getSize().x / 10.0f, window.getSize().y / 40.0f),
 		sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y)
 	);
 	mPaddle.setTexture(mPaddleTexture);
 
-    // Ball
+	// Ball
 	mBallTexture.loadFromFile("Resource/Textures/Ball.png");
 	mBall.create(
-		sf::Vector2f(32, 32),
+		sf::Vector2f(mPaddle.getSize().y, mPaddle.getSize().y), // The ball is a "square" with side length equal to the thickness of the paddle
 		sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f)
 	);
 	mBall.setTexture(mBallTexture);
 	mBall.resetVelocity();
 
-    // Bricks
-    using namespace tinyxml2;
-    XMLDocument source;
-    source.LoadFile(filename.c_str());
+	// Bricks
+	using namespace tinyxml2;
+	XMLDocument source;
+	source.LoadFile(filename.c_str());
 
-    XMLElement* pLevelElement = source.RootElement();
-    if (pLevelElement == NULL) {
-        std::cout << "Cannot read Level element at " << filename << std::endl;
-        std::cin.get();
-        exit(-1);
-    }
+	XMLElement* pLevelElement = source.RootElement();
+	if (pLevelElement == NULL) {
+		std::cout << "Cannot read Level element at " << filename << std::endl;
+		std::cin.get();
+		exit(-1);
+	}
 
-    mRowCount = strtod(pLevelElement->Attribute("RowCount"), NULL);
-    mColumnCount = strtod(pLevelElement->Attribute("ColumnCount"), NULL);
-    mRowSpacing = strtod(pLevelElement->Attribute("RowSpacing"), NULL);
-    mColumnSpacing = strtod(pLevelElement->Attribute("ColumnSpacing"), NULL);
+	mRowCount = strtod(pLevelElement->Attribute("RowCount"), NULL);
+	mColumnCount = strtod(pLevelElement->Attribute("ColumnCount"), NULL);
+	mRowSpacing = strtod(pLevelElement->Attribute("RowSpacing"), NULL);
+	mColumnSpacing = strtod(pLevelElement->Attribute("ColumnSpacing"), NULL);
 
-    XMLElement* pBrickTypesElement = pLevelElement->FirstChildElement("BrickTypes");
-    if (pBrickTypesElement == NULL) {
-        std::cout << "Cannot read BrickTypes element at " << filename << std::endl;
-        std::cin.get();
-        exit(-1);
-    }
+	XMLElement* pBrickTypesElement = pLevelElement->FirstChildElement("BrickTypes");
+	if (pBrickTypesElement == NULL) {
+		std::cout << "Cannot read BrickTypes element at " << filename << std::endl;
+		std::cin.get();
+		exit(-1);
+	}
 
-    // TAKE GOOD CARE! Huge difference between "Type" and "Types"
+	// TAKE GOOD CARE! Huge difference between "Type" and "Types"
 
-    // Brick data
-    XMLElement* pBrickTypeElement = pBrickTypesElement->FirstChildElement("BrickType");
-    unsigned int currentBrickType = 0;
-    while (currentBrickType < 4) {
-        // Loading data that can be copied without much memory loss
+	// Brick data
+	XMLElement* pBrickTypeElement = pBrickTypesElement->FirstChildElement("BrickType");
+	unsigned int currentBrickType = 0;
+	while (currentBrickType < 4) {
+		// Loading data that can be copied without much memory loss
 		mBrick[currentBrickType].setAttributes(pBrickTypeElement);
-		
+
 		// Loading data that should be shared among bricks
 		mHitSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("HitSound")));
 		mHitSound[currentBrickType].setBuffer(mHitSoundBuffer[currentBrickType]);
@@ -177,14 +186,14 @@ void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& win
 		}
 
 		mBrickTexture[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("Texture")));
-		
+
 
 		currentBrickType++;
-        pBrickTypeElement = pBrickTypeElement->NextSiblingElement("BrickType");
-    }
+		pBrickTypeElement = pBrickTypeElement->NextSiblingElement("BrickType");
+	}
 
-    pLevelElement = pLevelElement->FirstChildElement("Bricks");
-    mBrickLayout = pLevelElement->GetText();
+	pLevelElement = pLevelElement->FirstChildElement("Bricks");
+	mBrickLayout = pLevelElement->GetText();
 
 	mPlayerScore = 0; // Reset player score
 
@@ -218,15 +227,21 @@ void Level::update(const sf::Vector2i& mousePosition, const sf::RenderWindow& wi
 		mBall.xInvertVelocity();
 		mBall.rewindPosition();
 	}
-	
-	// Loss condition:
+
+	// Game over conditions:
 	if ((mBall.getPosition().y + mBall.getSize().y) > window.getSize().y) {
+		gameIsOver = true;
+		return;
+	}
+
+	if (mBreakableBricksNum == 0) {
 		gameIsOver = true;
 		return;
 	}
 
 	CollisionSide collisionSide;
 	if (mBall.collidedWith(mPaddle, collisionSide))
+		// in this case "collisionSide" is unused since the ball can collide with the paddle only from one side
 	{
 		mBall.redirect(mPaddle.getCenter().x, mPaddle.getSize().x);
 		mBall.rewindPosition();
@@ -234,6 +249,8 @@ void Level::update(const sf::Vector2i& mousePosition, const sf::RenderWindow& wi
 
 	// Brick iterator
 	// Needs to be implemented this way instead of auto brick : mBrickList because objects need to be removed
+	// Iterating over the whole list is not the ideal option, however, the list and objects are relatively small
+	// A better way would be to create a quadtree, and check recursively, but that is unneccessary complexness
 	for (auto itBrick = mBrickList.begin(); itBrick != mBrickList.end(); ++itBrick) {
 		if (mBall.collidedWith(*itBrick, collisionSide)) { // collisionSide is an "out" parameter
 			switch (collisionSide) {
@@ -259,8 +276,9 @@ void Level::update(const sf::Vector2i& mousePosition, const sf::RenderWindow& wi
 			itBrick->decreaseHitPoints();
 			if (itBrick->isDead()) {
 				mBreakSound[itBrick->getBrickType()].play();
-
 				mPlayerScore += mBrickBreakScore[itBrick->getBrickType()];
+				mBreakableBricksNum--;
+
 				mBrickList.remove(*itBrick++);
 			}
 			else {

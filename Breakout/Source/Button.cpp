@@ -4,8 +4,8 @@ void Button::create(const sf::Font& font, const sf::Vector2f& position,
 	const sf::Vector2f& size, const std::string& label) {
 	mLabel.setFont(font);
 	mLabel.setString(label);
-	mLabel.setCharacterSize(size.y/2.0f);
-	mLabel.setFillColor({ 140, 16, 16, 255 });
+	mLabel.setCharacterSize(size.y / 2.0f);
+	mLabel.setFillColor({ 0x80, 0x10, 0x10, 0xFF });
 	mLabel.setOrigin(
 		{
 			mLabel.getLocalBounds().width / 2.0f,
@@ -13,7 +13,7 @@ void Button::create(const sf::Font& font, const sf::Vector2f& position,
 		}
 	);
 
-	mBody.setFillColor({ 0x80, 0x80, 0x80, 255 });
+	mBody.setFillColor({ 0x80, 0x80, 0x80, 0xFF });
 	mBody.setSize(size);
 	mBody.setOrigin(
 		{
@@ -31,11 +31,13 @@ void Button::draw(sf::RenderWindow& window) {
 }
 
 bool Button::hasMouseInside(const sf::Vector2i& point) const {
-	// Huge condition incomming
+	// Checks whether the mouse is inside the body of the button
+	// Huge one-liner condition, but it would otherwise have to be nested
 	if (
 		point.x < (mBody.getPosition().x + mBody.getOrigin().x) && point.x >(mBody.getPosition().x - mBody.getOrigin().x)
 		&&
 		point.y < (mBody.getPosition().y + mBody.getOrigin().y) && point.y >(mBody.getPosition().y - mBody.getOrigin().y)
 		) return true;
+	// No need for an else statement
 	return false;
 }

@@ -5,7 +5,7 @@
 class Ball : public Entity {
 public:
 	Ball();
-	
+
 	void setTexture(const sf::Texture texture);
 	void updatePosition(const sf::RenderWindow& window, const float dt);
 	void normalizeVelocity();

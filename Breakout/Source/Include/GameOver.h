@@ -16,12 +16,11 @@ public:
 	GameOver() : mPlayerScore(0) {}
 
 	void load(const sf::Font& font, const sf::Vector2f windowDimensions);
-
 	void draw(sf::RenderWindow& window);
 
 	inline void updatePlayerScore(const unsigned int playerScore) { mPlayerScore = playerScore; }
-
 	GameOverChoice getMenuChoice(const sf::Vector2i& mousePosition) const;
+
 private:
 	sf::Text mTitle;
 	sf::Text mScoreDisplay;

@@ -5,7 +5,7 @@
 
 class LoadingScreen : public Scene {
 public:
-	LoadingScreen() 
+	LoadingScreen()
 		: mText() {}
 	void load(const sf::Font& font, const sf::Vector2f& position);
 	void draw(sf::RenderWindow& window);
