@@ -5,9 +5,10 @@
 * [X] Change main menu and game over screen buttons to be relative to screen size
 * [ ] ~~Turn all scenes into polymorphic objects from Scene~~
 * [X] Change all function naming conventions to camelCase
-* [ ] Add some logging functionality
-* [ ] Exception handling
-
+* [X] Add some logging functionality
+* [X] Exception handling
+* [ ] Design levels 2 and 3
+* [ ] Add graphics
 
 
 ## MAYBE

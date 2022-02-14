@@ -28,6 +28,7 @@ private:
 	Ball mBall;
 
 	// Background 
+	sf::Texture mBackgoundTexture;
 	sf::RectangleShape mBackground;
 
 	// Bricks info
@@ -37,7 +38,6 @@ private:
 	unsigned int mColumnSpacing;
 
 	// Bricks assets
-	sf::Texture mBackgoundTexture;
 	std::array<Brick, 4> mBrick;
 	std::array<sf::Texture, 4> mBrickTexture;
 	std::array<sf::SoundBuffer, 4> mHitSoundBuffer;

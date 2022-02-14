@@ -156,7 +156,7 @@ void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& win
 	mBall.setTexture(mBallTexture);
 	mBall.resetVelocity();
 
-	// Bricks
+	// Bricks and background
 	using namespace tinyxml2;
 	XMLDocument source;
 	try {
@@ -168,6 +168,12 @@ void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& win
 		mColumnCount = strtod(pLevelElement->Attribute("ColumnCount"), NULL);
 		mRowSpacing = strtod(pLevelElement->Attribute("RowSpacing"), NULL);
 		mColumnSpacing = strtod(pLevelElement->Attribute("ColumnSpacing"), NULL);
+		if (!mBackgoundTexture.loadFromFile("Resource/" + std::string(pLevelElement->Attribute("BackgroundTexture")))) {
+			throw "Cannot read background texture!";
+		}
+		mBackground.setPosition(0.0f, 0.0f);
+		mBackground.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
+		mBackground.setTexture(&mBackgoundTexture);
 
 		// Brick data
 		XMLElement* pBrickTypesElement = pLevelElement->FirstChildElement("BrickTypes");
@@ -205,7 +211,7 @@ void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& win
 				exit(-1);
 			}
 
-				currentBrickType++;
+			currentBrickType++;
 			pBrickTypeElement = pBrickTypeElement->NextSiblingElement("BrickType");
 		}
 
@@ -223,6 +229,7 @@ void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& win
 }
 
 void Level::draw(sf::RenderWindow& window) {
+	window.draw(mBackground);
 	mPaddle.draw(window);
 	mBall.draw(window);
 	for (auto& brick : mBrickList) {
