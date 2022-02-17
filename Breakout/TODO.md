@@ -7,8 +7,5 @@
 * [X] Change all function naming conventions to camelCase
 * [X] Add some logging functionality
 * [X] Exception handling
-* [ ] Design levels 2 and 3
-* [ ] Add graphics
-
-
-## MAYBE
+* [X] Design levels 2 and 3
+* [X] Add graphic assets and music
