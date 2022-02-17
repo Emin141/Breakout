@@ -5,7 +5,7 @@ void Button::create(const sf::Font& font, const sf::Vector2f& position,
 	mLabel.setFont(font);
 	mLabel.setString(label);
 	mLabel.setCharacterSize(size.y / 2.0f);
-	mLabel.setFillColor({ 0x80, 0x10, 0x10, 0xFF });
+	mLabel.setFillColor(sf::Color(0xFF, 0xA0, 0x10, 0xFF));
 	mLabel.setOrigin(
 		{
 			mLabel.getLocalBounds().width / 2.0f,
@@ -13,7 +13,7 @@ void Button::create(const sf::Font& font, const sf::Vector2f& position,
 		}
 	);
 
-	mBody.setFillColor({ 0x80, 0x80, 0x80, 0xFF });
+	mBody.setFillColor({ 0x80, 0x80, 0x80, 0x80 });
 	mBody.setSize(size);
 	mBody.setOrigin(
 		{

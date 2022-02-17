@@ -14,12 +14,13 @@ enum class MenuChoice {
 
 class Menu : Scene {
 public:
-	void load(const sf::Font& font, const sf::Vector2f windowDimensions);
+	void load(const sf::Font& font, const sf::Vector2f windowDimensions, const sf::Texture& backgroundTexture);
 	void draw(sf::RenderWindow& window);
 	MenuChoice getMenuChoice(const sf::Vector2i& mousePosition) const;
 
 private:
 	sf::Text mTitle;
 	std::array<Button, 4> mButton;
+	sf::RectangleShape mBackground;
 };
 

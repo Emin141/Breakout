@@ -221,12 +221,17 @@
     <None Include="Zadatak - Breakout.pdf" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resource\Textures\Backgrounds\CommonBackground.bmp" />
     <Image Include="Resource\Textures\Ball.png" />
     <Image Include="Resource\Textures\Boards\Board_01.bmp" />
     <Image Include="Resource\Textures\Bricks\Hard.bmp" />
+    <Image Include="Resource\Textures\Bricks\Hard.png" />
     <Image Include="Resource\Textures\Bricks\Impenetrable.bmp" />
+    <Image Include="Resource\Textures\Bricks\Impenetrable.png" />
     <Image Include="Resource\Textures\Bricks\Medium.bmp" />
+    <Image Include="Resource\Textures\Bricks\Medium.png" />
     <Image Include="Resource\Textures\Bricks\Soft.bmp" />
+    <Image Include="Resource\Textures\Bricks\Soft.png" />
     <Image Include="Resource\Textures\LoadingScreen.bmp" />
     <Image Include="Resource\Textures\Menu.bmp" />
     <Image Include="Resource\Textures\Paddle.png" />

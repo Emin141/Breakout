@@ -44,4 +44,11 @@ private:
 
 	// DeltaTime device
 	sf::Clock mClock;
+
+	// Music 
+	// Cairan Tourish - Port Chuilinn / The Cordial Jih / Paddy Taylor's Jig
+	sf::Music mBackgroundMusic;
+
+	// Common background for Menu and Game Over screen to be shared 
+	sf::Texture mCommonBackground;
 };

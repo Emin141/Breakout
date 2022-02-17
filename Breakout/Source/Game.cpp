@@ -49,17 +49,31 @@ Game::Game() {
 	mLoadingScreen->draw(mWindow);
 	mWindow.display();
 
+	// Loading common background for menu and game over screen
+	try {
+		if (!mCommonBackground.loadFromFile("Resource/Textures/Backgrounds/CommonBackground.bmp"))
+			throw "Cannot load image at Resource/Textures/Backgrounds/CommonBackground.bmp";
+	}
+	catch (std::string message) {
+		PLOGD << message;
+		exit(1);
+	}
+
 	// Menu screen
 	mMenu = new Menu();
-	mMenu->load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
+	mMenu->load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y), mCommonBackground);
 
 	// Game over screen
 	mGameOver = new GameOver();
-	mGameOver->load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y));
+	mGameOver->load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y), mCommonBackground);
 
 	mGameState = GameState::MENU;
 	mLevel = new Level();
 	mGameIsOver = false;
+
+	mBackgroundMusic.openFromFile("Resource/Sounds/BackgroundMusic.wav");
+	mBackgroundMusic.setLoop(true);
+	mBackgroundMusic.play();
 }
 
 void Game::run() {

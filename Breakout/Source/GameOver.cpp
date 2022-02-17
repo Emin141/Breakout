@@ -1,12 +1,16 @@
 #include "GameOver.h"
 #include <iostream>
 
-void GameOver::load(const sf::Font& font, const sf::Vector2f windowDimensions) {
+void GameOver::load(const sf::Font& font, const sf::Vector2f windowDimensions, const sf::Texture& backgroundTexture) {
+	mBackground.setPosition(0.0f, 0.0f);
+	mBackground.setSize(windowDimensions);
+	mBackground.setTexture(&backgroundTexture);
+
 	// Title options
 	mTitle.setFont(font);
 	mTitle.setString("GAME OVER");
 	mTitle.setCharacterSize(100);
-	mTitle.setFillColor(sf::Color(140, 16, 16, 255));
+	mTitle.setFillColor(sf::Color(0xFF, 0xA0, 0x10, 0xFF));
 	mTitle.setOrigin(
 		{
 			mTitle.getLocalBounds().width / 2.0f,
@@ -24,7 +28,7 @@ void GameOver::load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 	mScoreDisplay.setFont(font);
 	mScoreDisplay.setString("SCORE: " + std::to_string(mPlayerScore));
 	mScoreDisplay.setCharacterSize(100);
-	mScoreDisplay.setFillColor(sf::Color(0xFF, 0xFF, 0xFF, 0xFF));
+	mScoreDisplay.setFillColor(sf::Color(0xFF, 0xA0, 0x10, 0xFF));
 	mScoreDisplay.setOrigin(
 		{
 			mScoreDisplay.getLocalBounds().width / 2.0f,
@@ -55,6 +59,7 @@ void GameOver::load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 }
 
 void GameOver::draw(sf::RenderWindow& window) {
+	window.draw(mBackground);
 	window.draw(mTitle);
 
 	// Centers the score display

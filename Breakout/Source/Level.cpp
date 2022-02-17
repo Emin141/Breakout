@@ -1,6 +1,8 @@
 #include "Level.h"
 #include "plog/Log.h"
 
+#define OFFSET (3.5f)
+
 Level::Level() {
 	mRowCount = 0;
 	mColumnCount = 0;
@@ -30,7 +32,7 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 
 	// Defining a position which will track the brick which is currently being placed
 	sf::Vector2f currentBrickPosition(
-		mColumnSpacing,
+		mColumnSpacing * OFFSET,
 		mRowSpacing
 	);
 
@@ -50,7 +52,7 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 			if (columnCounter % mColumnCount == 0) {
 				columnCounter = 0;
 				currentBrickPosition.y += brickSize.y + mRowSpacing;
-				currentBrickPosition.x = mColumnSpacing;
+				currentBrickPosition.x = mColumnSpacing * OFFSET;
 			}
 			columnCounter++;
 			mBreakableBricksNum++;
@@ -62,7 +64,7 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 			if (columnCounter % mColumnCount == 0) {
 				columnCounter = 0;
 				currentBrickPosition.y += brickSize.y + mRowSpacing;
-				currentBrickPosition.x = mColumnSpacing;
+				currentBrickPosition.x = mColumnSpacing * OFFSET;
 			}
 			columnCounter++;
 			mBreakableBricksNum++;
@@ -74,7 +76,7 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 			if (columnCounter % mColumnCount == 0) {
 				columnCounter = 0;
 				currentBrickPosition.y += brickSize.y + mRowSpacing;
-				currentBrickPosition.x = mColumnSpacing;
+				currentBrickPosition.x = mColumnSpacing * OFFSET;
 			}
 			columnCounter++;
 			mBreakableBricksNum++;
@@ -86,7 +88,7 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 			if (columnCounter % mColumnCount == 0) {
 				columnCounter = 0;
 				currentBrickPosition.y += brickSize.y + mRowSpacing;
-				currentBrickPosition.x = mColumnSpacing;
+				currentBrickPosition.x = mColumnSpacing * OFFSET;
 			}
 			columnCounter++;
 			break;
@@ -95,7 +97,7 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 			if (columnCounter % mColumnCount == 0) {
 				columnCounter = 0;
 				currentBrickPosition.y += brickSize.y + mRowSpacing;
-				currentBrickPosition.x = mColumnSpacing;
+				currentBrickPosition.x = mColumnSpacing * OFFSET;
 			}
 			columnCounter++;
 			break;

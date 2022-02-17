@@ -196,6 +196,21 @@
     <Image Include="Resource\Textures\Paddle.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\Textures\Backgrounds\CommonBackground.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Bricks\Hard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Bricks\Impenetrable.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Bricks\Medium.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Bricks\Soft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\Levels\Level1.xml" />

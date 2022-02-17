@@ -1,10 +1,14 @@
 #include "Menu.h"
 
-void Menu::load(const sf::Font& font, const sf::Vector2f windowDimensions) {
+void Menu::load(const sf::Font& font, const sf::Vector2f windowDimensions, const sf::Texture& backgroundTexture) {
+	mBackground.setPosition(0.0f, 0.0f);
+	mBackground.setSize(windowDimensions);
+	mBackground.setTexture(&backgroundTexture);
+
 	mTitle.setFont(font);
 	mTitle.setString("MAIN MENU");
 	mTitle.setCharacterSize(windowDimensions.y / 10.0f);
-	mTitle.setFillColor(sf::Color(140, 16, 16, 255));
+	mTitle.setFillColor(sf::Color(0xFF, 0xA0, 0x10, 0xFF));
 	mTitle.setOrigin(
 		{
 			mTitle.getLocalBounds().width / 2.0f,
@@ -48,6 +52,7 @@ void Menu::load(const sf::Font& font, const sf::Vector2f windowDimensions) {
 }
 
 void Menu::draw(sf::RenderWindow& window) {
+	window.draw(mBackground);
 	window.draw(mTitle);
 	for (auto& button : mButton) button.draw(window);
 }
