@@ -65,9 +65,6 @@
     <ClInclude Include="Source\Include\Actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Include\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Include\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>

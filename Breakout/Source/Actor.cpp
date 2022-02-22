@@ -7,9 +7,6 @@ Actor::Actor() {
 	mShape.setPosition(mPosition);
 }
 
-Actor::~Actor() {
-}
-
 void Actor::create(const sf::Vector2f& size, const sf::Vector2f& position) {
 	mSize = size;
 	mPosition = position;

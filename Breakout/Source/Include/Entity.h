@@ -8,6 +8,10 @@
 // The ball moves constantly
 // The paddle moves on mouse control
 
+#ifdef V_DTOR_DEBUG
+#include <plog/Log.h>
+#endif
+
 #include "Actor.h"
 
 enum class CollisionSide {
@@ -21,6 +25,11 @@ enum class CollisionSide {
 class Entity : public Actor {
 public:
 	Entity() : mPreviousPosition({ 0.0f, 0.0f }) {}
+#ifdef V_DTOR_DEBUG
+	virtual ~Entity() { PLOGD << "- Entity destroyed "; }
+#else
+	virtual ~Entity() {}
+#endif
 
 	bool collidedWith(const Entity&, CollisionSide&) const;
 

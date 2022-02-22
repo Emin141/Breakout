@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Scene.h"
 #include "Button.h"
 #include <array>
 
@@ -12,7 +11,7 @@ enum class MenuChoice {
 	NONE
 };
 
-class Menu : Scene {
+class Menu {
 public:
 	void load(const sf::Font& font, const sf::Vector2f windowDimensions, const sf::Texture& backgroundTexture);
 	void draw(sf::RenderWindow& window);
