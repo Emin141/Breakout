@@ -72,7 +72,7 @@ Game::Game() {
 	mGameIsOver = false;
 
 	mBackgroundMusic.setLoop(true);
-	//mBackgroundMusic.play(); temporary off
+	mBackgroundMusic.play();
 }
 
 void Game::run() {
