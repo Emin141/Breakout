@@ -164,6 +164,13 @@
     <None Include="Zadatak - Breakout.pdf" />
     <None Include="TODO.md" />
     <None Include="geogebra-export.ggb" />
+    <None Include="Breakout.exe" />
+    <None Include="Breakout.pdb" />
+    <None Include="openal32.dll" />
+    <None Include="sfml-audio-2.dll" />
+    <None Include="sfml-graphics-2.dll" />
+    <None Include="sfml-system-2.dll" />
+    <None Include="sfml-window-2.dll" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Textures\LoadingScreen.bmp">
