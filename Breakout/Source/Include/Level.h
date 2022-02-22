@@ -10,6 +10,8 @@
 class Level {
 public:
 	Level();
+#include <iostream>
+	~Level() { std::cout << "Level destructor called!\n"; }
 
 	void loadFromXML(const std::string&, const sf::RenderWindow&);
 	void arrangeBricks(const sf::RenderWindow&);
