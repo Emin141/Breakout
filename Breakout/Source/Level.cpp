@@ -9,8 +9,6 @@ Level::Level() {
 	mRowSpacing = 0;
 	mColumnSpacing = 0;
 	mPlayerScore = 0;
-
-	mBrickBreakScore.fill(0);
 	mBreakableBricksNum = 0;
 }
 
@@ -27,8 +25,9 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 
 	// Sets all brick sizes
 	for (auto& brick : mBrick) {
-		brick.setSize(brickSize);
+		brick.second.setSize(brickSize);
 	}
+	
 
 	// Defining a position which will track the brick which is currently being placed
 	sf::Vector2f currentBrickPosition(
@@ -41,13 +40,15 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 
 	// Parsing the positions
 	for (size_t i = 0; i < mBrickLayout.size(); i++) {
-		switch (mBrickLayout[i]) {
-			// The position needs to be pushed if the parsed layout info is valid
-			// hence, the code is quite literally "copied" in order to avoid pushing 
-			// when the parsed character is not valid
-		case 'S':
-			mBrick[SOFT].setPosition(currentBrickPosition);
-			mBrickList.emplace_back(mBrick[SOFT]);
+		if (mBrick.find(mBrickLayout[i]) != mBrick.end() // Checks if the key is valid
+			or mBrickLayout[i] == '_') { // Or if the parsed character is an underline
+			// If the character is NOT an underline:
+			if (mBrickLayout[i] != '_') {
+				mBrick[mBrickLayout[i]].setPosition(currentBrickPosition);
+				mBrickList.emplace_back(mBrick[mBrickLayout[i]]);
+				mBreakableBricksNum++;
+			}
+			// This will run regardless
 			currentBrickPosition.x += brickSize.x + mColumnSpacing;
 			if (columnCounter % mColumnCount == 0) {
 				columnCounter = 0;
@@ -55,73 +56,12 @@ void Level::arrangeBricks(const sf::RenderWindow& window) {
 				currentBrickPosition.x = mColumnSpacing * OFFSET;
 			}
 			columnCounter++;
-			mBreakableBricksNum++;
-			break;
-		case 'M':
-			mBrick[MEDIUM].setPosition(currentBrickPosition);
-			mBrickList.emplace_back(mBrick[MEDIUM]);
-			currentBrickPosition.x += brickSize.x + mColumnSpacing;
-			if (columnCounter % mColumnCount == 0) {
-				columnCounter = 0;
-				currentBrickPosition.y += brickSize.y + mRowSpacing;
-				currentBrickPosition.x = mColumnSpacing * OFFSET;
-			}
-			columnCounter++;
-			mBreakableBricksNum++;
-			break;
-		case 'H':
-			mBrick[HARD].setPosition(currentBrickPosition);
-			mBrickList.emplace_back(mBrick[HARD]);
-			currentBrickPosition.x += brickSize.x + mColumnSpacing;
-			if (columnCounter % mColumnCount == 0) {
-				columnCounter = 0;
-				currentBrickPosition.y += brickSize.y + mRowSpacing;
-				currentBrickPosition.x = mColumnSpacing * OFFSET;
-			}
-			columnCounter++;
-			mBreakableBricksNum++;
-			break;
-		case 'I':
-			mBrick[IMPENETRABLE].setPosition(currentBrickPosition);
-			mBrickList.emplace_back(mBrick[IMPENETRABLE]);
-			currentBrickPosition.x += brickSize.x + mColumnSpacing;
-			if (columnCounter % mColumnCount == 0) {
-				columnCounter = 0;
-				currentBrickPosition.y += brickSize.y + mRowSpacing;
-				currentBrickPosition.x = mColumnSpacing * OFFSET;
-			}
-			columnCounter++;
-			break;
-		case '_':
-			currentBrickPosition.x += brickSize.x + mColumnSpacing;
-			if (columnCounter % mColumnCount == 0) {
-				columnCounter = 0;
-				currentBrickPosition.y += brickSize.y + mRowSpacing;
-				currentBrickPosition.x = mColumnSpacing * OFFSET;
-			}
-			columnCounter++;
-			break;
-		default:
-			break;
 		}
 	}
 
 	// Setting textures
 	for (auto& brick : mBrickList) {
-		switch (brick.getBrickType()) {
-		case SOFT:
-			brick.setTexture(mBrickTexture[SOFT]);
-			break;
-		case MEDIUM:
-			brick.setTexture(mBrickTexture[MEDIUM]);
-			break;
-		case HARD:
-			brick.setTexture(mBrickTexture[HARD]);
-			break;
-		case IMPENETRABLE:
-			brick.setTexture(mBrickTexture[IMPENETRABLE]);
-			break;
-		}
+		brick.setTexture(mBrickTexture[brick.getBrickID()]);
 	}
 }
 
@@ -166,10 +106,10 @@ void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& win
 
 		XMLElement* pLevelElement = source.RootElement();
 
-		mRowCount = strtod(pLevelElement->Attribute("RowCount"), NULL);
-		mColumnCount = strtod(pLevelElement->Attribute("ColumnCount"), NULL);
-		mRowSpacing = strtod(pLevelElement->Attribute("RowSpacing"), NULL);
-		mColumnSpacing = strtod(pLevelElement->Attribute("ColumnSpacing"), NULL);
+		mRowCount = strtod(pLevelElement->Attribute("RowCount"), nullptr);
+		mColumnCount = strtod(pLevelElement->Attribute("ColumnCount"), nullptr);
+		mRowSpacing = strtod(pLevelElement->Attribute("RowSpacing"), nullptr);
+		mColumnSpacing = strtod(pLevelElement->Attribute("ColumnSpacing"), nullptr);
 		if (!mBackgoundTexture.loadFromFile("Resource/" + std::string(pLevelElement->Attribute("BackgroundTexture")))) {
 			throw "Cannot read background texture!";
 		}
@@ -182,38 +122,62 @@ void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& win
 
 		// TAKE GOOD CARE! Huge difference between "Type" and "Types"
 		XMLElement* pBrickTypeElement = pBrickTypesElement->FirstChildElement("BrickType");
-		unsigned int currentBrickType = 0;
 
-		while (currentBrickType < 4) { // 4 is the number of possible brick types
+		while (pBrickTypeElement) {
+			BrickID currentBrickID;
+			unsigned int currentHitPoints;
 
 			// Loading data that has to be copied per brick object
-			mBrick[currentBrickType].setAttributes(pBrickTypeElement);
+			if (pBrickTypeElement->Attribute("Id") == nullptr) {
+				throw "Cannot read attribute Id";
+			}
+			currentBrickID = pBrickTypeElement->Attribute("Id")[0];
+
+			if (pBrickTypeElement->Attribute("HitPoints") == nullptr) {
+				throw "Cannot read attribute HitPoints";
+			}
+			// Special case for impenetrable bricks
+			if (currentBrickID == 'I') {
+				currentHitPoints = -1; // Unsigned conversion will underflow to 2^32-1
+			}
+			else {
+				currentHitPoints = strtod(pBrickTypeElement->Attribute("HitPoints"), nullptr);
+			}
+
+			// Creates the unique brick in the mBrick map
+			mBrick.insert(std::pair(
+				currentBrickID, Brick(currentBrickID, currentHitPoints)
+			));
 
 			// Loading data that should be shared among bricks
-			if (!mHitSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("HitSound"))))
+			mHitSoundBuffer.insert(std::pair(currentBrickID, sf::SoundBuffer()));
+			if (!mHitSoundBuffer[currentBrickID].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("HitSound"))))
 			{
 				PLOGD << "Cannot read Resource/" + std::string(pBrickTypeElement->Attribute("HitSound"));
 				exit(-1);
 			}
-			mHitSound[currentBrickType].setBuffer(mHitSoundBuffer[currentBrickType]);
+			mHitSound.insert(std::pair(currentBrickID, sf::Sound()));
+			mHitSound[currentBrickID].setBuffer(mHitSoundBuffer[currentBrickID]);
 
-			if (currentBrickType < 3) {
-				if (!mBreakSoundBuffer[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("BreakSound"))))
+			// All but impenetrable have a break sound as well
+			if (currentBrickID != 'I') {
+				mBreakSoundBuffer.insert(std::pair(currentBrickID, sf::SoundBuffer()));
+				if (!mBreakSoundBuffer[currentBrickID].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("BreakSound"))))
 				{
 					PLOGD << "Cannot read Resource/" + std::string(pBrickTypeElement->Attribute("BreakSound"));
 					exit(-1);
 				}
-				mBreakSound[currentBrickType].setBuffer(mBreakSoundBuffer[currentBrickType]);
-				mBrickBreakScore[currentBrickType] = strtod(pBrickTypeElement->Attribute("BreakScore"), NULL);
+				mBreakSound.insert(std::pair(currentBrickID, sf::Sound()));
+				mBreakSound[currentBrickID].setBuffer(mBreakSoundBuffer[currentBrickID]);
+				mBrickBreakScore[currentBrickID] = strtod(pBrickTypeElement->Attribute("BreakScore"), NULL);
 			}
 
-			if (!mBrickTexture[currentBrickType].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("Texture"))))
+			mBrickTexture.insert(std::pair(currentBrickID, sf::Texture()));
+			if (!mBrickTexture[currentBrickID].loadFromFile("Resource/" + std::string(pBrickTypeElement->Attribute("Texture"))))
 			{
 				PLOGD << "Cannot read Resource/" + std::string(pBrickTypeElement->Attribute("Texture"));
 				exit(-1);
 			}
-
-			currentBrickType++;
 			pBrickTypeElement = pBrickTypeElement->NextSiblingElement("BrickType");
 		}
 
@@ -306,14 +270,14 @@ void Level::update(const sf::Vector2i& mousePosition, const sf::RenderWindow& wi
 			}
 			itBrick->decreaseHitPoints();
 			if (itBrick->isDead()) {
-				mBreakSound[itBrick->getBrickType()].play();
-				mPlayerScore += mBrickBreakScore[itBrick->getBrickType()];
+				mBreakSound[itBrick->getBrickID()].play();
+				mPlayerScore += mBrickBreakScore[itBrick->getBrickID()];
 				mBreakableBricksNum--;
 
 				mBrickList.remove(*itBrick++);
 			}
 			else {
-				mHitSound[itBrick->getBrickType()].play();
+				mHitSound[itBrick->getBrickID()].play();
 			}
 		}
 	}

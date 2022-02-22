@@ -1,7 +1,7 @@
 #pragma once
 
 #include <list>
-#include <array>
+#include <unordered_map>
 
 #include "Paddle.h"
 #include "Ball.h"
@@ -37,13 +37,13 @@ private:
 	unsigned int mColumnSpacing;
 
 	// Bricks assets
-	std::array<Brick, 4> mBrick;
-	std::array<sf::Texture, 4> mBrickTexture;
-	std::array<sf::SoundBuffer, 4> mHitSoundBuffer;
-	std::array<sf::SoundBuffer, 3> mBreakSoundBuffer;
-	std::array<sf::Sound, 4> mHitSound;
-	std::array<sf::Sound, 3> mBreakSound;
-	std::array<unsigned int, 4> mBrickBreakScore;
+	std::unordered_map<BrickID, Brick> mBrick;
+	std::unordered_map<BrickID, sf::Texture> mBrickTexture;
+	std::unordered_map<BrickID, sf::SoundBuffer> mHitSoundBuffer;
+	std::unordered_map<BrickID, sf::SoundBuffer> mBreakSoundBuffer;
+	std::unordered_map<BrickID, sf::Sound> mHitSound;
+	std::unordered_map<BrickID, sf::Sound> mBreakSound;
+	std::unordered_map<BrickID, unsigned int> mBrickBreakScore;
 	std::string mBrickLayout;
 
 	std::list<Brick> mBrickList;

@@ -33,10 +33,10 @@ private:
 	bool mLmbWasCliked;
 
 	// Scenes, all inherited from Scene
-	LoadingScreen* mLoadingScreen;
-	Menu* mMenu;
-	GameOver* mGameOver;
-	Level* mLevel;
+	std::unique_ptr<LoadingScreen> mLoadingScreen;
+	std::unique_ptr<Menu> mMenu;
+	std::unique_ptr<GameOver> mGameOver;
+	std::unique_ptr<Level> mLevel;
 
 	// GameOver flag
 	bool mGameIsOver;

@@ -23,7 +23,6 @@ Game::Game() {
 
 	// Gets the biggest possible video mode
 	sf::VideoMode videoMode = sf::VideoMode::getDesktopMode();
-
 	mWindow.create(
 		videoMode,
 		"Breakout",
@@ -33,45 +32,45 @@ Game::Game() {
 	mWindowSize = mWindow.getSize();
 	mWindow.setFramerateLimit(60);
 
+	// Global game assets to be loaded
 	try {
 		if (!mFont.loadFromFile("Resource/Fonts/Biolinum.ttf"))
+		{
 			throw "Cannot load font at Resource/Fonts/Biolinum.tff";
+		}
+		if (!mCommonBackground.loadFromFile("Resource/Textures/Backgrounds/CommonBackground.bmp"))
+		{
+			throw "Cannot load image at Resource/Textures/Backgrounds/CommonBackground.bmp";
+		}
+		if (!mBackgroundMusic.openFromFile("Resource/Sounds/BackgroundMusic.wav"))
+		{
+			throw "Cannot load image at Resource/Sounds/BackgroundMusic.wav";
+		}
 	}
-	catch (std::string message) {
-		PLOGD << message;
+	catch (const std::string& msg) {
+		PLOGD << msg;
 		exit(1);
 	}
 
-	// Loading screen until the game is loaded
-	mLoadingScreen = new LoadingScreen();
+	// Loading screen until the game is loaded  // is actually necessary?
+	mLoadingScreen = std::make_unique<LoadingScreen>();
 	mLoadingScreen->load(mFont, { mWindowSize.x / 2.0f, mWindowSize.y / 2.0f });
 	mWindow.clear(sf::Color::Black);
 	mLoadingScreen->draw(mWindow);
 	mWindow.display();
 
-	// Loading common background for menu and game over screen
-	try {
-		if (!mCommonBackground.loadFromFile("Resource/Textures/Backgrounds/CommonBackground.bmp"))
-			throw "Cannot load image at Resource/Textures/Backgrounds/CommonBackground.bmp";
-	}
-	catch (std::string message) {
-		PLOGD << message;
-		exit(1);
-	}
-
 	// Menu screen
-	mMenu = new Menu();
+	mMenu = std::make_unique<Menu>();
 	mMenu->load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y), mCommonBackground);
 
 	// Game over screen
-	mGameOver = new GameOver();
+	mGameOver = std::make_unique<GameOver>();
 	mGameOver->load(mFont, sf::Vector2f(mWindowSize.x, mWindowSize.y), mCommonBackground);
 
 	mGameState = GameState::MENU;
-	mLevel = new Level();
+	mLevel = nullptr;
 	mGameIsOver = false;
 
-	mBackgroundMusic.openFromFile("Resource/Sounds/BackgroundMusic.wav");
 	mBackgroundMusic.setLoop(true);
 	mBackgroundMusic.play();
 }
@@ -88,13 +87,9 @@ void Game::quit() {
 	mBackgroundMusic.stop();
 	mWindow.close();
 
-	delete mLoadingScreen;
-	delete mMenu;
-	delete mGameOver;
-	delete mLevel;
-
-	// Everything else is RAII managed to deallocate
-	// and will deallocate automatically
+	// All scene pointers that were used are unique pointers and will
+	// deallocate automatically
+	// Everything else is RAII managed as well to deallocate
 }
 
 void Game::update() {
@@ -115,14 +110,17 @@ void Game::update() {
 				break;
 			case MenuChoice::LEVEL_1:
 				mGameState = GameState::LEVEL;
+				mLevel = std::make_unique<Level>();
 				mLevel->loadFromXML("Resource/Levels/Level1.xml", mWindow);
 				break;
 			case MenuChoice::LEVEL_2:
 				mGameState = GameState::LEVEL;
+				mLevel = std::make_unique<Level>();
 				mLevel->loadFromXML("Resource/Levels/Level2.xml", mWindow);
 				break;
 			case MenuChoice::LEVEL_3:
 				mGameState = GameState::LEVEL;
+				mLevel = std::make_unique<Level>();
 				mLevel->loadFromXML("Resource/Levels/Level3.xml", mWindow);
 				break;
 			case MenuChoice::NONE:
@@ -140,6 +138,14 @@ void Game::update() {
 		if (mGameIsOver) {
 			mGameState = GameState::GAMEOVER;
 			mGameIsOver = false;
+			mGameOver->updatePlayerScore(mLevel->getPlayerScore());
+
+			// Explicitly freeing memory
+			// Although it is not neccessary since std::make_unique would replace the ptr,
+			// the amount of time the user could spend in the menu and gameover screens
+			// is unpredictable, so it's better to just clear the memory 
+			Level* pLevel = mLevel.release(); // mLevel is not nullptr
+			delete pLevel;
 		}
 		break;
 
@@ -165,8 +171,6 @@ void Game::update() {
 	default:
 		break;
 	}
-
-
 }
 
 void Game::draw() {
@@ -180,6 +184,7 @@ void Game::draw() {
 	// the chosen level are the loading screen (literally just text),
 	// a menu (barely any resources used), and a game over screen 
 	// (even less resources used), this is completely fine. 
+
 	switch (mGameState) {
 	case GameState::LOADING:
 		mLoadingScreen->draw(mWindow);
@@ -191,7 +196,6 @@ void Game::draw() {
 		mLevel->draw(mWindow);
 		break;
 	case GameState::GAMEOVER:
-		mGameOver->updatePlayerScore(mLevel->getPlayerScore());
 		mGameOver->draw(mWindow);
 		break;
 	default:
