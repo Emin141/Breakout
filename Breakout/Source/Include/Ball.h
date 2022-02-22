@@ -1,10 +1,19 @@
 #pragma once
 
+#ifdef V_DTOR_DEBUG
+#include <plog/Log.h>
+#endif
+
 #include "Entity.h"
 
 class Ball : public Entity {
 public:
 	Ball();
+#ifdef V_DTOR_DEBUG
+	virtual ~Ball() { PLOGD << "Ball destroyed! "; }
+#else 
+	virtual ~Ball() {}
+#endif
 
 	void setTexture(const sf::Texture texture);
 	void updatePosition(const sf::RenderWindow& window, const float dt);

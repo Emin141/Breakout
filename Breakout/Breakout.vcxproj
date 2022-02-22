@@ -210,7 +210,6 @@
     <ClInclude Include="Source\Include\plog\Severity.h" />
     <ClInclude Include="Source\Include\plog\Util.h" />
     <ClInclude Include="Source\Include\plog\WinApi.h" />
-    <ClInclude Include="Source\Include\Scene.h" />
     <ClInclude Include="Source\Include\Level.h" />
     <ClInclude Include="Source\Include\tinyxml2.h" />
   </ItemGroup>

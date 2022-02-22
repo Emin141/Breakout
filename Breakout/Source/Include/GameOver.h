@@ -2,7 +2,6 @@
 
 #include <array>
 
-#include "Scene.h"
 #include "Button.h"
 
 enum class GameOverChoice {
@@ -11,7 +10,7 @@ enum class GameOverChoice {
 	NONE
 };
 
-class GameOver : public Scene {
+class GameOver {
 public:
 	GameOver() : mPlayerScore(0) {}
 

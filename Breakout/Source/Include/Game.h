@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "GameState.h"
-#include "Scene.h"
 #include "LoadingScreen.h"
 #include "Menu.h"
 #include "GameOver.h"

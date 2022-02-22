@@ -8,7 +8,7 @@
 
 Game::Game() {
 	// Logger
-	plog::init(plog::debug, "Error.log");
+	plog::init(plog::debug, "Debug.log");
 
 	// Constructor call
 	mGameState = GameState::LOADING;
@@ -85,12 +85,16 @@ void Game::run() {
 }
 
 void Game::quit() {
+	mBackgroundMusic.stop();
 	mWindow.close();
+
 	delete mLoadingScreen;
 	delete mMenu;
 	delete mGameOver;
 	delete mLevel;
+
 	// Everything else is RAII managed to deallocate
+	// and will deallocate automatically
 }
 
 void Game::update() {
@@ -136,7 +140,6 @@ void Game::update() {
 		if (mGameIsOver) {
 			mGameState = GameState::GAMEOVER;
 			mGameIsOver = false;
-
 		}
 		break;
 

@@ -1,6 +1,10 @@
 #pragma once
 
 #include <SFML/Audio.hpp>
+#ifdef V_DTOR_DEBUG
+#include <plog/Log.h>
+#endif
+
 #include "Entity.h"
 #include "tinyxml2.h"
 
@@ -14,8 +18,12 @@ enum BrickType { // NOT a class enum !
 
 class Brick : public Entity {
 public:
-	Brick() :
-		mIdentifier('\0'), mHitPoints(0) {}
+	Brick() : mIdentifier('\0'), mHitPoints(0) {}
+#ifdef V_DTOR_DEBUG
+	virtual ~Brick() { PLOGD << "Brick Destroyed "; }
+#else
+	virtual ~Brick() {}
+#endif
 
 	void setAttributes(const tinyxml2::XMLElement*);
 	BrickType getBrickType() const;

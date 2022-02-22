@@ -3,12 +3,11 @@
 #include <list>
 #include <array>
 
-#include "Scene.h"
 #include "Paddle.h"
 #include "Ball.h"
 #include "Brick.h"
 
-class Level : public Scene {
+class Level {
 public:
 	Level();
 
