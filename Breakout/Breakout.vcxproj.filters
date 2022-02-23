@@ -158,9 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <None Include="Zadatak - Breakout.pdf" />
     <None Include="TODO.md" />
-    <None Include="geogebra-export.ggb" />
     <None Include="Breakout.exe" />
     <None Include="Breakout.pdb" />
     <None Include="openal32.dll" />
@@ -212,6 +210,12 @@
     <Image Include="Resource\Textures\Bricks\Soft.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\Textures\Bricks\ExtremelyHard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Textures\Bricks\VeryHard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\Levels\Level1.xml" />
@@ -220,7 +224,6 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resource\Fonts\Biolinum.ttf" />
-    <Font Include="Resource\Fonts\Helvetica.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sounds\Break_01.wav">
@@ -242,6 +245,21 @@
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="Resource\Sounds\Hit_04.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\Break_06.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\Break_05.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\BackgroundMusic.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\Hit_06.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resource\Sounds\Hit_05.wav">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>

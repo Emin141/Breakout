@@ -219,7 +219,6 @@
   <ItemGroup>
     <None Include="Breakout.exe" />
     <None Include="Breakout.pdb" />
-    <None Include="geogebra-export.ggb" />
     <None Include="openal32.dll" />
     <None Include="README.md" />
     <None Include="sfml-audio-2.dll" />
@@ -227,12 +226,12 @@
     <None Include="sfml-system-2.dll" />
     <None Include="sfml-window-2.dll" />
     <None Include="TODO.md" />
-    <None Include="Zadatak - Breakout.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Textures\Backgrounds\CommonBackground.bmp" />
     <Image Include="Resource\Textures\Ball.png" />
     <Image Include="Resource\Textures\Boards\Board_01.bmp" />
+    <Image Include="Resource\Textures\Bricks\ExtremelyHard.png" />
     <Image Include="Resource\Textures\Bricks\Hard.bmp" />
     <Image Include="Resource\Textures\Bricks\Hard.png" />
     <Image Include="Resource\Textures\Bricks\Impenetrable.bmp" />
@@ -241,6 +240,7 @@
     <Image Include="Resource\Textures\Bricks\Medium.png" />
     <Image Include="Resource\Textures\Bricks\Soft.bmp" />
     <Image Include="Resource\Textures\Bricks\Soft.png" />
+    <Image Include="Resource\Textures\Bricks\VeryHard.png" />
     <Image Include="Resource\Textures\LoadingScreen.bmp" />
     <Image Include="Resource\Textures\Menu.bmp" />
     <Image Include="Resource\Textures\Paddle.png" />
@@ -252,16 +252,20 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resource\Fonts\Biolinum.ttf" />
-    <Font Include="Resource\Fonts\Helvetica.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="Resource\Sounds\BackgroundMusic.wav" />
     <Media Include="Resource\Sounds\Break_01.wav" />
     <Media Include="Resource\Sounds\Break_02.wav" />
     <Media Include="Resource\Sounds\Break_03.wav" />
+    <Media Include="Resource\Sounds\Break_05.wav" />
+    <Media Include="Resource\Sounds\Break_06.wav" />
     <Media Include="Resource\Sounds\Hit_01.wav" />
     <Media Include="Resource\Sounds\Hit_02.wav" />
     <Media Include="Resource\Sounds\Hit_03.wav" />
     <Media Include="Resource\Sounds\Hit_04.wav" />
+    <Media Include="Resource\Sounds\Hit_05.wav" />
+    <Media Include="Resource\Sounds\Hit_06.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
