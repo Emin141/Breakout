@@ -169,7 +169,6 @@
   <ItemGroup>
     <ClCompile Include="Source\Actor.cpp" />
     <ClCompile Include="Source\Ball.cpp" />
-    <ClCompile Include="Source\Brick.cpp" />
     <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Game.cpp" />

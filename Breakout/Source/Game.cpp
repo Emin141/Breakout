@@ -72,21 +72,25 @@ Game::Game() {
 	mBackgroundMusic.play();
 }
 
-void Game::run() {
-	while (mGameState != GameState::QUIT) {
-		update();
-		draw();
-		poll();
-	}
-}
-
-void Game::quit() {
+Game::~Game() {
 	mBackgroundMusic.stop();
 	mWindow.close();
 
 	// All scene pointers that were used are unique pointers and will
 	// deallocate automatically
 	// Everything else is RAII managed as well to deallocate
+
+	// Note: Profilers may note that there is a leak, but there isn't
+	// The "leak" is due to the global logger called by init::plog which
+	// automatically deallocates when main returns.
+}
+
+void Game::run() {
+	while (mGameState != GameState::QUIT) {
+		update();
+		draw();
+		poll();
+	}
 }
 
 void Game::update() {

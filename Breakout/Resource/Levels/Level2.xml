@@ -35,8 +35,8 @@
         Id="V"
         Texture="Textures/Bricks/VeryHard.png"
         HitPoints="4"
-        HitSound="Sounds/Hit_03.wav"
-        BreakSound="Sounds/Break_03.wav"
+        HitSound="Sounds/Hit_05.wav"
+        BreakSound="Sounds/Break_05.wav"
         BreakScore="200" />
     <!-- Impenetrable Brick -->
     <BrickType

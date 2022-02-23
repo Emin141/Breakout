@@ -11,10 +11,10 @@ class Level {
 public:
 	Level();
 
-	void loadFromXML(const std::string&, const sf::RenderWindow&);
-	void arrangeBricks(const sf::RenderWindow&);
-	void draw(sf::RenderWindow&);
-	void update(const sf::Vector2i&, const sf::RenderWindow&, const float, bool&);
+	void loadFromXML(const std::string& filename, const sf::RenderWindow& window);
+	void arrangeBricks(const sf::RenderWindow& window);
+	void draw(sf::RenderWindow& window);
+	void update(const sf::Vector2i& mousePosition, const sf::RenderWindow& window, const float dt, bool& gameIsOver);
 	inline unsigned int getPlayerScore() const { return mPlayerScore; }
 
 private:

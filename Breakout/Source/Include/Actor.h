@@ -22,4 +22,5 @@ protected:
 	sf::Vector2f mSize;
 	sf::Vector2f mPosition;
 	sf::RectangleShape mShape;
+	// No need for texture, because they will be set by reference
 };

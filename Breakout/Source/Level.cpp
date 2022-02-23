@@ -12,59 +12,6 @@ Level::Level() {
 	mBreakableBricksNum = 0;
 }
 
-void Level::arrangeBricks(const sf::RenderWindow& window) {
-	// Clears the brick list first
-	mBrickList.clear();
-
-	// Defining the size of a brick
-	sf::Vector2f brickSize(
-		(window.getSize().x - (mColumnCount + 1) * mColumnSpacing) / mColumnCount,
-		// Same size in order to be square 
-		(window.getSize().x - (mColumnCount + 1) * mRowSpacing) / mColumnCount
-	);
-
-	// Sets all brick sizes
-	for (auto& brick : mBrick) {
-		brick.second.setSize(brickSize);
-	}
-	
-
-	// Defining a position which will track the brick which is currently being placed
-	sf::Vector2f currentBrickPosition(
-		mColumnSpacing * OFFSET,
-		mRowSpacing
-	);
-
-	// Required to track the rows
-	unsigned int columnCounter = 1;
-
-	// Parsing the positions
-	for (size_t i = 0; i < mBrickLayout.size(); i++) {
-		if (mBrick.find(mBrickLayout[i]) != mBrick.end() // Checks if the key is valid
-			or mBrickLayout[i] == '_') { // Or if the parsed character is an underline
-			// If the character is NOT an underline:
-			if (mBrickLayout[i] != '_') {
-				mBrick[mBrickLayout[i]].setPosition(currentBrickPosition);
-				mBrickList.emplace_back(mBrick[mBrickLayout[i]]);
-				mBreakableBricksNum++;
-			}
-			// This will run regardless
-			currentBrickPosition.x += brickSize.x + mColumnSpacing;
-			if (columnCounter % mColumnCount == 0) {
-				columnCounter = 0;
-				currentBrickPosition.y += brickSize.y + mRowSpacing;
-				currentBrickPosition.x = mColumnSpacing * OFFSET;
-			}
-			columnCounter++;
-		}
-	}
-
-	// Setting textures
-	for (auto& brick : mBrickList) {
-		brick.setTexture(mBrickTexture[brick.getBrickID()]);
-	}
-}
-
 void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& window) {
 
 	// Paddle
@@ -191,6 +138,64 @@ void Level::loadFromXML(const std::string& filename, const sf::RenderWindow& win
 	catch (std::string message) {
 		PLOGD << message;
 		exit(-1);
+	}
+}
+
+void Level::arrangeBricks(const sf::RenderWindow& window) {
+	// Clears the brick list first, in case it isn't empty because of previous allocations
+	mBrickList.clear();
+
+	// Defining the size of a brick
+	sf::Vector2f brickSize(
+		(window.getSize().x - (mColumnCount + 1) * mColumnSpacing) / mColumnCount,
+		// Same size in order to be square 
+		(window.getSize().x - (mColumnCount + 1) * mRowSpacing) / mColumnCount
+	);
+
+	// Sets all brick sizes
+	for (auto& brick : mBrick) {
+		brick.second.setSize(brickSize);
+	}
+
+	// The spacing scale
+	// This is done so that the spacing can be tweaked, 1 means no tweaking ergo default
+	float columnSpacingScale = 1.0f, rowSpacingScale = 1.0f;
+	mColumnSpacing *= columnSpacingScale;
+	mRowSpacing *= rowSpacingScale;
+
+	// Defining a position which will track the brick which is currently being placed
+	sf::Vector2f currentBrickPosition(
+		mColumnSpacing * OFFSET, // left offset correction
+		mRowSpacing
+	);
+
+	// Required to track the rows
+	unsigned int columnCounter = 1;
+
+	// Parsing the positions
+	for (size_t i = 0; i < mBrickLayout.size(); i++) {
+		if (mBrick.find(mBrickLayout[i]) != mBrick.end()	// Checks if the key is valid
+			or mBrickLayout[i] == '_') {					// Or if the parsed character is an underline
+			// If the character is NOT an underline:
+			if (mBrickLayout[i] != '_') {
+				mBrick[mBrickLayout[i]].setPosition(currentBrickPosition);
+				mBrickList.emplace_back(mBrick[mBrickLayout[i]]);
+				mBreakableBricksNum++;
+			}
+			// This will run regardless if underline or not
+			currentBrickPosition.x += brickSize.x + mColumnSpacing;
+			if (columnCounter % mColumnCount == 0) {
+				columnCounter = 0;
+				currentBrickPosition.y += brickSize.y + mRowSpacing;
+				currentBrickPosition.x = mColumnSpacing * OFFSET;
+			}
+			columnCounter++;
+		}
+	}
+
+	// Setting textures by reference to save memory
+	for (auto& brick : mBrickList) {
+		brick.setTexture(mBrickTexture[brick.getBrickID()]);
 	}
 }
 
