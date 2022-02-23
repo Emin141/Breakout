@@ -23,7 +23,7 @@ void Ball::updatePosition(const sf::RenderWindow& window, const float dt) {
 
 void Ball::normalizeVelocity() {
 	float scalingFactor = 0.002f;
-	float magnitude = 0.002 * sqrt(mVelocity.x * mVelocity.x + mVelocity.y * mVelocity.y);
+	float magnitude = scalingFactor * sqrt(mVelocity.x * mVelocity.x + mVelocity.y * mVelocity.y);
 	mVelocity.x /= magnitude;
 	mVelocity.y /= magnitude;
 }

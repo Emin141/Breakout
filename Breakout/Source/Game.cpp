@@ -31,6 +31,7 @@ Game::Game() {
 	);
 	mWindowSize = mWindow.getSize();
 	mWindow.setFramerateLimit(60);
+	mWindow.setVerticalSyncEnabled(true);
 
 	// Global game assets to be loaded
 	try {
