@@ -34,16 +34,13 @@ Game::Game() {
 
 	// Global game assets to be loaded
 	try {
-		if (!mFont.loadFromFile("Resource/Fonts/Biolinum.ttf"))
-		{
+		if (!mFont.loadFromFile("Resource/Fonts/Biolinum.ttf")) {
 			throw "Cannot load font at Resource/Fonts/Biolinum.tff";
 		}
-		if (!mCommonBackground.loadFromFile("Resource/Textures/Backgrounds/CommonBackground.bmp"))
-		{
+		if (!mCommonBackground.loadFromFile("Resource/Textures/Backgrounds/CommonBackground.bmp")) {
 			throw "Cannot load image at Resource/Textures/Backgrounds/CommonBackground.bmp";
 		}
-		if (!mBackgroundMusic.openFromFile("Resource/Sounds/BackgroundMusic.wav"))
-		{
+		if (!mBackgroundMusic.openFromFile("Resource/Sounds/BackgroundMusic.wav")) {
 			throw "Cannot load image at Resource/Sounds/BackgroundMusic.wav";
 		}
 	}
@@ -110,17 +107,17 @@ void Game::update() {
 				break;
 			case MenuChoice::LEVEL_1:
 				mGameState = GameState::LEVEL;
-				mLevel = std::make_unique<Level>();
+				mLevel.reset(new Level); // any next reset call will automatically free the memory
 				mLevel->loadFromXML("Resource/Levels/Level1.xml", mWindow);
 				break;
 			case MenuChoice::LEVEL_2:
 				mGameState = GameState::LEVEL;
-				mLevel = std::make_unique<Level>();
+				mLevel.reset(new Level);
 				mLevel->loadFromXML("Resource/Levels/Level2.xml", mWindow);
 				break;
 			case MenuChoice::LEVEL_3:
 				mGameState = GameState::LEVEL;
-				mLevel = std::make_unique<Level>();
+				mLevel.reset(new Level);
 				mLevel->loadFromXML("Resource/Levels/Level3.xml", mWindow);
 				break;
 			case MenuChoice::NONE:
@@ -144,8 +141,7 @@ void Game::update() {
 			// Although it is not neccessary since std::make_unique would replace the ptr,
 			// the amount of time the user could spend in the menu and gameover screens
 			// is unpredictable, so it's better to just clear the memory 
-			Level* pLevel = mLevel.release(); // mLevel is not nullptr
-			delete pLevel;
+			mLevel.reset();
 		}
 		break;
 

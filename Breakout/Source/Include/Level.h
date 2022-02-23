@@ -13,7 +13,7 @@ public:
 
 	void loadFromXML(const std::string&, const sf::RenderWindow&);
 	void arrangeBricks(const sf::RenderWindow&);
-	void draw(sf::RenderWindow& window);
+	void draw(sf::RenderWindow&);
 	void update(const sf::Vector2i&, const sf::RenderWindow&, const float, bool&);
 	inline unsigned int getPlayerScore() const { return mPlayerScore; }
 
